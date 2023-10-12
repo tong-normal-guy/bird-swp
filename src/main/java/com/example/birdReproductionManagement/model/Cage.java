@@ -19,11 +19,16 @@ public class Cage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "location", columnDefinition = "nvarchar(255)")
     private String location;
+    @Column(name = "available")
     private Boolean available;
+    @Column(name = "bird_quantity")
     private Integer quantity;
+    @Column(name = "in_process", columnDefinition = "nvarchar(255)")
+    private Boolean inProcess;
     @ManyToOne
-    @JoinColumn(name = "cage", nullable = false)
+    @JoinColumn(name = "cage_type_id", nullable = false)
     private CageType cageType;
 
     @OneToMany(mappedBy = "cage", cascade = CascadeType.REMOVE)

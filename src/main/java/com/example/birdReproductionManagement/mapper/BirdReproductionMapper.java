@@ -7,8 +7,11 @@ public class BirdReproductionMapper {
     public static BirdReproduction mapToBirdReproduction (BirdReproductionDto birdReproductionDto){
         return BirdReproduction.builder()
                 .id(birdReproductionDto.getId())
-                .bird(birdReproductionDto.getBird())
-                .reproductionProcess(birdReproductionDto.getReproductionProcess())
+                .bird(BirdMapper.mapToBird(birdReproductionDto.getBird()))
+                .actEggHatchDate(birdReproductionDto.getActEggHatchDate())
+                .actSwingBranch(birdReproductionDto.getActSwingBranch())
+                .actAdultBirdDate(birdReproductionDto.getActAdultBirdDate())
+                .reproductionProcess(ReproductionProcessMapper.mapToReproductionProcess(birdReproductionDto.getReproductionProcess()))
                 .isChild(birdReproductionDto.getIsChild())
                 .build();
     }
@@ -16,8 +19,11 @@ public class BirdReproductionMapper {
     public static BirdReproductionDto mapToBirdReproductionDto (BirdReproduction birdReproduction){
         return BirdReproductionDto.builder()
                 .id(birdReproduction.getId())
-                .bird(birdReproduction.getBird())
-                .reproductionProcess(birdReproduction.getReproductionProcess())
+                .bird(BirdMapper.mapToBirdDto(birdReproduction.getBird()))
+                .actEggHatchDate(birdReproduction.getActEggHatchDate())
+                .actSwingBranch(birdReproduction.getActSwingBranch())
+                .actAdultBirdDate(birdReproduction.getActAdultBirdDate())
+                .reproductionProcess(ReproductionProcessMapper.mapToReproductionProcessDto(birdReproduction.getReproductionProcess()))
                 .isChild(birdReproduction.getIsChild())
                 .build();
     }

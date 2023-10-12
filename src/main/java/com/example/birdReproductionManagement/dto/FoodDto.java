@@ -18,5 +18,5 @@ import java.util.List;
 public class FoodDto {
     private Long id;
     private String name;
-    private List<MealDto> meals = new ArrayList<>();
+//    private List<MealDto> meals = new ArrayList<>();
 }

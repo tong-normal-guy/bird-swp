@@ -20,11 +20,23 @@ public class Bird {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(columnDefinition = "nvarchar(255)", name = "sex")
     private Boolean sex;
+    @Column(name = "hatch_date")
     private Date hatchDate;
+    @Column(name = "age_range", columnDefinition = "nvarchar(255)")
     private String ageRange;
+    @Column(name = "mutation", columnDefinition = "nvarchar(255)")
     private String mutation;
+    @Column(name = "mutation_rate")
+    private Float mutationRate;
+    @Column(name = "is_alive")
+    private Boolean isAlive;
+    @Column(name = "image")
     private String image;
+    @Column(name = "feather_color", columnDefinition = "nvarchar(255)")
+    private String featherColor;
+    @Column(name = "weight")
     private Long weight;
 
     @ManyToOne

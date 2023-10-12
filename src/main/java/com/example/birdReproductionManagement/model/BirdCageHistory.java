@@ -18,6 +18,7 @@ public class BirdCageHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "impl_date")
     private Date implDate;
 
     @ManyToOne

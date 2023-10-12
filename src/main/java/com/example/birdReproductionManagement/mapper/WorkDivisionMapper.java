@@ -9,9 +9,10 @@ public class WorkDivisionMapper {
                 .id(workDivisionDto.getId())
                 .createDate(workDivisionDto.getCreateDate())
                 .workDate(workDivisionDto.getWorkDate())
+                .isAttended(workDivisionDto.getIsAttended())
                 .report(workDivisionDto.getReport())
-                .user(workDivisionDto.getUser())
-                .cage(workDivisionDto.getCage())
+                .user(UserEntityMapper.mapToUserEntity(workDivisionDto.getUser()))
+                .cage(CageMapper.mapToCage(workDivisionDto.getCage()))
                 .build();
     }
 
@@ -20,9 +21,10 @@ public class WorkDivisionMapper {
                 .id(workDivision.getId())
                 .createDate(workDivision.getCreateDate())
                 .workDate(workDivision.getWorkDate())
+                .isAttended(workDivision.getIsAttended())
                 .report(workDivision.getReport())
-                .user(workDivision.getUser())
-                .cage(workDivision.getCage())
+                .user(UserEntityMapper.mapToUserEntityDto(workDivision.getUser()))
+                .cage(CageMapper.mapToCageDto(workDivision.getCage()))
                 .build();
     }
 }

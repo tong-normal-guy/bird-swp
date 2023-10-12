@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 @Builder
 public class MealDto {
     private Long id;
-    private Long foodNorm;
-    private BirdType birdType;
-    private Food food;
+    private String foodNorm;
+    private BirdTypeDto birdType;
+    private FoodDto food;
 }

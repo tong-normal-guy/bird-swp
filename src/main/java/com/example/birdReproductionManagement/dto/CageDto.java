@@ -22,9 +22,11 @@ public class CageDto {
     private String location;
     private Boolean available;
     private Integer quantity;
-    private CageType cageType;
-    private List<BirdDto> birdList;
-    private List<BirdCageHistoryDto> birdCageHistories;
-    private List<ReproductionProcessDto> reproductionProcesses;
-    private List<WorkDivisionDto> workDivisions;
+    private Boolean inProcess;
+    private CageTypeDto cageType;
+    private Long cageTypeId;
+//    private List<BirdDto> birdList;
+//    private List<BirdCageHistoryDto> birdCageHistories;
+//    private List<ReproductionProcessDto> reproductionProcesses;
+//    private List<WorkDivisionDto> workDivisions;
 }

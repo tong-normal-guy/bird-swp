@@ -13,20 +13,35 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
+
+
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        User user = userService.findByUsername(username);
+//        if (user == null) {
+//            throw new UsernameNotFoundException("User Not Found!");
+//        }
+//
+//        UserSecurity userSecurity = new UserSecurity(user);
+//        return userSecurity;
+//    }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity user = userRepository.findByUsername(username);
-        return new User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+        return User.builder()
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .roles(String.valueOf(user.getRole()))
+                .build();
     }
 
-    private Collection<GrantedAuthority> mapRolesToAuthorities(List<Role> roles){
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
-    }
+//    private Collection<GrantedAuthority> mapRolesToAuthorities(Role roles){
+//        return List.of(new SimpleGrantedAuthority(roles.name()));;
+//    }
 }

@@ -1,25 +1,13 @@
 package com.example.birdReproductionManagement.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@Entity
-@Table(name = "roles")
-public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
-    @ManyToMany(mappedBy = "roles")
-    private List<UserEntity> users = new ArrayList<>();
+@Getter
+public enum Role{
+    ADMIN,
+    STAFF,
+    MANAGER
 }

@@ -12,7 +12,7 @@ public class CageTypeMapper {
                 .name(cageTypeDto.getName())
                 .size(cageTypeDto.getSize())
                 .description(cageTypeDto.getDescription())
-                .cageList(cageTypeDto.getCageList().stream().map(CageMapper::mapToCage).collect(Collectors.toList()))
+//                .cageList(cageTypeDto.getCageList().stream().map(CageMapper::mapToCage).collect(Collectors.toList()))
                 .build();
     }
 
@@ -22,7 +22,7 @@ public class CageTypeMapper {
                 .name(cageType.getName())
                 .size(cageType.getSize())
                 .description(cageType.getDescription())
-                .cageList(cageType.getCageList().stream().map(CageMapper::mapToCageDto).collect(Collectors.toList()))
+//                .cageList(cageType.getCageList().stream().map(CageMapper::mapToCageDto).collect(Collectors.toList()))
                 .build();
     }
 }

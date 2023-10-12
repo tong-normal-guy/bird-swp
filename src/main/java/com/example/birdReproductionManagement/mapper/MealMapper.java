@@ -8,8 +8,8 @@ public class MealMapper {
         return Meal.builder()
                 .id(mealDto.getId())
                 .foodNorm(mealDto.getFoodNorm())
-                .birdType(mealDto.getBirdType())
-                .food(mealDto.getFood())
+                .birdType(BirdTypeMapper.mapToBirdType(mealDto.getBirdType()))
+                .food(FoodMapper.mapToFood(mealDto.getFood()))
                 .build();
     }
 
@@ -17,8 +17,8 @@ public class MealMapper {
         return MealDto.builder()
                 .id(meal.getId())
                 .foodNorm(meal.getFoodNorm())
-                .birdType(meal.getBirdType())
-                .food(meal.getFood())
+                .birdType(BirdTypeMapper.mapToBirdTypeDto(meal.getBirdType()))
+                .food(FoodMapper.mapToFoodDto(meal.getFood()))
                 .build();
     }
 }

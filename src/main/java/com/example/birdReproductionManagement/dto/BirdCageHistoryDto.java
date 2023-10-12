@@ -18,6 +18,6 @@ import java.util.Date;
 public class BirdCageHistoryDto {
     private Long id;
     private Date implDate;
-    private Bird bird;
-    private Cage cage;
+    private BirdDto bird;
+    private CageDto cage;
 }

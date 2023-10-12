@@ -19,10 +19,17 @@ public class BirdType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "name", columnDefinition = "nvarchar(255)")
     private String name;
+    @Column(name = "incubate_period")
     private Long incubate;
+    @Column(name = "chick_period")
     private Long chick;
+    @Column(name = "swingbranch_period")
     private Long swingBranch;
+    @Column(name = "life_expectancy", columnDefinition = "nvarchar(255)")
+    private String lifeExpectancy;
+    @Column(name = "description", columnDefinition = "nvarchar(255)")
     private String description;
 
     @OneToMany(mappedBy = "birdType",cascade = CascadeType.REMOVE)

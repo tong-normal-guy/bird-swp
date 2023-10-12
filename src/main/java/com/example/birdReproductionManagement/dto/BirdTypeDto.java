@@ -21,7 +21,8 @@ public class BirdTypeDto {
     private Long incubate;
     private Long chick;
     private Long swingBranch;
+    private String lifeExpectancy;
     private String description;
-    private List<BirdDto> birdList;
-    private List<MealDto> meals;
+//    private List<BirdDto> birdList;
+//    private List<MealDto> meals;
 }

@@ -20,5 +20,5 @@ public class CageTypeDto {
     private String name;
     private String size;
     private String description;
-    private List<CageDto> cageList;
+//    private List<CageDto> cageList;
 }

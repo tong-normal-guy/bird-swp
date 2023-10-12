@@ -18,8 +18,13 @@ public class WorkDivision {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "created_date")
     private Date createDate;
+    @Column(name = "work_date")
     private Date workDate;
+    @Column(name = "is_attended")
+    private Boolean isAttended;
+    @Column(name = "report")
     private String report;
 
     @ManyToOne

@@ -17,7 +17,8 @@ public class Meal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long foodNorm;
+    @Column(name = "food_norm", columnDefinition = "nvarchar(255)")
+    private String foodNorm;
 
     @ManyToOne
     @JoinColumn(name = "birdtype_id", nullable = false)

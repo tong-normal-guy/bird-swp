@@ -14,8 +14,9 @@ public class BirdTypeMapper {
                 .chick(birdTypeDto.getChick())
                 .swingBranch(birdTypeDto.getSwingBranch())
                 .description(birdTypeDto.getDescription())
-                .birdList(birdTypeDto.getBirdList().stream().map(BirdMapper::mapToBird).collect(Collectors.toList()))
-                .meals(birdTypeDto.getMeals().stream().map(MealMapper::mapToMeal).collect(Collectors.toList()))
+                .lifeExpectancy(birdTypeDto.getLifeExpectancy())
+//                .birdList(birdTypeDto.getBirdList().stream().map(BirdMapper::mapToBird).collect(Collectors.toList()))
+//                .meals(birdTypeDto.getMeals().stream().map(MealMapper::mapToMeal).collect(Collectors.toList()))
                 .build();
     }
 
@@ -27,8 +28,9 @@ public class BirdTypeMapper {
                 .chick(birdType.getChick())
                 .swingBranch(birdType.getSwingBranch())
                 .description(birdType.getDescription())
-                .birdList(birdType.getBirdList().stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList()))
-                .meals(birdType.getMeals().stream().map(MealMapper::mapToMealDto).collect(Collectors.toList()))
+                .lifeExpectancy(birdType.getLifeExpectancy())
+//                .birdList(birdType.getBirdList().stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList()))
+//                .meals(birdType.getMeals().stream().map(MealMapper::mapToMealDto).collect(Collectors.toList()))
                 .build();
     }
 }

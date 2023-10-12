@@ -15,11 +15,12 @@ public class CageMapper {
                 .location(cageDto.getLocation())
                 .available(cageDto.getAvailable())
                 .quantity(cageDto.getQuantity())
-                .cageType(cageDto.getCageType())
-                .birdList(cageDto.getBirdList().stream().map(BirdMapper::mapToBird).collect(Collectors.toList()))
-                .birdCageHistories(cageDto.getBirdCageHistories().stream().map(BirdCageHistoryMapper::mapToBirdCageHistory).collect(Collectors.toList()))
-                .reproductionProcesses(cageDto.getReproductionProcesses().stream().map(ReproductionProcessMapper::mapToReproductionProcess).collect(Collectors.toList()))
-                .workDivisions(cageDto.getWorkDivisions().stream().map(WorkDivisionMapper::mapToWorkDivision).collect(Collectors.toList()))
+                .inProcess(cageDto.getInProcess())
+                .cageType(CageTypeMapper.mapToCageType(cageDto.getCageType()))
+//                .birdList(cageDto.getBirdList().stream().map(BirdMapper::mapToBird).collect(Collectors.toList()))
+//                .birdCageHistories(cageDto.getBirdCageHistories().stream().map(BirdCageHistoryMapper::mapToBirdCageHistory).collect(Collectors.toList()))
+//                .reproductionProcesses(cageDto.getReproductionProcesses().stream().map(ReproductionProcessMapper::mapToReproductionProcess).collect(Collectors.toList()))
+//                .workDivisions(cageDto.getWorkDivisions().stream().map(WorkDivisionMapper::mapToWorkDivision).collect(Collectors.toList()))
                 .build();
     }
 
@@ -29,11 +30,12 @@ public class CageMapper {
                 .location(cage.getLocation())
                 .available(cage.getAvailable())
                 .quantity(cage.getQuantity())
-                .cageType(cage.getCageType())
-                .birdList(cage.getBirdList().stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList()))
-                .birdCageHistories(cage.getBirdCageHistories().stream().map(BirdCageHistoryMapper::mapToBirdCageHistoryDto).collect(Collectors.toList()))
-                .reproductionProcesses(cage.getReproductionProcesses().stream().map(ReproductionProcessMapper::mapToReproductionProcessDto).collect(Collectors.toList()))
-                .workDivisions(cage.getWorkDivisions().stream().map(WorkDivisionMapper::mapToWorkDivisionDto).collect(Collectors.toList()))
+                .cageType(CageTypeMapper.mapToCageTypeDto(cage.getCageType()))
+                .inProcess(cage.getInProcess())
+//                .birdList(cage.getBirdList().stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList()))
+//                .birdCageHistories(cage.getBirdCageHistories().stream().map(BirdCageHistoryMapper::mapToBirdCageHistoryDto).collect(Collectors.toList()))
+//                .reproductionProcesses(cage.getReproductionProcesses().stream().map(ReproductionProcessMapper::mapToReproductionProcessDto).collect(Collectors.toList()))
+//                .workDivisions(cage.getWorkDivisions().stream().map(WorkDivisionMapper::mapToWorkDivisionDto).collect(Collectors.toList()))
                 .build();
     }
 }

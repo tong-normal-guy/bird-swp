@@ -19,7 +19,8 @@ public class WorkDivisionDto {
     private Long id;
     private Date createDate;
     private Date workDate;
+    private Boolean isAttended;
     private String report;
-    private UserEntity user;
-    private Cage cage;
+    private UserEntityDto user;
+    private CageDto cage;
 }

@@ -10,7 +10,7 @@ public class FoodMapper {
         return Food.builder()
                 .id(foodDto.getId())
                 .name(foodDto.getName())
-                .meals(foodDto.getMeals().stream().map(MealMapper::mapToMeal).collect(Collectors.toList()))
+//                .meals(foodDto.getMeals().stream().map(MealMapper::mapToMeal).collect(Collectors.toList()))
                 .build();
     }
 
@@ -18,7 +18,7 @@ public class FoodMapper {
         return FoodDto.builder()
                 .id(food.getId())
                 .name(food.getName())
-                .meals(food.getMeals().stream().map(MealMapper::mapToMealDto).collect(Collectors.toList()))
+//                .meals(food.getMeals().stream().map(MealMapper::mapToMealDto).collect(Collectors.toList()))
                 .build();
     }
 }

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -16,7 +17,10 @@ import javax.persistence.ManyToOne;
 @Builder
 public class BirdReproductionDto {
     private Long id;
-    private Bird bird;
-    private ReproductionProcess reproductionProcess;
+    private BirdDto bird;
+    private Date actEggHatchDate;
+    private Date actSwingBranch;
+    private Date actAdultBirdDate;
+    private ReproductionProcessDto reproductionProcess;
     private Boolean isChild;
 }

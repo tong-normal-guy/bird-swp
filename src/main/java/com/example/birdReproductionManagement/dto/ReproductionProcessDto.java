@@ -24,14 +24,16 @@ public class ReproductionProcessDto {
     private Date pairingDate;
     private Date eggLaidDate;
     private Date expEggHatchDate;
-    private Date actEggHatchDate;
+//    private Date actEggHatchDate;
     private Date expSwingBranch;
-    private Date actSwingBranch;
+//    private Date actSwingBranch;
     private Date expAdultBirdDate;
-    private Date actAdultBirdDate;
+//    private Date actAdultBirdDate;
     private Integer totalEgg;
     private String stage;
     private Integer failEgg;
-    private Cage cage;
-    private List<BirdReproductionDto> birdReproductions;
+    private Boolean isDone;
+    private CageDto cage;
+    private Long cageId;
+//    private List<BirdReproductionDto> birdReproductions;
 }

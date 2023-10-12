@@ -8,6 +8,7 @@ import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -20,17 +21,21 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "username")
     private String username;
+    @Column(name = "email")
     private String email;
+    @Column(name = "password")
     private String password;
-    private String fullname;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "user_role",
-            joinColumns ={@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
-    )
-    private List<Role> roles = new ArrayList<>();
+    @Column(name = "full_name", columnDefinition = "nvarchar(255)")
+    private String fullName;
+    @Column(name = "created_by", columnDefinition = "nvarchar(255)")
+    private String createdBy;
+    @Column(name = "created_date")
+    private Date createdDate;
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<WorkDivision> workDivisions = new ArrayList<>();
