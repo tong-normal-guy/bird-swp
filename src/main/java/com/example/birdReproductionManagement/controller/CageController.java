@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/cages")
+@CrossOrigin(origins = "*")
 public class CageController {
     private CageService cageService;
     @Autowired
