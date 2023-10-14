@@ -16,6 +16,7 @@ import com.example.birdReproductionManagement.service.BirdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,6 +38,11 @@ public class BirdServiceImpl implements BirdService {
     @Override
     public List<BirdDto> findAllBirds() {
         List<Bird> birds = birdRepository.findAll();
+//         List<BirdDto> birdDtos = new ArrayList<>();
+//         for (BirdDto birdDto : birdDtos) {
+//             Bird bird = BirdMapper.mapToBird(birdDto);
+//             birds.add(bird);
+//         }
         return birds.stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList());
     }
 

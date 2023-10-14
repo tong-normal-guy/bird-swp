@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/birdtypes")
+@CrossOrigin(origins = "*")
 public class BirdTypeController {
     private BirdTypeService birdTypeService;
     @Autowired
