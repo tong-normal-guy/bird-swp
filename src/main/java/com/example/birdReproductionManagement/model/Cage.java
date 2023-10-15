@@ -40,7 +40,10 @@ public class Cage {
     @OneToMany(mappedBy = "cage", cascade = CascadeType.REMOVE)
     private List<ReproductionProcess> reproductionProcesses = new ArrayList<>();
 
-    @OneToMany(mappedBy = "cage", cascade = CascadeType.REMOVE)
-    private List<WorkDivision> workDivisions = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
 
 }

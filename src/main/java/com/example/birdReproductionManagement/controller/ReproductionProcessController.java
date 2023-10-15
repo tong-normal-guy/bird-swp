@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/reproductionprocess")
+@CrossOrigin(origins = "*")
 public class ReproductionProcessController {
     private ReproductionProcessService reproductionProcessService;
     @Autowired

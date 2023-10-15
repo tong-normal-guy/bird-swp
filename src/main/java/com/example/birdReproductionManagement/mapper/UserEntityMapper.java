@@ -1,6 +1,7 @@
 package com.example.birdReproductionManagement.mapper;
 
 import com.example.birdReproductionManagement.dto.UserEntityDto;
+import com.example.birdReproductionManagement.dto.UserResponse.User4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.model.UserEntity;
 
 public class UserEntityMapper {
@@ -27,6 +28,14 @@ public class UserEntityMapper {
                 .createdBy(userEntity.getCreatedBy())
                 .createdDate(userEntity.getCreatedDate())
                 .role(userEntity.getRole())
+                .build();
+    }
+
+    public static User4CageDetailDTOResponse map2User4CageDetailDTO(UserEntity userEntity){
+        return User4CageDetailDTOResponse.builder()
+                .id(userEntity.getId())
+                .fullName(userEntity.getFullName())
+                .role(String.valueOf(userEntity.getRole()))
                 .build();
     }
 }

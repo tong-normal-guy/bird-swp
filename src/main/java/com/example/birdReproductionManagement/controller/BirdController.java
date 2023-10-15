@@ -1,6 +1,6 @@
 package com.example.birdReproductionManagement.controller;
 
-import com.example.birdReproductionManagement.dto.BirdDto;
+import com.example.birdReproductionManagement.dto.BirdResponse.BirdDto;
 import com.example.birdReproductionManagement.service.BirdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/birds")
+@CrossOrigin(origins = "*")
 public class BirdController {
     private final BirdService birdService;
     @Autowired

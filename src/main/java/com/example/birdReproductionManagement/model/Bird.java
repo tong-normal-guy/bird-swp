@@ -26,7 +26,7 @@ public class Bird {
     private Date hatchDate;
     @Column(name = "age_range", columnDefinition = "nvarchar(255)")
     private String ageRange;
-    @Column(name = "mutation", columnDefinition = "nvarchar(255)")
+    @Column(name = "mutation_note", columnDefinition = "nvarchar(255)")
     private String mutation;
     @Column(name = "mutation_rate")
     private Float mutationRate;
@@ -37,7 +37,7 @@ public class Bird {
     @Column(name = "feather_color", columnDefinition = "nvarchar(255)")
     private String featherColor;
     @Column(name = "weight")
-    private Long weight;
+    private Float weight;
 
     @ManyToOne
     @JoinColumn(name = "birdtype_id", nullable = false)

@@ -1,6 +1,6 @@
 package com.example.birdReproductionManagement.service.impl;
 
-import com.example.birdReproductionManagement.dto.BirdDto;
+import com.example.birdReproductionManagement.dto.BirdResponse.BirdDto;
 import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
 import com.example.birdReproductionManagement.exceptions.CageNotFoundException;
 import com.example.birdReproductionManagement.mapper.BirdMapper;
