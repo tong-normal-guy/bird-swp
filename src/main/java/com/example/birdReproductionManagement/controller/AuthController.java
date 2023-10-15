@@ -2,8 +2,8 @@ package com.example.birdReproductionManagement.controller;
 
 import com.example.birdReproductionManagement.dto.LoginDto;
 import com.example.birdReproductionManagement.dto.RegisterDto;
-import com.example.birdReproductionManagement.model.Role;
-import com.example.birdReproductionManagement.model.UserEntity;
+import com.example.birdReproductionManagement.entity.Role;
+import com.example.birdReproductionManagement.entity.UserEntity;
 import com.example.birdReproductionManagement.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

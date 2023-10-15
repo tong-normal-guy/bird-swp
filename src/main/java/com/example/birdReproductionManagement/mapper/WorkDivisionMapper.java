@@ -1,7 +1,7 @@
 package com.example.birdReproductionManagement.mapper;
 
 import com.example.birdReproductionManagement.dto.WorkDivisionDto;
-import com.example.birdReproductionManagement.model.WorkDivision;
+import com.example.birdReproductionManagement.entity.WorkDivision;
 
 public class WorkDivisionMapper {
     public static WorkDivision mapToWorkDivision(WorkDivisionDto workDivisionDto){

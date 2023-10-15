@@ -1,6 +1,6 @@
 package com.example.birdReproductionManagement.dto;
 
-import com.example.birdReproductionManagement.model.Role;
+import com.example.birdReproductionManagement.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +20,7 @@ public class UserEntityDto {
     private String fullName;
     private String createdBy;
     private Date createdDate;
-    private Role role;
+    private String role;
 //    private List<Role> roles = new ArrayList<>();
 //    private List<WorkDivision> workDivisions = new ArrayList<>();
 }

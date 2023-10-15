@@ -11,9 +11,12 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BirdCageHistoryDto {
-    private Long id;
-    private Date implDate;
-    private BirdDto bird;
-    private CageDto cage;
+public class EggDto {
+    private Integer number;
+    private Date hatchDate;
+    private Long processId;
+//    private String type;
+//    private String status;
+//    private Date fertilityCheckDate;
+//    private Long birdId;
 }

@@ -1,7 +1,7 @@
 package com.example.birdReproductionManagement.repository;
 
-import com.example.birdReproductionManagement.model.Role;
-import com.example.birdReproductionManagement.model.UserEntity;
+import com.example.birdReproductionManagement.entity.Role;
+import com.example.birdReproductionManagement.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

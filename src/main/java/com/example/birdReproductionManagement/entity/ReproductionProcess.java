@@ -1,4 +1,4 @@
-package com.example.birdReproductionManagement.model;
+package com.example.birdReproductionManagement.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,8 +21,8 @@ public class ReproductionProcess {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Date pairingDate;
-    @Column(name = "egg_laid_date")
-    private Date eggLaidDate;
+//    @Column(name = "egg_laid_date")
+//    private Date eggLaidDate;
     @Column(name = "exp_egg_hatch_date")
     private Date expEggHatchDate;
 //    private Date actEggHatchDate;
@@ -32,6 +32,8 @@ public class ReproductionProcess {
     @Column(name = "exp_adult_bird_date")
     private Date expAdultBirdDate;
 //    private Date actAdultBirdDate;
+    @Column(name = "separation_date")
+    private Date separationDate;
     @Column(name = "total_egg")
     private Integer totalEgg;
     @Column(name = "stage", columnDefinition = "nvarchar(255)")

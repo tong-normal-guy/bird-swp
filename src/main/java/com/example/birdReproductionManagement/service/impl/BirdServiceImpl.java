@@ -6,9 +6,9 @@ import com.example.birdReproductionManagement.exceptions.CageNotFoundException;
 import com.example.birdReproductionManagement.mapper.BirdMapper;
 import com.example.birdReproductionManagement.mapper.BirdTypeMapper;
 import com.example.birdReproductionManagement.mapper.CageMapper;
-import com.example.birdReproductionManagement.model.Bird;
-import com.example.birdReproductionManagement.model.BirdType;
-import com.example.birdReproductionManagement.model.Cage;
+import com.example.birdReproductionManagement.entity.Bird;
+import com.example.birdReproductionManagement.entity.BirdType;
+import com.example.birdReproductionManagement.entity.Cage;
 import com.example.birdReproductionManagement.repository.BirdRepository;
 import com.example.birdReproductionManagement.repository.BirdTypeRepository;
 import com.example.birdReproductionManagement.repository.CageRepository;
@@ -25,14 +25,12 @@ public class BirdServiceImpl implements BirdService {
     private BirdTypeRepository birdTypeRepository;
     private CageRepository cageRepository;
 
+    @Autowired
     public BirdServiceImpl(BirdRepository birdRepository, BirdTypeRepository birdTypeRepository, CageRepository cageRepository) {
         this.birdRepository = birdRepository;
         this.birdTypeRepository = birdTypeRepository;
         this.cageRepository = cageRepository;
     }
-
-    @Autowired
-
 
     @Override
     public List<BirdDto> findAllBirds() {
@@ -73,5 +71,10 @@ public class BirdServiceImpl implements BirdService {
         birdDto.setMother(BirdMapper.mapToBirdDto(mother));
         birdDto.setCage(CageMapper.mapToCageDto(cage));
         return BirdMapper.mapToBirdDto(birdRepository.save(BirdMapper.mapToBird(birdDto)));
+    }
+
+    @Override
+    public List<BirdDto> findBirdsByCageId(Long cageId) {
+        return birdRepository.findByCageId(cageId).stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList());
     }
 }

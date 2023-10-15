@@ -1,11 +1,7 @@
 package com.example.birdReproductionManagement.mapper;
 
 import com.example.birdReproductionManagement.dto.BirdDto;
-import com.example.birdReproductionManagement.model.Bird;
-import com.example.birdReproductionManagement.model.BirdCageHistory;
-import com.example.birdReproductionManagement.model.BirdReproduction;
-
-import java.util.stream.Collectors;
+import com.example.birdReproductionManagement.entity.Bird;
 
 public class BirdMapper {
     public static Bird mapToBird(BirdDto birdDto){

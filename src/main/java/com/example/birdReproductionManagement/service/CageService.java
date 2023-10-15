@@ -1,7 +1,6 @@
 package com.example.birdReproductionManagement.service;
 
 import com.example.birdReproductionManagement.dto.CageDto;
-import com.example.birdReproductionManagement.model.Cage;
 
 import java.util.List;
 

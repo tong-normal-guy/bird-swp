@@ -1,9 +1,7 @@
 package com.example.birdReproductionManagement.mapper;
 
 import com.example.birdReproductionManagement.dto.CageTypeDto;
-import com.example.birdReproductionManagement.model.CageType;
-
-import java.util.stream.Collectors;
+import com.example.birdReproductionManagement.entity.CageType;
 
 public class CageTypeMapper {
     public static CageType mapToCageType(CageTypeDto cageTypeDto){

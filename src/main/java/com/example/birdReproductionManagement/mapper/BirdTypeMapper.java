@@ -1,9 +1,7 @@
 package com.example.birdReproductionManagement.mapper;
 
 import com.example.birdReproductionManagement.dto.BirdTypeDto;
-import com.example.birdReproductionManagement.model.BirdType;
-
-import java.util.stream.Collectors;
+import com.example.birdReproductionManagement.entity.BirdType;
 
 public class BirdTypeMapper {
     public static BirdType mapToBirdType(BirdTypeDto birdTypeDto){

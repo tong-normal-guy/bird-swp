@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/birds")
+@CrossOrigin(origins = "*")
 public class BirdController {
     private final BirdService birdService;
     @Autowired
@@ -31,13 +32,18 @@ public class BirdController {
     }
 
     @DeleteMapping("/{id}/delete")
-    public ResponseEntity<?> deleteBird(@PathVariable("id") Long id){
+    public ResponseEntity<BirdDto> deleteBird(@PathVariable("id") Long id){
         BirdDto birdDto = birdService.deleteBird(id);
         return  new ResponseEntity<>(birdDto, HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createBird(@RequestBody BirdDto birdDto){
+    public ResponseEntity<BirdDto> createBird(@RequestBody BirdDto birdDto){
         return new ResponseEntity<>(birdService.createBird(birdDto), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/view/{cageId}")
+    public ResponseEntity<List<BirdDto>> getBirdsByCageId(@PathVariable("cageId")Long cageId){
+        return new ResponseEntity<>(birdService.findBirdsByCageId(cageId), HttpStatus.OK);
     }
 }

@@ -1,9 +1,7 @@
 package com.example.birdReproductionManagement.mapper;
 
 import com.example.birdReproductionManagement.dto.FoodDto;
-import com.example.birdReproductionManagement.model.Food;
-
-import java.util.stream.Collectors;
+import com.example.birdReproductionManagement.entity.Food;
 
 public class FoodMapper {
     public static Food mapToFood(FoodDto foodDto){

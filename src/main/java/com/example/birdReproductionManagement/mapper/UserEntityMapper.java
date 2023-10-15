@@ -1,7 +1,8 @@
 package com.example.birdReproductionManagement.mapper;
 
 import com.example.birdReproductionManagement.dto.UserEntityDto;
-import com.example.birdReproductionManagement.model.UserEntity;
+import com.example.birdReproductionManagement.entity.Role;
+import com.example.birdReproductionManagement.entity.UserEntity;
 
 public class UserEntityMapper {
     public static UserEntity mapToUserEntity(UserEntityDto userEntityDto){
@@ -13,7 +14,7 @@ public class UserEntityMapper {
                 .fullName(userEntityDto.getFullName())
                 .createdBy(userEntityDto.getCreatedBy())
                 .createdDate(userEntityDto.getCreatedDate())
-                .role(userEntityDto.getRole())
+                .role(Role.valueOf(userEntityDto.getRole()))
                 .build();
     }
 
@@ -26,7 +27,7 @@ public class UserEntityMapper {
                 .fullName(userEntity.getFullName())
                 .createdBy(userEntity.getCreatedBy())
                 .createdDate(userEntity.getCreatedDate())
-                .role(userEntity.getRole())
+                .role(userEntity.getRole().name())
                 .build();
     }
 }

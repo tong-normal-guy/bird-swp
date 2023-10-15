@@ -1,7 +1,7 @@
 package com.example.birdReproductionManagement.mapper;
 
 import com.example.birdReproductionManagement.dto.MealDto;
-import com.example.birdReproductionManagement.model.Meal;
+import com.example.birdReproductionManagement.entity.Meal;
 
 public class MealMapper {
     public static Meal mapToMeal(MealDto mealDto){

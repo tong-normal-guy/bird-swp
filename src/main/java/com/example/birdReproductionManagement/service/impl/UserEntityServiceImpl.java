@@ -2,8 +2,7 @@ package com.example.birdReproductionManagement.service.impl;
 
 import com.example.birdReproductionManagement.dto.UserEntityDto;
 import com.example.birdReproductionManagement.mapper.UserEntityMapper;
-import com.example.birdReproductionManagement.model.Role;
-import com.example.birdReproductionManagement.model.UserEntity;
+import com.example.birdReproductionManagement.entity.Role;
 import com.example.birdReproductionManagement.repository.UserRepository;
 import com.example.birdReproductionManagement.service.UserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;

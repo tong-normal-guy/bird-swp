@@ -5,14 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class CageTypeDto {
-    private Long id;
-    private String name;
-    private String size;
-    private String description;
-//    private List<CageDto> cageList;
+public class SeparationPairDto {
+    private Long processId;
+    private Date separationDate;
+    private Long cageId;
 }

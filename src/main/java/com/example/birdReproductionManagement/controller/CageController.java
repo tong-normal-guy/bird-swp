@@ -1,7 +1,6 @@
 package com.example.birdReproductionManagement.controller;
 
 import com.example.birdReproductionManagement.dto.CageDto;
-import com.example.birdReproductionManagement.model.Cage;
 import com.example.birdReproductionManagement.service.CageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/cages")
+@CrossOrigin(origins = "*")
 public class CageController {
     private CageService cageService;
     @Autowired

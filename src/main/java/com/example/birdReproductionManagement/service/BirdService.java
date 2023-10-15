@@ -1,7 +1,6 @@
 package com.example.birdReproductionManagement.service;
 
 import com.example.birdReproductionManagement.dto.BirdDto;
-import com.example.birdReproductionManagement.model.Bird;
 
 import java.util.List;
 
@@ -12,4 +11,6 @@ public interface BirdService {
     BirdDto deleteBird(Long id);
 
     BirdDto createBird(BirdDto birdDto);
+    List<BirdDto> findBirdsByCageId(Long cageId);
+
 }

@@ -9,4 +9,5 @@ public interface BirdTypeService {
     BirdTypeDto createBirdType(BirdTypeDto birdTypeDto);
     void deleteBirdType(Long id);
     BirdTypeDto updateBirdType(Long id, BirdTypeDto birdTypeDto);
+    List<BirdTypeDto> searchBirdTypeByName(String query);
 }

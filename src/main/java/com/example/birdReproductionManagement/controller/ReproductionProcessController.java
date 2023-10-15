@@ -1,16 +1,19 @@
 package com.example.birdReproductionManagement.controller;
 
 import com.example.birdReproductionManagement.dto.ReproductionProcessDto;
+import com.example.birdReproductionManagement.dto.SeparationPairDto;
 import com.example.birdReproductionManagement.service.ReproductionProcessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/reproductionprocess")
+@CrossOrigin(origins = "*")
 public class ReproductionProcessController {
     private ReproductionProcessService reproductionProcessService;
     @Autowired
@@ -30,8 +33,13 @@ public class ReproductionProcessController {
         reproductionProcessService.deleteReproductionProcess(id);
         return new ResponseEntity<>("Reproduction process is deleted.", HttpStatus.OK);
     }
-    @PutMapping("/updated/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<ReproductionProcessDto> updateReproductionProcess(@PathVariable("id")Long id, @RequestBody ReproductionProcessDto reproductionProcessDto){
         return new ResponseEntity<>(reproductionProcessService.updateReproductionProcess(id, reproductionProcessDto), HttpStatus.OK);
+    }
+    @PutMapping("/separate")
+    public ResponseEntity<String> separateBirdPair(@RequestBody SeparationPairDto separationPairDto){
+        reproductionProcessService.updateSeparationDate(separationPairDto);
+        return new ResponseEntity<>("Separation date updated success.", HttpStatus.OK);
     }
 }

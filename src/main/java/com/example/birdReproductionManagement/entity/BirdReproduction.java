@@ -1,4 +1,4 @@
-package com.example.birdReproductionManagement.model;
+package com.example.birdReproductionManagement.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,19 +20,30 @@ public class BirdReproduction {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "bird_id", nullable = false)
+    @JoinColumn(name = "bird_id", nullable = true)
     private Bird bird;
+    @Column(name = "egg_laid_date")
+    private Date eggLaidDate;
     @Column(name = "act_egg_hatch_date")
     private Date actEggHatchDate;
     @Column(name = "act_swing_branch_date")
     private Date actSwingBranch;
     @Column(name = "act_adult_bird_date")
     private Date actAdultBirdDate;
+    @Column(name = "egg_type", columnDefinition = "nvarchar(255)")
+    private String eggType;
+    @Column(name = "egg_status", columnDefinition = "nvarchar(255)")
+    private String eggStatus;
+    @Column(name = "is_fail")
+    private Boolean isFail;
+    @Column(name = "fail_date")
+    private Date failDate;
 
     @ManyToOne
     @JoinColumn(name = "process_id", nullable = false)
     private ReproductionProcess reproductionProcess;
-    @Column(name = "is_child")
-    private Boolean isChild;
+    @Column(name = "reproduction_role")
+    @Enumerated(EnumType.STRING)
+    private ReproductionRole reproductionRole;
 
 }
