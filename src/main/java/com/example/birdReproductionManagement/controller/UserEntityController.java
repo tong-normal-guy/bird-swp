@@ -25,8 +25,8 @@ public class UserEntityController {
         return new ResponseEntity<>(userEntityService.findAllStaffs(), HttpStatus.OK);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<?> createStaff(@RequestBody UserEntityDto userEntityDto){
-        return new ResponseEntity<>(userEntityService.createUser(userEntityDto), HttpStatus.CREATED);
-    }
+//    @PostMapping("/create")
+//    public ResponseEntity<?> createStaff(@RequestBody UserEntityDto userEntityDto){
+//        return new ResponseEntity<>(userEntityService.createUser(userEntityDto), HttpStatus.CREATED);
+//    }
 }
