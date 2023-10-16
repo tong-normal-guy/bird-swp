@@ -21,7 +21,7 @@ public class Bird {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(columnDefinition = "nvarchar(255)", name = "sex")
-    private Boolean sex;
+    private Sex sex;
     @Column(name = "hatch_date")
     private Date hatchDate;
     @Column(name = "age_range", columnDefinition = "nvarchar(255)")
@@ -43,17 +43,16 @@ public class Bird {
     @JoinColumn(name = "birdtype_id", nullable = false)
     private BirdType birdType;
 
-    @OneToMany(mappedBy = "father", cascade = CascadeType.REMOVE)
-    private List<Bird> birdListOfFather = new ArrayList<>();
-    @ManyToOne
-    @JoinColumn(name = "father_id", nullable = false)
-    private Bird father;
-
-    @OneToMany(mappedBy = "mother", cascade = CascadeType.REMOVE)
-    private List<Bird> birdListOfMother = new ArrayList<>();
-    @ManyToOne
-    @JoinColumn(name = "mother_id", nullable = false)
-    private Bird mother;
+//    @OneToMany(mappedBy = "father", cascade = CascadeType.REMOVE)
+//    private List<Bird> birdListOfFather = new ArrayList<>();
+//    @ManyToOne
+//    @JoinColumn(name = "father_id", nullable = false)
+//    private Bird father;
+//    @OneToMany(mappedBy = "mother", cascade = CascadeType.REMOVE)
+//    private List<Bird> birdListOfMother = new ArrayList<>();
+//    @ManyToOne
+//    @JoinColumn(name = "mother_id", nullable = false)
+//    private Bird mother;
 
     @ManyToOne
     @JoinColumn(name = "cage_id", nullable = false)
