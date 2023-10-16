@@ -32,8 +32,7 @@ public class BirdServiceImpl implements BirdService {
         this.cageRepository = cageRepository;
     }
 
-    @Autowired
-
+//    @Autowired
 
     @Override
     public List<BirdDto> findAllBirds() {
@@ -45,6 +44,8 @@ public class BirdServiceImpl implements BirdService {
 //         }
         return birds.stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList());
     }
+
+
 
     @Override
     public BirdDto updateBird(BirdDto birdDto, Long id) {
@@ -68,15 +69,9 @@ public class BirdServiceImpl implements BirdService {
     @Override
     public BirdDto createBird(BirdDto birdDto) {
         BirdType birdType = birdTypeRepository.findByName(birdDto.getBirdTypeName());
-        Bird father = birdRepository.findById(birdDto.getFatherId()).orElseThrow(()
-            -> new BirdNotFoundException("Bird could not be created."));
-        Bird mother = birdRepository.findById(birdDto.getMotherId()).orElseThrow(()
-            -> new BirdNotFoundException("Bird could not be created."));
         Cage cage = cageRepository.findById(birdDto.getCageId()).orElseThrow(()
             -> new CageNotFoundException("Bird could not be created."));
         birdDto.setBirdType(BirdTypeMapper.mapToBirdTypeDto(birdType));
-        birdDto.setFather(BirdMapper.mapToBirdDto(father));
-        birdDto.setMother(BirdMapper.mapToBirdDto(mother));
         birdDto.setCage(CageMapper.mapToCageDto(cage));
         return BirdMapper.mapToBirdDto(birdRepository.save(BirdMapper.mapToBird(birdDto)));
     }

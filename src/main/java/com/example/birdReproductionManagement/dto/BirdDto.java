@@ -20,7 +20,7 @@ import java.util.List;
 @Builder
 public class BirdDto {
     private Long id;
-    private Boolean sex;
+    private String sex;
     private Date hatchDate;
     private String ageRange;
     private String mutation;
@@ -32,11 +32,7 @@ public class BirdDto {
     private BirdTypeDto birdType;
     private String birdTypeName;
 //    private List<BirdDto> birdListOfFather;
-    private BirdDto father;
-    private Long fatherId;
 //    private List<BirdDto> birdListOfMother;
-    private BirdDto mother;
-    private Long motherId;
     private CageDto cage;
     private Long cageId;
 //    private List<BirdCageHistoryDto> birdCageHistories;
