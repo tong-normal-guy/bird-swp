@@ -1,6 +1,6 @@
 package com.example.birdReproductionManagement.controller;
 
-import com.example.birdReproductionManagement.dto.BirdDto;
+import com.example.birdReproductionManagement.dto.BirdResponse.BirdDto;
 import com.example.birdReproductionManagement.service.BirdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

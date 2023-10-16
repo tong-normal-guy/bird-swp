@@ -25,8 +25,8 @@ public class UserEntityServiceImpl implements UserEntityService {
                 .map(UserEntityMapper::mapToUserEntityDto).collect(Collectors.toList());
     }
 
-    @Override
-    public UserEntityDto createUser(UserEntityDto userEntityDto){
-        return UserEntityMapper.mapToUserEntityDto(userRepository.save(UserEntityMapper.mapToUserEntity(userEntityDto)));
-    }
+//    @Override
+//    public UserEntityDto createUser(UserEntityDto userEntityDto){
+//        return UserEntityMapper.mapToUserEntityDto(userRepository.save(UserEntityMapper.mapToUserEntity(userEntityDto)));
+//    }
 }

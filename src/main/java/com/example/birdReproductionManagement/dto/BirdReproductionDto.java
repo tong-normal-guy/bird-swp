@@ -1,14 +1,11 @@
 package com.example.birdReproductionManagement.dto;
 
-import com.example.birdReproductionManagement.model.Bird;
-import com.example.birdReproductionManagement.model.ReproductionProcess;
+import com.example.birdReproductionManagement.dto.BirdResponse.BirdDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.util.Date;
 
 @Data
@@ -22,5 +19,5 @@ public class BirdReproductionDto {
     private Date actSwingBranch;
     private Date actAdultBirdDate;
     private ReproductionProcessDto reproductionProcess;
-    private Boolean isChild;
+    private String reproductionRole;
 }

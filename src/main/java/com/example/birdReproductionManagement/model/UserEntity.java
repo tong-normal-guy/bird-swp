@@ -37,6 +37,7 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<WorkDivision> workDivisions = new ArrayList<>();
+    private List<Cage> cages = new ArrayList<>();
 }

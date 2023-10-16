@@ -1,12 +1,9 @@
 package com.example.birdReproductionManagement.mapper;
 
-import com.example.birdReproductionManagement.dto.CageDto;
-import com.example.birdReproductionManagement.dto.WorkDivisionDto;
-import com.example.birdReproductionManagement.model.BirdCageHistory;
+import com.example.birdReproductionManagement.dto.CageResponse.Cage4ListDTO;
+import com.example.birdReproductionManagement.dto.CageResponse.CageDetailDTOResponse;
+import com.example.birdReproductionManagement.dto.CageResponse.CageDto;
 import com.example.birdReproductionManagement.model.Cage;
-import com.example.birdReproductionManagement.model.ReproductionProcess;
-
-import java.util.stream.Collectors;
 
 public class CageMapper {
     public static Cage mapToCage(CageDto cageDto){
@@ -38,4 +35,13 @@ public class CageMapper {
 //                .workDivisions(cage.getWorkDivisions().stream().map(WorkDivisionMapper::mapToWorkDivisionDto).collect(Collectors.toList()))
                 .build();
     }
+    public static Cage4ListDTO map2Cage4ListDTO(Cage cage){
+        return Cage4ListDTO.builder()
+                .id(cage.getId())
+                .location(cage.getLocation())
+                .quantity(cage.getQuantity())
+                .build();
+    }
+
+
 }

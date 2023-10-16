@@ -1,14 +1,11 @@
 package com.example.birdReproductionManagement.dto;
 
-import com.example.birdReproductionManagement.model.Cage;
-import com.example.birdReproductionManagement.model.UserEntity;
+import com.example.birdReproductionManagement.dto.CageResponse.CageDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.util.Date;
 
 @Data

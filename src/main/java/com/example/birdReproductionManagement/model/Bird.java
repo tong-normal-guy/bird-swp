@@ -1,16 +1,14 @@
 package com.example.birdReproductionManagement.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -26,7 +24,7 @@ public class Bird {
     private Date hatchDate;
     @Column(name = "age_range", columnDefinition = "nvarchar(255)")
     private String ageRange;
-    @Column(name = "mutation", columnDefinition = "nvarchar(255)")
+    @Column(name = "mutation_note", columnDefinition = "nvarchar(255)")
     private String mutation;
     @Column(name = "mutation_rate")
     private Float mutationRate;
@@ -37,7 +35,7 @@ public class Bird {
     @Column(name = "feather_color", columnDefinition = "nvarchar(255)")
     private String featherColor;
     @Column(name = "weight")
-    private Long weight;
+    private Float weight;
 
     @ManyToOne
     @JoinColumn(name = "birdtype_id", nullable = false)

@@ -1,6 +1,7 @@
 package com.example.birdReproductionManagement.mapper;
 
 import com.example.birdReproductionManagement.dto.ReproductionProcessDto;
+import com.example.birdReproductionManagement.dto.ReproductionProcessResponse.Reproduction4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.model.ReproductionProcess;
 
 import java.util.stream.Collectors;
@@ -43,6 +44,19 @@ public class ReproductionProcessMapper {
                 .isDone(reproductionProcess.getIsDone())
                 .cage(CageMapper.mapToCageDto(reproductionProcess.getCage()))
 //                .birdReproductions(reproductionProcess.getBirdReproductions().stream().map(BirdReproductionMapper::mapToBirdReproductionDto).collect(Collectors.toList()))
+                .build();
+    }
+
+    public static Reproduction4CageDetailDTOResponse map2Reproduction4CageDetailDTO(ReproductionProcess reproductionProcess){
+        return Reproduction4CageDetailDTOResponse.builder()
+                .id(reproductionProcess.getId())
+                .pairingDate(reproductionProcess.getPairingDate())
+                .stage(reproductionProcess.getStage())
+                .failEgg(reproductionProcess.getFailEgg())
+                .totalEgg(reproductionProcess.getTotalEgg())
+                .expEggHatchDate(reproductionProcess.getExpEggHatchDate())
+                .expSwingBranch(reproductionProcess.getExpSwingBranch())
+                .expAdultBirdDate(reproductionProcess.getExpAdultBirdDate())
                 .build();
     }
 }

@@ -1,18 +1,13 @@
-package com.example.birdReproductionManagement.dto;
+package com.example.birdReproductionManagement.dto.BirdResponse;
 
-import com.example.birdReproductionManagement.model.*;
+import com.example.birdReproductionManagement.dto.BirdTypeDto;
+import com.example.birdReproductionManagement.dto.CageResponse.CageDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.CascadeType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -28,7 +23,7 @@ public class BirdDto {
     private Boolean isAlive;
     private String image;
     private String featherColor;
-    private Long weight;
+    private Float weight;
     private BirdTypeDto birdType;
     private String birdTypeName;
 //    private List<BirdDto> birdListOfFather;

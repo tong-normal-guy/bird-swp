@@ -1,7 +1,8 @@
 package com.example.birdReproductionManagement.controller;
 
-import com.example.birdReproductionManagement.dto.CageDto;
-import com.example.birdReproductionManagement.model.Cage;
+import com.example.birdReproductionManagement.dto.CageResponse.Cage4ListDTO;
+import com.example.birdReproductionManagement.dto.CageResponse.CageDetailDTOResponse;
+import com.example.birdReproductionManagement.dto.CageResponse.CageDto;
 import com.example.birdReproductionManagement.service.CageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,19 +20,28 @@ public class CageController {
     public CageController(CageService cageService) {
         this.cageService = cageService;
     }
-    @GetMapping("/view")
+    @GetMapping()
     public ResponseEntity<List<CageDto>> getListCages(){
         return new ResponseEntity<>(cageService.findAllCages(), HttpStatus.OK);
     }
-    @PostMapping ("/create")
+    @GetMapping("/view/{id}")
+    public ResponseEntity<CageDetailDTOResponse> getDetailById(@PathVariable("id")Long id){
+        return new ResponseEntity<>(cageService.getDetailById(id), HttpStatus.OK);
+    }
+    @GetMapping("/view")
+    public ResponseEntity<List<CageDetailDTOResponse>> pickaCages(){
+        // 4 list cages hv id, location, quantity, use in .
+        return new ResponseEntity<>(cageService.pickaCages(), HttpStatus.OK);
+    }
+    @PostMapping ()
     public ResponseEntity<CageDto> addCage(@RequestBody CageDto cageDto){
         return new ResponseEntity<>(cageService.addCage(cageDto), HttpStatus.CREATED);
     }
-    @PutMapping("/{id}/update")
+    @PutMapping("/{id}")
     public ResponseEntity<CageDto> updateCage(@PathVariable("id")Long id, @RequestBody CageDto cageDto){
         return new ResponseEntity<>(cageService.updateCage(id, cageDto), HttpStatus.OK);
     }
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCage(@PathVariable("id")Long id){
         cageService.deleteCage(id);
         return new ResponseEntity<>("Cage id deleted.", HttpStatus.OK);

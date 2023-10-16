@@ -27,11 +27,5 @@ public class WorkDivision {
     @Column(name = "report")
     private String report;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity user;
 
-    @ManyToOne
-    @JoinColumn(name = "cage_id", nullable = false)
-    private Cage cage;
 }
