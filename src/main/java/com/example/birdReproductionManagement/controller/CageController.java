@@ -28,8 +28,8 @@ public class CageController {
     public ResponseEntity<CageDetailDTOResponse> getDetailById(@PathVariable("id")Long id){
         return new ResponseEntity<>(cageService.getDetailById(id), HttpStatus.OK);
     }
-    @GetMapping("/pick")
-    public ResponseEntity<List<Cage4ListDTO>> pickaCages(){
+    @GetMapping("/view")
+    public ResponseEntity<List<CageDetailDTOResponse>> pickaCages(){
         // 4 list cages hv id, location, quantity, use in .
         return new ResponseEntity<>(cageService.pickaCages(), HttpStatus.OK);
     }

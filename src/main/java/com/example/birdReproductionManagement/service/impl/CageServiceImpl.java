@@ -1,5 +1,6 @@
 package com.example.birdReproductionManagement.service.impl;
 
+import com.example.birdReproductionManagement.dto.BirdReproductionResponse.BirdRe4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.BirdResponse.Bird4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.CageResponse.Cage4ListDTO;
 import com.example.birdReproductionManagement.dto.CageResponse.CageDetailDTOResponse;
@@ -23,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,27 +43,45 @@ public class CageServiceImpl implements CageService {
         return cageRepository.findAll().stream().map(CageMapper::mapToCageDto).collect(Collectors.toList());
     }
     @Override
-    public List<Cage4ListDTO> pickaCages() {
-        return cageRepository.findAll().stream().map(CageMapper::map2Cage4ListDTO).collect(Collectors.toList());
+    public List<CageDetailDTOResponse> pickaCages() {
+        List<CageDetailDTOResponse> cageDetailDTOResponses = new ArrayList<>();
+        List<Cage> cages = cageRepository.findAll();
+        for (Cage cage : cages) {
+            CageDetailDTOResponse cageDetailDTOResponse = new CageDetailDTOResponse();
+            // entity
+            ReproductionProcess reproductionProcess = reproductionProcessRepository.findByIsDoneFalseAndCage_Id(cage.getId())
+                    .orElseThrow( () -> new ReproductionProcessNotFoundException("khong co cai long nao theo cage id"));
+            List<BirdReproduction> birdReproductions = birdReproductionRepository.findAllByReproductionProcess_Id(reproductionProcess.getId());
+
+            // dto
+            Reproduction4CageDetailDTOResponse reproduction4CageDetailDTOResponse = ReproductionProcessMapper.map2Reproduction4CageDetailDTO(reproductionProcess);
+            List<BirdRe4CageDetailDTOResponse> bird4CageDetailDTOResponses = new ArrayList<>();
+
+            for (BirdReproduction birdReproduction:birdReproductions) {
+                BirdRe4CageDetailDTOResponse bird4CageDetailDTOResponse = BirdReproductionMapper.map2Bird4CageDetailDTO(birdReproduction);
+                bird4CageDetailDTOResponse.setBird(BirdMapper.map2Birdd4CageDetailDTO(birdReproduction.getBird()));
+                bird4CageDetailDTOResponses.add(bird4CageDetailDTOResponse);
+            }
+            User4CageDetailDTOResponse user4CageDetailDTOResponse = UserEntityMapper.map2User4CageDetailDTO(cage.getUser());
+            // mapper to CageDetailDTOResponse
+            cageDetailDTOResponse.setCageId(cage.getId());
+            cageDetailDTOResponse.setLocation(cageDetailDTOResponse.getLocation());
+            cageDetailDTOResponse.setQuantity(cageDetailDTOResponse.getQuantity());
+            cageDetailDTOResponse.setUser(user4CageDetailDTOResponse);
+            cageDetailDTOResponse.setBirdReproduction(bird4CageDetailDTOResponses);
+            cageDetailDTOResponse.setReproductionProcess(reproduction4CageDetailDTOResponse);
+            cageDetailDTOResponses.add(cageDetailDTOResponse);
+
+        }
+
+
+        return cageDetailDTOResponses;
+
     }
 
     @Override
     public CageDetailDTOResponse getDetailById(Long id) {
-        ReproductionProcess reproductionProcess = reproductionProcessRepository.findByIsDoneFalseAndCage_Id(id)
-                .orElseThrow( () -> new ReproductionProcessNotFoundException("khong co cai long nao theo cage id"));
-        List<BirdReproduction> birdReproductions = birdReproductionRepository.findAllByReproductionProcess_Id(reproductionProcess.getId());
-        Cage cage = cageRepository.findById(id).orElseThrow( () -> new CageNotFoundException("khong co long nay"));
-
-        Reproduction4CageDetailDTOResponse reproduction4CageDetailDTOResponse = ReproductionProcessMapper.map2Reproduction4CageDetailDTO(reproductionProcess);
-        List<Bird4CageDetailDTOResponse> bird4CageDetailDTOResponses = birdReproductions.stream().map(BirdReproductionMapper::map2Bird4CageDetailDTO).collect(Collectors.toList());
-        User4CageDetailDTOResponse user4CageDetailDTOResponse = UserEntityMapper.map2User4CageDetailDTO(cage.getUser());
-
-        return CageDetailDTOResponse.builder()
-                .cageID(id)
-                .reproduction4CageDetailDTOResponse(reproduction4CageDetailDTOResponse)
-                .bird4CageDetailDTO(bird4CageDetailDTOResponses)
-                .user4CageDetailDTOResponse(user4CageDetailDTOResponse)
-                .build();
+        return null;
     }
 
     @Override

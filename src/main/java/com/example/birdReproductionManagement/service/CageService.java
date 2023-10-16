@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CageService {
     List<CageDto> findAllCages();
-    List<Cage4ListDTO> pickaCages(); // 4 list cages hv id, location, quantity.
+    List<CageDetailDTOResponse> pickaCages(); // 4 list cages hv id, location, quantity.
 
     CageDetailDTOResponse getDetailById(Long id);
     CageDto addCage(CageDto cageDto);

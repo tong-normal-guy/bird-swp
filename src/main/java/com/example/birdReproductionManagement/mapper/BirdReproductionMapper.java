@@ -1,6 +1,7 @@
 package com.example.birdReproductionManagement.mapper;
 
 import com.example.birdReproductionManagement.dto.BirdReproductionDto;
+import com.example.birdReproductionManagement.dto.BirdReproductionResponse.BirdRe4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.BirdResponse.Bird4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.model.BirdReproduction;
 import com.example.birdReproductionManagement.model.ReproductionRole;
@@ -30,17 +31,13 @@ public class BirdReproductionMapper {
                 .build();
     }
 
-    public static Bird4CageDetailDTOResponse map2Bird4CageDetailDTO(BirdReproduction birdReproduction){
-        return Bird4CageDetailDTOResponse.builder()
-                .id(birdReproduction.getId())
-                .sex(String.valueOf(birdReproduction.getBird().getSex()))
-                .birdType(birdReproduction.getBird().getBirdType().getName())
+    public static BirdRe4CageDetailDTOResponse map2Bird4CageDetailDTO(BirdReproduction birdReproduction){
+        return BirdRe4CageDetailDTOResponse.builder()
+                .birdReproductionId(birdReproduction.getId())
                 .eggLaidDate(birdReproduction.getEggLaidDate())
                 .reproductionRole(String.valueOf(birdReproduction.getReproductionRole()))
                 .eggStatus(String.valueOf(birdReproduction.getEggStatus()))
                 .actEggHatchDate(birdReproduction.getActEggHatchDate())
-                .mutationRate(birdReproduction.getBird().getMutationRate())
-                .weight(birdReproduction.getBird().getWeight())
                 .build();
     }
 }
