@@ -24,4 +24,9 @@ public class UserEntityServiceImpl implements UserEntityService {
         return userRepository.findAllByRole(Role.valueOf("STAFF")).stream()
                 .map(UserEntityMapper::mapToUserEntityDto).collect(Collectors.toList());
     }
+
+//    @Override
+//    public UserEntityDto createUser(UserEntityDto userEntityDto){
+//        return UserEntityMapper.mapToUserEntityDto(userRepository.save(UserEntityMapper.mapToUserEntity(userEntityDto)));
+//    }
 }

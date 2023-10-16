@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface UserEntityService {
     List<UserEntityDto> findAllStaffs();
+//    UserEntityDto createUser(UserEntityDto userEntityDto);
 }

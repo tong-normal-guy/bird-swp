@@ -16,6 +16,7 @@ import com.example.birdReproductionManagement.service.BirdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,14 +32,20 @@ public class BirdServiceImpl implements BirdService {
         this.cageRepository = cageRepository;
     }
 
-    @Autowired
-
+//    @Autowired
 
     @Override
     public List<BirdDto> findAllBirds() {
         List<Bird> birds = birdRepository.findAll();
+//         List<BirdDto> birdDtos = new ArrayList<>();
+//         for (BirdDto birdDto : birdDtos) {
+//             Bird bird = BirdMapper.mapToBird(birdDto);
+//             birds.add(bird);
+//         }
         return birds.stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList());
     }
+
+
 
     @Override
     public BirdDto updateBird(BirdDto birdDto, Long id) {
@@ -62,15 +69,9 @@ public class BirdServiceImpl implements BirdService {
     @Override
     public BirdDto createBird(BirdDto birdDto) {
         BirdType birdType = birdTypeRepository.findByName(birdDto.getBirdTypeName());
-        Bird father = birdRepository.findById(birdDto.getFatherId()).orElseThrow(()
-            -> new BirdNotFoundException("Bird could not be created."));
-        Bird mother = birdRepository.findById(birdDto.getMotherId()).orElseThrow(()
-            -> new BirdNotFoundException("Bird could not be created."));
         Cage cage = cageRepository.findById(birdDto.getCageId()).orElseThrow(()
             -> new CageNotFoundException("Bird could not be created."));
         birdDto.setBirdType(BirdTypeMapper.mapToBirdTypeDto(birdType));
-        birdDto.setFather(BirdMapper.mapToBirdDto(father));
-        birdDto.setMother(BirdMapper.mapToBirdDto(mother));
         birdDto.setCage(CageMapper.mapToCageDto(cage));
         return BirdMapper.mapToBirdDto(birdRepository.save(BirdMapper.mapToBird(birdDto)));
     }

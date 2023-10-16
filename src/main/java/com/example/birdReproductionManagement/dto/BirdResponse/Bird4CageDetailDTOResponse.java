@@ -11,7 +11,7 @@ import java.util.Date;
 @Builder
 public class Bird4CageDetailDTOResponse {
     private Long id;
-    private Boolean isMale;
+    private String sex;
     private String birdType;
     private Date eggLaidDate;
     private String reproductionRole;

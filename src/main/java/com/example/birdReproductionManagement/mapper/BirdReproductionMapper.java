@@ -33,11 +33,11 @@ public class BirdReproductionMapper {
     public static Bird4CageDetailDTOResponse map2Bird4CageDetailDTO(BirdReproduction birdReproduction){
         return Bird4CageDetailDTOResponse.builder()
                 .id(birdReproduction.getId())
-                .isMale(birdReproduction.getBird().getSex())
+                .sex(String.valueOf(birdReproduction.getBird().getSex()))
                 .birdType(birdReproduction.getBird().getBirdType().getName())
                 .eggLaidDate(birdReproduction.getEggLaidDate())
                 .reproductionRole(String.valueOf(birdReproduction.getReproductionRole()))
-                .eggStatus(birdReproduction.getEggStatus())
+                .eggStatus(String.valueOf(birdReproduction.getEggStatus()))
                 .actEggHatchDate(birdReproduction.getActEggHatchDate())
                 .mutationRate(birdReproduction.getBird().getMutationRate())
                 .weight(birdReproduction.getBird().getWeight())
