@@ -34,7 +34,7 @@ public class BirdReproduction {
     @Column(name = "egg_type")
     private long eggType;
     @Column(name = "egg_status")
-    private boolean eggStatus;
+    private String eggStatus;
     @Column(name = "is_fail")
     private boolean isFail;
     @Column(name = "fail_date")
