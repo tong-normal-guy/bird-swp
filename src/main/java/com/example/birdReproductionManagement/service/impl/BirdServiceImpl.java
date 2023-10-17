@@ -13,6 +13,7 @@ import com.example.birdReproductionManagement.repository.BirdRepository;
 import com.example.birdReproductionManagement.repository.BirdTypeRepository;
 import com.example.birdReproductionManagement.repository.CageRepository;
 import com.example.birdReproductionManagement.service.BirdService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class BirdServiceImpl implements BirdService {
     private BirdRepository birdRepository;
     private BirdTypeRepository birdTypeRepository;
     private CageRepository cageRepository;
-
+    @Autowired
     public BirdServiceImpl(BirdRepository birdRepository, BirdTypeRepository birdTypeRepository, CageRepository cageRepository) {
         this.birdRepository = birdRepository;
         this.birdTypeRepository = birdTypeRepository;
@@ -35,11 +36,6 @@ public class BirdServiceImpl implements BirdService {
     @Override
     public List<BirdDto> findAllBirds() {
         List<Bird> birds = birdRepository.findAll();
-//         List<BirdDto> birdDtos = new ArrayList<>();
-//         for (BirdDto birdDto : birdDtos) {
-//             Bird bird = BirdMapper.mapToBird(birdDto);
-//             birds.add(bird);
-//         }
         return birds.stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList());
     }
 
@@ -69,8 +65,9 @@ public class BirdServiceImpl implements BirdService {
         BirdType birdType = birdTypeRepository.findByName(birdDto.getBirdTypeName());
         Cage cage = cageRepository.findById(birdDto.getCageId()).orElseThrow(()
             -> new CageNotFoundException("Bird could not be created."));
-        birdDto.setBirdType(BirdTypeMapper.mapToBirdTypeDto(birdType));
-        birdDto.setCage(CageMapper.mapToCageDto(cage));
-        return BirdMapper.mapToBirdDto(birdRepository.save(BirdMapper.mapToBird(birdDto)));
+        Bird bird = BirdMapper.mapToBird(birdDto);
+        bird.setBirdType(birdType);
+        bird.setCage(cage);
+        return BirdMapper.mapToBirdDto(birdRepository.save(bird));
     }
 }
