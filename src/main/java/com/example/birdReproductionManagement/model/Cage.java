@@ -21,15 +21,14 @@ public class Cage {
     private Long id;
     @Column(name = "location", columnDefinition = "nvarchar(255)")
     private String location;
-    @Column(name = "available")
-    private Boolean available;
+//    @Column(name = "available")
+//    private Boolean available;
     @Column(name = "bird_quantity")
     private Integer quantity;
-    @Column(name = "in_process", columnDefinition = "nvarchar(255)")
-    private Boolean inProcess;
-    @ManyToOne
-    @JoinColumn(name = "cage_type_id", nullable = false)
-    private CageType cageType;
+//    @Column(name = "in_process", columnDefinition = "nvarchar(255)")
+//    private Boolean inProcess;
+    @JoinColumn(name = "cageType", columnDefinition = "nvarchar(255)")
+    private String cageType;
 
     @OneToMany(mappedBy = "cage", cascade = CascadeType.REMOVE)
     private List<Bird> birdList = new ArrayList<>();

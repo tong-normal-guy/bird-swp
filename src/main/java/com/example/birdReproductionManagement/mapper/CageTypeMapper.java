@@ -3,8 +3,6 @@ package com.example.birdReproductionManagement.mapper;
 import com.example.birdReproductionManagement.dto.CageTypeDto;
 import com.example.birdReproductionManagement.model.CageType;
 
-import java.util.stream.Collectors;
-
 public class CageTypeMapper {
     public static CageType mapToCageType(CageTypeDto cageTypeDto){
         return CageType.builder()
@@ -16,12 +14,12 @@ public class CageTypeMapper {
                 .build();
     }
 
-    public static CageTypeDto mapToCageTypeDto(CageType cageType){
+    public static CageTypeDto mapToCageTypeDto(CageType cageType1){
         return CageTypeDto.builder()
-                .id(cageType.getId())
-                .name(cageType.getName())
-                .size(cageType.getSize())
-                .description(cageType.getDescription())
+                .id(cageType1.getId())
+                .name(cageType1.getName())
+                .size(cageType1.getSize())
+                .description(cageType1.getDescription())
 //                .cageList(cageType.getCageList().stream().map(CageMapper::mapToCageDto).collect(Collectors.toList()))
                 .build();
     }

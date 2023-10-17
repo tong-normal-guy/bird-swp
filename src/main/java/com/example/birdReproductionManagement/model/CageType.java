@@ -25,6 +25,6 @@ public class CageType {
     private String size;
     @Column(name = "description", columnDefinition = "nvarchar(255)")
     private String description;
-    @OneToMany(mappedBy = "cageType", cascade = CascadeType.REMOVE)
-    private List<Cage> cageList =  new ArrayList<>();
+//    @OneToMany(mappedBy = "cageType", cascade = CascadeType.REMOVE)
+//    private List<Cage> cageList =  new ArrayList<>();
 }
