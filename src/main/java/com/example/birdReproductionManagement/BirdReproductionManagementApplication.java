@@ -1,7 +1,6 @@
 package com.example.birdReproductionManagement;
 
 import com.example.birdReproductionManagement.entity.*;
-import com.example.birdReproductionManagement.model.*;
 import com.example.birdReproductionManagement.repository.BirdRepository;
 import com.example.birdReproductionManagement.repository.BirdTypeRepository;
 import com.example.birdReproductionManagement.repository.CageRepository;
@@ -61,12 +60,12 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		birdType.setIncubate(Long.valueOf(16));
 		birdType.setChick(Long.valueOf(16));
 		birdType.setSwingBranch(Long.valueOf(7));
-//		birdTypeRepository.save(birdType);
+		birdTypeRepository.save(birdType);
 
 		cage.setLocation("A01");
 		cage.setQuantity(1);
 //		cage.setCageType("S");
-//		cageRepository.save(cage);
+		cageRepository.save(cage);
 
 
 		bird = new Bird();
@@ -76,7 +75,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		bird.setMutation("bong");
 		bird.setMutationRate(Float.valueOf(99));
 		bird.setIsAlive(true);
-		bird.setImage("https://firebasestorage.googleapis.com/v0/b/birdreproductionswp.appspot.com/o/imgsrc%2FthanBong.png?alt=media&token=945eaa26-1640-4385-a52d-8fbb183504d4&_gl=1*czf4q3*_ga*NTA4MjM3NDgwLjE2OTQ5MzYyNjU.*_ga_CW55HF8NVT*MTY5NzQ3MzUwMC43LjEuMTY5NzQ3MzUxNS40NS4wLjA.");
+//		bird.setImage("https://firebasestorage.googleapis.com/v0/b/birdreproductionswp.appspot.com/o/imgsrc%2FthanBong.png?alt=media&token=945eaa26-1640-4385-a52d-8fbb183504d4&_gl=1*czf4q3*_ga*NTA4MjM3NDgwLjE2OTQ5MzYyNjU.*_ga_CW55HF8NVT*MTY5NzQ3MzUwMC43LjEuMTY5NzQ3MzUxNS40NS4wLjA.");
 		bird.setFeatherColor("den trang");
 		bird.setWeight(Float.valueOf(600));
 		bird.setBirdType(birdType);
