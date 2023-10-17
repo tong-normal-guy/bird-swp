@@ -1,11 +1,13 @@
 package com.example.birdReproductionManagement.service.impl;
 
+import com.example.birdReproductionManagement.dto.BirdReproductionDto;
 import com.example.birdReproductionManagement.dto.PairDTO;
 import com.example.birdReproductionManagement.dto.ReproductionProcessDto;
 import com.example.birdReproductionManagement.entity.BirdReproduction;
 import com.example.birdReproductionManagement.entity.ReproductionRole;
 import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
 import com.example.birdReproductionManagement.exceptions.ReproductionProcessNotFoundException;
+import com.example.birdReproductionManagement.mapper.BirdReproductionMapper;
 import com.example.birdReproductionManagement.mapper.CageMapper;
 import com.example.birdReproductionManagement.mapper.ReproductionProcessMapper;
 import com.example.birdReproductionManagement.entity.Cage;
@@ -36,19 +38,23 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
         this.cageRepository = cageRepository;
     }
 
-//    @Override
-//    public List<ReproductionProcessDto> findAllReproductionProcess() {
-//        List<ReproductionProcess> list = reproductionProcessRepository.findAll();
-//        for(ReproductionProcess reproductionProcess : list){
-//
-//        }
-//
-//    }
-
     @Override
     public List<ReproductionProcessDto> findAllReproductionProcess() {
-        return null;
+        List<ReproductionProcessDto> list = reproductionProcessRepository.findAll().stream()
+                .map(ReproductionProcessMapper::mapToReproductionProcessDto).collect(Collectors.toList());
+        for (ReproductionProcessDto reproductionProcessDto : list){
+            BirdReproductionDto cock = BirdReproductionMapper.mapToBirdReproductionDto(birdReproductionRepository
+                    .findByReproductionProcessIdAndReproductionRoleEquals(reproductionProcessDto.getId(), ReproductionRole.FATHER));
+            reproductionProcessDto.setCockReproduction(cock);
+            BirdReproductionDto hen = BirdReproductionMapper.mapToBirdReproductionDto(birdReproductionRepository
+                    .findByReproductionProcessIdAndReproductionRoleEquals(reproductionProcessDto.getId(), ReproductionRole.MOTHER));
+            reproductionProcessDto.setHenReproduction(hen);
+        }
+        return list;
     }
+
+
+
 
     @Override
     public ReproductionProcessDto addReproductionProcess(PairDTO pairDTO) {
@@ -91,4 +97,10 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
         reproductionProcessDto.setCage(CageMapper.mapToCageDto(cage));
         return ReproductionProcessMapper.mapToReproductionProcessDto(reproductionProcessRepository.save(ReproductionProcessMapper.mapToReproductionProcess(reproductionProcessDto)));
     }
+
+//    @Override
+//    public BirdReproductionDto findFather(Long id) {
+//        return BirdReproductionMapper.mapToBirdReproductionDto(birdReproductionRepository
+//                .findByReproductionProcessIdAndReproductionRoleEquals(id, ReproductionRole.FATHER));
+//    }
 }

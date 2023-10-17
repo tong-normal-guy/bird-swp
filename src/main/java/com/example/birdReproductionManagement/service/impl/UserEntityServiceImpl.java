@@ -1,7 +1,7 @@
 package com.example.birdReproductionManagement.service.impl;
 
 import com.example.birdReproductionManagement.dto.UserDto;
-import com.example.birdReproductionManagement.mapper.UserEntityMapper;
+import com.example.birdReproductionManagement.mapper.UserMapper;
 import com.example.birdReproductionManagement.entity.Role;
 import com.example.birdReproductionManagement.repository.UserRepository;
 import com.example.birdReproductionManagement.service.UserEntityService;
@@ -21,7 +21,7 @@ public class UserEntityServiceImpl implements UserEntityService {
     @Override
     public List<UserDto> findAllStaffs() {
         return userRepository.findAllByRole(Role.valueOf("STAFF")).stream()
-                .map(UserEntityMapper::mapToUserEntityDto).collect(Collectors.toList());
+                .map(UserMapper::mapToUserEntityDto).collect(Collectors.toList());
     }
 
 //    @Override

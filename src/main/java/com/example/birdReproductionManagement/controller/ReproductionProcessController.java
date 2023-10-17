@@ -1,5 +1,6 @@
 package com.example.birdReproductionManagement.controller;
 
+import com.example.birdReproductionManagement.dto.BirdReproductionDto;
 import com.example.birdReproductionManagement.dto.PairDTO;
 import com.example.birdReproductionManagement.dto.ReproductionProcessDto;
 import com.example.birdReproductionManagement.service.ReproductionProcessService;
@@ -37,4 +38,8 @@ public class ReproductionProcessController {
                                                                             @RequestBody ReproductionProcessDto reproductionProcessDto){
         return new ResponseEntity<>(reproductionProcessService.updateReproductionProcess(id, reproductionProcessDto), HttpStatus.OK);
     }
+//    @GetMapping("/findfather/{id}")
+//    public ResponseEntity<BirdReproductionDto> findFather(@PathVariable("id")Long id){
+//        return new ResponseEntity<>(reproductionProcessService.findFather(id), HttpStatus.OK);
+//    }
 }

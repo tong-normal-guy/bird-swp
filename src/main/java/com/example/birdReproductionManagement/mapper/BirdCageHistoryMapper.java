@@ -8,8 +8,8 @@ public class BirdCageHistoryMapper {
         return BirdCageHistory.builder()
                 .id(birdCageHistoryDto.getId())
                 .implDate(birdCageHistoryDto.getImplDate())
-                .bird(BirdMapper.mapToBird(birdCageHistoryDto.getBird()))
-                .cage(CageMapper.mapToCage(birdCageHistoryDto.getCage()))
+//                .bird(BirdMapper.mapToBird(birdCageHistoryDto.getBird()))
+//                .cage(CageMapper.mapToCage(birdCageHistoryDto.getCage()))
                 .build();
     }
 

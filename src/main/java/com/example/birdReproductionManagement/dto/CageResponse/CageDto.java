@@ -1,6 +1,5 @@
 package com.example.birdReproductionManagement.dto.CageResponse;
 
-import com.example.birdReproductionManagement.dto.CageTypeDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

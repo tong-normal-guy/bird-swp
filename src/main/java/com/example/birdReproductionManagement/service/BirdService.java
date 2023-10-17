@@ -11,4 +11,5 @@ public interface BirdService {
     BirdDto deleteBird(Long id);
 
     BirdDto createBird(BirdDto birdDto);
+    List<BirdDto> findByCage(Long id);
 }

@@ -70,4 +70,9 @@ public class BirdServiceImpl implements BirdService {
         bird.setCage(cage);
         return BirdMapper.mapToBirdDto(birdRepository.save(bird));
     }
+
+    @Override
+    public List<BirdDto> findByCage(Long id) {
+        return birdRepository.findByCage_Id(id).stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList());
+    }
 }

@@ -38,6 +38,7 @@ public class BirdReproduction {
     @Column(name = "fail_date")
     private Date failDate;
     @Column(name = "reproduction_role")
+//    @Enumerated(EnumType.STRING)
     private ReproductionRole reproductionRole;
 
     @ManyToOne
