@@ -1,15 +1,13 @@
 package com.example.birdReproductionManagement.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -23,7 +21,6 @@ public class BirdReproduction {
     @ManyToOne
     @JoinColumn(name = "bird_id")
     private Bird bird;
-
     @Column(name = "egglaid_date")
     private Date eggLaidDate;
     @Column(name = "act_egg_hatch_date")
