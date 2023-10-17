@@ -1,6 +1,6 @@
 package com.example.birdReproductionManagement.dto;
 
-import com.example.birdReproductionManagement.model.Role;
+import com.example.birdReproductionManagement.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserEntityDto {
+public class UserDto {
     private Long id;
     private String username;
     private String email;

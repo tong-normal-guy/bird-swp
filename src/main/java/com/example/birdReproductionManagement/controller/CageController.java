@@ -20,7 +20,7 @@ public class CageController {
     public CageController(CageService cageService) {
         this.cageService = cageService;
     }
-    @GetMapping()
+    @GetMapping("/viewall")
     public ResponseEntity<List<CageDto>> getListCages(){
         return new ResponseEntity<>(cageService.findAllCages(), HttpStatus.OK);
     }
@@ -33,7 +33,7 @@ public class CageController {
         // 4 list cages hv id, location, quantity, use in .
         return new ResponseEntity<>(cageService.pickaCages(), HttpStatus.OK);
     }
-    @PostMapping ()
+    @PostMapping ("/add")
     public ResponseEntity<CageDto> addCage(@RequestBody CageDto cageDto){
         return new ResponseEntity<>(cageService.addCage(cageDto), HttpStatus.CREATED);
     }

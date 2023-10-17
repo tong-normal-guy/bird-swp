@@ -1,6 +1,6 @@
 package com.example.birdReproductionManagement.controller;
 
-import com.example.birdReproductionManagement.dto.UserEntityDto;
+import com.example.birdReproductionManagement.dto.UserDto;
 import com.example.birdReproductionManagement.service.UserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ public class UserEntityController {
         this.userEntityService = userEntityService;
     }
     @GetMapping("/staffs")
-    public ResponseEntity<List<UserEntityDto>> getListStaffs(){
+    public ResponseEntity<List<UserDto>> getListStaffs(){
         return new ResponseEntity<>(userEntityService.findAllStaffs(), HttpStatus.OK);
     }
 

@@ -1,4 +1,4 @@
-package com.example.birdReproductionManagement.model;
+package com.example.birdReproductionManagement.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,13 +19,10 @@ public class Meal {
     private Long id;
     @Column(name = "food_norm", columnDefinition = "nvarchar(255)")
     private String foodNorm;
-
+    @Column(name = "food", columnDefinition = "nvarchar(255)")
+    private String food;
     @ManyToOne
     @JoinColumn(name = "birdtype_id", nullable = false)
     private BirdType birdType;
-
-    @ManyToOne
-    @JoinColumn(name = "food_id", nullable = false)
-    private Food food;
 
 }

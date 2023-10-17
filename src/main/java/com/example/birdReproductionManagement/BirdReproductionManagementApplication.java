@@ -1,12 +1,13 @@
 package com.example.birdReproductionManagement;
 
+import com.example.birdReproductionManagement.entity.*;
 import com.example.birdReproductionManagement.model.*;
 import com.example.birdReproductionManagement.repository.BirdRepository;
 import com.example.birdReproductionManagement.repository.BirdTypeRepository;
 import com.example.birdReproductionManagement.repository.CageRepository;
+
 import com.example.birdReproductionManagement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -33,13 +34,16 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 	@Override
 	public void run(String... args) throws Exception {
 
-		UserEntity userAdmin = userRepository.findByUsername(USER);
+
+
 		Bird bird;
 		BirdType birdType;
 		Cage cage = new Cage();
 
+		User userAdmin = userRepository.findByUsername("Admin");
+
 		if (userAdmin == null){
-			userAdmin = new UserEntity();
+			userAdmin = new User();
 			userAdmin.setPassword(password);
 			userAdmin.setFullName(USER);
 			userAdmin.setUsername(USER);
@@ -61,7 +65,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 
 		cage.setLocation("A01");
 		cage.setQuantity(1);
-		cage.setCageType("S");
+//		cage.setCageType("S");
 //		cageRepository.save(cage);
 
 

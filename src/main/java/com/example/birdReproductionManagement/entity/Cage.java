@@ -1,4 +1,4 @@
-package com.example.birdReproductionManagement.model;
+package com.example.birdReproductionManagement.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,9 +27,6 @@ public class Cage {
     private Integer quantity;
 //    @Column(name = "in_process", columnDefinition = "nvarchar(255)")
 //    private Boolean inProcess;
-    @JoinColumn(name = "cageType", columnDefinition = "nvarchar(255)")
-    private String cageType;
-
     @OneToMany(mappedBy = "cage", cascade = CascadeType.REMOVE)
     private List<Bird> birdList = new ArrayList<>();
 
@@ -42,7 +39,7 @@ public class Cage {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private User user;
 
 
 }

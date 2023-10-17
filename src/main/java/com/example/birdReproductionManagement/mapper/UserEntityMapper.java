@@ -1,12 +1,12 @@
 package com.example.birdReproductionManagement.mapper;
 
-import com.example.birdReproductionManagement.dto.UserEntityDto;
+import com.example.birdReproductionManagement.dto.UserDto;
 import com.example.birdReproductionManagement.dto.UserResponse.User4CageDetailDTOResponse;
-import com.example.birdReproductionManagement.model.UserEntity;
+import com.example.birdReproductionManagement.entity.User;
 
 public class UserEntityMapper {
-    public static UserEntity mapToUserEntity(UserEntityDto userEntityDto){
-        return UserEntity.builder()
+    public static User mapToUserEntity(UserDto userEntityDto){
+        return User.builder()
                 .id(userEntityDto.getId())
                 .username(userEntityDto.getUsername())
                 .email(userEntityDto.getEmail())
@@ -18,8 +18,8 @@ public class UserEntityMapper {
                 .build();
     }
 
-    public static UserEntityDto mapToUserEntityDto(UserEntity userEntity){
-        return UserEntityDto.builder()
+    public static UserDto mapToUserEntityDto(User userEntity){
+        return UserDto.builder()
                 .id(userEntity.getId())
                 .username(userEntity.getUsername())
                 .email(userEntity.getEmail())
@@ -31,7 +31,7 @@ public class UserEntityMapper {
                 .build();
     }
 
-    public static User4CageDetailDTOResponse map2User4CageDetailDTO(UserEntity userEntity){
+    public static User4CageDetailDTOResponse map2User4CageDetailDTO(User userEntity){
         return User4CageDetailDTOResponse.builder()
                 .id(userEntity.getId())
                 .fullName(userEntity.getFullName())
