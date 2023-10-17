@@ -27,7 +27,6 @@ public class Cage {
     private Integer quantity;
 //    @Column(name = "in_process", columnDefinition = "nvarchar(255)")
 //    private Boolean inProcess;
-
     @OneToMany(mappedBy = "cage", cascade = CascadeType.REMOVE)
     private List<Bird> birdList = new ArrayList<>();
 

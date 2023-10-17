@@ -26,7 +26,6 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 	private  String STAFF2 = "staff2";
 	private  String STAFF3 = "staff3";
 	private  String STAFF4 = "staff4";
-
 	public static void main(String[] args) {
 		SpringApplication.run(BirdReproductionManagementApplication.class, args);
 	}
@@ -34,7 +33,6 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 
 	@Override
 	public void run(String... args) throws Exception {
-
 		User userAdmin = userRepository.findByUsername(ADMIN);
 		User staff1 = userRepository.findByUsername(STAFF);
 		User staff2 = userRepository.findByUsername(STAFF2);
@@ -183,6 +181,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		bird.setMutation("bong");
 		bird.setMutationRate(Float.valueOf(99));
 		bird.setIsAlive(true);
+
 		bird.setImage("");
 //		bird.setImage("https://firebasestorage.googleapis.com/v0/b/birdreproductionswp.appspot.com/o/imgsrc%2FthanBong.png?alt=media&token=945eaa26-1640-4385-a52d-8fbb183504d4&_gl=1*czf4q3*_ga*NTA4MjM3NDgwLjE2OTQ5MzYyNjU.*_ga_CW55HF8NVT*MTY5NzQ3MzUwMC43LjEuMTY5NzQ3MzUxNS40NS4wLjA.");
 		bird.setFeatherColor("den trang");
@@ -441,5 +440,6 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		cFail2Re.setReproductionRole(ReproductionRole.EGG);
 		cFail2Re.setReproductionProcess(process12);
 //		birdReproductionRepository.save(cFail2Re);
+
 	}
 }
