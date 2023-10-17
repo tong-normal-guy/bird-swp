@@ -14,11 +14,11 @@ import lombok.NoArgsConstructor;
 public class CageDto {
     private Long id;
     private String location;
-    private Boolean available;
+//    private Boolean available;
     private Integer quantity;
-    private Boolean inProcess;
-    private CageTypeDto cageType;
-    private Long cageTypeId;
+//    private Boolean inProcess;
+//    private CageTypeDto cageType;
+//    private Long cageTypeId;
 //    private List<BirdDto> birdList;
 //    private List<BirdCageHistoryDto> birdCageHistories;
 //    private List<ReproductionProcessDto> reproductionProcesses;

@@ -6,17 +6,15 @@ import com.example.birdReproductionManagement.exceptions.CageNotFoundException;
 import com.example.birdReproductionManagement.mapper.BirdMapper;
 import com.example.birdReproductionManagement.mapper.BirdTypeMapper;
 import com.example.birdReproductionManagement.mapper.CageMapper;
-import com.example.birdReproductionManagement.model.Bird;
-import com.example.birdReproductionManagement.model.BirdType;
-import com.example.birdReproductionManagement.model.Cage;
+import com.example.birdReproductionManagement.entity.Bird;
+import com.example.birdReproductionManagement.entity.BirdType;
+import com.example.birdReproductionManagement.entity.Cage;
 import com.example.birdReproductionManagement.repository.BirdRepository;
 import com.example.birdReproductionManagement.repository.BirdTypeRepository;
 import com.example.birdReproductionManagement.repository.CageRepository;
 import com.example.birdReproductionManagement.service.BirdService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

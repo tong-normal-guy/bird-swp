@@ -2,16 +2,14 @@ package com.example.birdReproductionManagement.mapper;
 
 import com.example.birdReproductionManagement.dto.ReproductionProcessDto;
 import com.example.birdReproductionManagement.dto.ReproductionProcessResponse.Reproduction4CageDetailDTOResponse;
-import com.example.birdReproductionManagement.model.ReproductionProcess;
-
-import java.util.stream.Collectors;
+import com.example.birdReproductionManagement.entity.ReproductionProcess;
 
 public class ReproductionProcessMapper {
     public static ReproductionProcess mapToReproductionProcess(ReproductionProcessDto reproductionProcessDto){
         return ReproductionProcess.builder()
                 .id(reproductionProcessDto.getId())
                 .pairingDate(reproductionProcessDto.getPairingDate())
-                .eggLaidDate(reproductionProcessDto.getEggLaidDate())
+//                .eggLaidDate(reproductionProcessDto.getEggLaidDate())
                 .expEggHatchDate(reproductionProcessDto.getExpEggHatchDate())
 //                .actEggHatchDate(reproductionProcessDto.getActEggHatchDate())
                 .expSwingBranch(reproductionProcessDto.getExpSwingBranch())
@@ -31,7 +29,7 @@ public class ReproductionProcessMapper {
         return ReproductionProcessDto.builder()
                 .id(reproductionProcess.getId())
                 .pairingDate(reproductionProcess.getPairingDate())
-                .eggLaidDate(reproductionProcess.getEggLaidDate())
+//                .eggLaidDate(reproductionProcess.getEggLaidDate())
                 .expEggHatchDate(reproductionProcess.getExpEggHatchDate())
 //                .actEggHatchDate(reproductionProcess.getActEggHatchDate())
                 .expSwingBranch(reproductionProcess.getExpSwingBranch())

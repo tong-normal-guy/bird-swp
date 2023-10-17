@@ -1,7 +1,7 @@
 package com.example.birdReproductionManagement.mapper;
 
 import com.example.birdReproductionManagement.dto.BirdCageHistoryDto;
-import com.example.birdReproductionManagement.model.BirdCageHistory;
+import com.example.birdReproductionManagement.entity.BirdCageHistory;
 
 public class BirdCageHistoryMapper {
     public static BirdCageHistory mapToBirdCageHistory(BirdCageHistoryDto birdCageHistoryDto){

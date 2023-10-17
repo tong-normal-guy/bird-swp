@@ -1,10 +1,9 @@
 package com.example.birdReproductionManagement;
 
-import com.example.birdReproductionManagement.model.Role;
-import com.example.birdReproductionManagement.model.UserEntity;
+import com.example.birdReproductionManagement.entity.Role;
+import com.example.birdReproductionManagement.entity.User;
 import com.example.birdReproductionManagement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,16 +25,16 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 	@Override
 	public void run(String... args) throws Exception {
 
-		UserEntity userAdmin = userRepository.findByUsername(ADMIN);
+		User userAdmin = userRepository.findByUsername(ADMIN);
 		if (userAdmin == null){
-			userAdmin = new UserEntity();
+			userAdmin = new User();
 			userAdmin.setPassword(password);
 			userAdmin.setFullName(ADMIN);
 			userAdmin.setUsername(ADMIN);
 			userAdmin.setEmail(ADMIN + "@gmail.com");
 			userAdmin.setRole(Role.ADMIN);
 			// save dtb
-			userRepository.save(userAdmin);
+//			userRepository.save(userAdmin);
 		}
 	}
 }

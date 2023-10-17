@@ -2,9 +2,9 @@ package com.example.birdReproductionManagement.mapper;
 
 import com.example.birdReproductionManagement.dto.BirdResponse.Bird4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.BirdResponse.BirdDto;
-import com.example.birdReproductionManagement.model.Bird;
+import com.example.birdReproductionManagement.entity.Bird;
 
-import com.example.birdReproductionManagement.model.Sex;
+import com.example.birdReproductionManagement.entity.Sex;
 
 
 public class BirdMapper {

@@ -18,6 +18,6 @@ public class WorkDivisionDto {
     private Date workDate;
     private Boolean isAttended;
     private String report;
-    private UserEntityDto user;
+    private UserDto user;
     private CageDto cage;
 }

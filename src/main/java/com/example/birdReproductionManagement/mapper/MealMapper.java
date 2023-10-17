@@ -1,7 +1,7 @@
 package com.example.birdReproductionManagement.mapper;
 
 import com.example.birdReproductionManagement.dto.MealDto;
-import com.example.birdReproductionManagement.model.Meal;
+import com.example.birdReproductionManagement.entity.Meal;
 
 public class MealMapper {
     public static Meal mapToMeal(MealDto mealDto){
@@ -9,7 +9,7 @@ public class MealMapper {
                 .id(mealDto.getId())
                 .foodNorm(mealDto.getFoodNorm())
                 .birdType(BirdTypeMapper.mapToBirdType(mealDto.getBirdType()))
-                .food(FoodMapper.mapToFood(mealDto.getFood()))
+//                .food(FoodMapper.mapToFood(mealDto.getFood()))
                 .build();
     }
 
@@ -18,7 +18,7 @@ public class MealMapper {
                 .id(meal.getId())
                 .foodNorm(meal.getFoodNorm())
                 .birdType(BirdTypeMapper.mapToBirdTypeDto(meal.getBirdType()))
-                .food(FoodMapper.mapToFoodDto(meal.getFood()))
+//                .food(FoodMapper.mapToFoodDto(meal.getFood()))
                 .build();
     }
 }

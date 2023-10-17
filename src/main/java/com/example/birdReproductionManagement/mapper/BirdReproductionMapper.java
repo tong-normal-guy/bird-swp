@@ -2,9 +2,8 @@ package com.example.birdReproductionManagement.mapper;
 
 import com.example.birdReproductionManagement.dto.BirdReproductionDto;
 import com.example.birdReproductionManagement.dto.BirdReproductionResponse.BirdRe4CageDetailDTOResponse;
-import com.example.birdReproductionManagement.dto.BirdResponse.Bird4CageDetailDTOResponse;
-import com.example.birdReproductionManagement.model.BirdReproduction;
-import com.example.birdReproductionManagement.model.ReproductionRole;
+import com.example.birdReproductionManagement.entity.BirdReproduction;
+import com.example.birdReproductionManagement.entity.ReproductionRole;
 
 public class BirdReproductionMapper {
     public static BirdReproduction mapToBirdReproduction (BirdReproductionDto birdReproductionDto){

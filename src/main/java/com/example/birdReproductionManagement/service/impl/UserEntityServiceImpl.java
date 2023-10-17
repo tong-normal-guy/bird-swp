@@ -1,9 +1,8 @@
 package com.example.birdReproductionManagement.service.impl;
 
-import com.example.birdReproductionManagement.dto.UserEntityDto;
+import com.example.birdReproductionManagement.dto.UserDto;
 import com.example.birdReproductionManagement.mapper.UserEntityMapper;
-import com.example.birdReproductionManagement.model.Role;
-import com.example.birdReproductionManagement.model.UserEntity;
+import com.example.birdReproductionManagement.entity.Role;
 import com.example.birdReproductionManagement.repository.UserRepository;
 import com.example.birdReproductionManagement.service.UserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ public class UserEntityServiceImpl implements UserEntityService {
         this.userRepository = userRepository;
     }
     @Override
-    public List<UserEntityDto> findAllStaffs() {
+    public List<UserDto> findAllStaffs() {
         return userRepository.findAllByRole(Role.valueOf("STAFF")).stream()
                 .map(UserEntityMapper::mapToUserEntityDto).collect(Collectors.toList());
     }

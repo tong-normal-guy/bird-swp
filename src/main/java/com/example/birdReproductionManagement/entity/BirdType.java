@@ -1,4 +1,4 @@
-package com.example.birdReproductionManagement.model;
+package com.example.birdReproductionManagement.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
