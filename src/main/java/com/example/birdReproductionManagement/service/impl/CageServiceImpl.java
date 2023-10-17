@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CageServiceImpl implements CageService {
     private final CageRepository cageRepository;
+
     private final ReproductionProcessRepository reproductionProcessRepository;
     private final BirdReproductionRepository birdReproductionRepository;
 //    private
@@ -63,10 +64,7 @@ public class CageServiceImpl implements CageService {
             cageDetailDTOResponse.setBirdReproduction(bird4CageDetailDTOResponses);
             cageDetailDTOResponse.setReproductionProcess(reproduction4CageDetailDTOResponse);
             cageDetailDTOResponses.add(cageDetailDTOResponse);
-
         }
-
-
         return cageDetailDTOResponses;
 
     }
@@ -78,11 +76,13 @@ public class CageServiceImpl implements CageService {
 
     @Override
     public CageDto addCage(CageDto cageDto) {
+
         return CageMapper.mapToCageDto(cageRepository.save(CageMapper.mapToCage(cageDto)));
     }
 
     @Override
     public CageDto updateCage(Long id, CageDto cageDto) {
+
         Cage cage = cageRepository.findById(id).orElseThrow(()
                 -> new CageNotFoundException("Cage could not be updated."));
         cageDto.setId(id);

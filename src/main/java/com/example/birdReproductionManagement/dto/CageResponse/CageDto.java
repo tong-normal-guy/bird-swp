@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class CageDto {
     private Long id;
     private String location;
+
 //    private Boolean available;
     private Integer quantity;
 //    private Boolean inProcess;
