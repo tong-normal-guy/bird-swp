@@ -20,6 +20,7 @@ public class ReproductionProcess {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "pairing_date")
     private Date pairingDate;
     @Column(name = "exp_egg_hatch_date")
     private Date expEggHatchDate;

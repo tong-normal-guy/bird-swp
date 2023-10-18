@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MealDto {
     private Long id;
+    private String food;
     private String foodNorm;
     private BirdTypeDto birdType;
-    private FoodDto food;
 }

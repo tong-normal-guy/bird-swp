@@ -46,4 +46,9 @@ public class CageController {
         cageService.deleteCage(id);
         return new ResponseEntity<>("Cage id deleted.", HttpStatus.OK);
     }
+
+    @GetMapping("/location/{location}")
+    public ResponseEntity<List<CageDto>> findByLocation(@PathVariable("location")String location){
+        return new ResponseEntity<>(cageService.findByLocation(location), HttpStatus.OK);
+    }
 }
