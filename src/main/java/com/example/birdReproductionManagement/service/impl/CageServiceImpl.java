@@ -77,7 +77,7 @@ public class CageServiceImpl implements CageService {
 
     @Override
     public CageDto addCage(CageDto cageDto) {
-
+        cageDto.setQuantity(0);
         return CageMapper.mapToCageDto(cageRepository.save(CageMapper.mapToCage(cageDto)));
     }
 

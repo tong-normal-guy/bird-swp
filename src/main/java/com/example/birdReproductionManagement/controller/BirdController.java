@@ -33,8 +33,8 @@ public class BirdController {
 
     @DeleteMapping("/{id}/delete")
     public ResponseEntity<?> deleteBird(@PathVariable("id") Long id){
-        BirdDto birdDto = birdService.deleteBird(id);
-        return  new ResponseEntity<>(birdDto, HttpStatus.OK);
+        birdService.deleteBird(id);
+        return  new ResponseEntity<>("Bird is deleted", HttpStatus.OK);
     }
 
     @PostMapping("/create")

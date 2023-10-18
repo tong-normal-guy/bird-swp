@@ -6,6 +6,7 @@ import com.example.birdReproductionManagement.dto.ReproductionProcessDto;
 import com.example.birdReproductionManagement.entity.BirdReproduction;
 import com.example.birdReproductionManagement.entity.ReproductionRole;
 import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
+import com.example.birdReproductionManagement.exceptions.BirdTypeNotMatchedException;
 import com.example.birdReproductionManagement.exceptions.ReproductionProcessNotFoundException;
 import com.example.birdReproductionManagement.mapper.BirdReproductionMapper;
 import com.example.birdReproductionManagement.mapper.CageMapper;
@@ -63,22 +64,35 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
         ReproductionProcess reproductionProcess = new ReproductionProcess();
         reproductionProcess.setCage(cage);
         reproductionProcess.setPairingDate(new Date());
+        cage.setQuantity(cage.getQuantity() + 2);
+        cageRepository.save(cage);
+        ReproductionProcess newProcess = reproductionProcessRepository.save(reproductionProcess);
 
         BirdReproduction cock = new BirdReproduction();
         cock.setBird(birdRepository.findById(pairDTO.getCockId()).orElseThrow(()
                 -> new BirdNotFoundException("Reproduction process could not be created.")));
-        cock.setReproductionRole(ReproductionRole.FATHER);
-        cock.setReproductionProcess(reproductionProcess);
-        birdReproductionRepository.save(cock);
 
         BirdReproduction hen = new BirdReproduction();
         hen.setBird(birdRepository.findById(pairDTO.getHenId()).orElseThrow(()
                 -> new BirdNotFoundException("Reproduction process could not be created.")));
+
+        if(!cock.getBird().getBirdType().getName().equals(hen.getBird().getBirdType().getName())){
+            reproductionProcessRepository.delete(reproductionProcess);
+            cage.setQuantity(cage.getQuantity() + 2);
+            cageRepository.save(cage);
+            throw new BirdTypeNotMatchedException("Bird type of this birds pair is not matched.");
+        }
+        cock.setReproductionRole(ReproductionRole.FATHER);
+        cock.setReproductionProcess(reproductionProcess);
+        cock.getBird().setCage(cage);
+        birdReproductionRepository.save(cock);
+
         hen.setReproductionRole(ReproductionRole.MOTHER);
         hen.setReproductionProcess(reproductionProcess);
+        hen.getBird().setCage(cage);
         birdReproductionRepository.save(hen);
 
-        return ReproductionProcessMapper.mapToReproductionProcessDto(reproductionProcessRepository.save(reproductionProcess));
+        return ReproductionProcessMapper.mapToReproductionProcessDto(newProcess);
     }
 
     @Override

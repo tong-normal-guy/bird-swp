@@ -8,7 +8,7 @@ public interface BirdService {
     List<BirdDto> findAllBirds();
     BirdDto updateBird(BirdDto birdDto, Long id);
 
-    BirdDto deleteBird(Long id);
+    void deleteBird(Long id);
 
     BirdDto createBird(BirdDto birdDto);
     List<BirdDto> findByCage(Long id);

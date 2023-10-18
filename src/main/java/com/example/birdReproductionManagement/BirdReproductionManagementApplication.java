@@ -83,7 +83,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 			userAdmin.setEmail(ADMIN + "@gmail.com");
 			userAdmin.setRole(Role.ADMIN);
 ////			 save dtb
-//			userRepository.save(userAdmin);
+			userRepository.save(userAdmin);
 		}
 		if (staff1 == null){
 			staff1 = new User();
@@ -95,7 +95,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 			staff1.setEmail(STAFF + "@gmail.com");
 			staff1.setRole(Role.STAFF);
 ////			 save dtb
-//			userRepository.save(staff1);
+			userRepository.save(staff1);
 		}
 
 		if (staff2 == null){
@@ -108,7 +108,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 			staff2.setEmail(STAFF2 + "@gmail.com");
 			staff2.setRole(Role.STAFF);
 ////			 save dtb
-//			userRepository.save(staff2);
+			userRepository.save(staff2);
 		}
 
 		if (staff3 == null){
@@ -121,7 +121,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 			staff3.setEmail(STAFF3 + "@gmail.com");
 			staff3.setRole(Role.STAFF);
 ////			 save dtb
-//			userRepository.save(staff3);
+			userRepository.save(staff3);
 		}
 
 		if (staff4 == null){
@@ -134,7 +134,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 			staff4.setEmail(STAFF4 + "@gmail.com");
 			staff4.setRole(Role.STAFF);
 ////			 save dtb
-//			userRepository.save(staff4);
+			userRepository.save(staff4);
 		}
 
 
@@ -144,36 +144,36 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		birdType.setIncubate(Long.valueOf(16));
 		birdType.setChick(Long.valueOf(16));
 		birdType.setSwingBranch(Long.valueOf(7));
-//		birdTypeRepository.save(birdType);
+		birdTypeRepository.save(birdType);
 
 		birdType2 = new BirdType();
 		birdType2.setName("lua");
 		birdType2.setIncubate(Long.valueOf(16));
 		birdType2.setChick(Long.valueOf(16));
 		birdType2.setSwingBranch(Long.valueOf(7));
-//		birdTypeRepository.save(birdType);
+		birdTypeRepository.save(birdType);
 
 		cage = new Cage();
 		cage.setLocation("A01");
 		cage.setQuantity(1);
-//		cageRepository.save(cage);
+		cageRepository.save(cage);
 
 		cage1 = new Cage();
 		cage1.setLocation("A02");
 		cage1.setQuantity(1);
-//		cageRepository.save(cage1);
+		cageRepository.save(cage1);
 
 		cage2 = new Cage();
 		cage2.setLocation("B01");
 		cage2.setQuantity(4);
 		cage2.setUser(staff1);
-//		cageRepository.save(cage2);
+		cageRepository.save(cage2);
 
 		cage22 = new Cage();
 		cage22.setLocation("B02");
 		cage22.setQuantity(4);
 		cage22.setUser(staff2);
-//		cageRepository.save(cage22);
+		cageRepository.save(cage22);
 
 		bird = new Bird();
 		bird.setSex(Sex.MALE);
@@ -190,7 +190,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		bird.setBirdType(birdType);
 		bird.setCage(cage);
 
-//		birdRepository.save(bird);
+		birdRepository.save(bird);
 
 		bird2 = new Bird();
 		bird2.setSex(Sex.FEMALE);
@@ -205,7 +205,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		bird2.setWeight(Float.valueOf(600));
 		bird2.setBirdType(birdType);
 		bird2.setCage(cage2);
-//		birdRepository.save(bird2);
+		birdRepository.save(bird2);
 
 		father = new Bird();
 		father.setSex(Sex.MALE);
@@ -220,7 +220,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		father.setWeight(Float.valueOf(700));
 		father.setBirdType(birdType);
 		father.setCage(cage2);
-//		birdRepository.save(father);
+		birdRepository.save(father);
 
 		father2 = new Bird();//
 		father2.setSex(Sex.MALE);
@@ -235,7 +235,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		father2.setWeight(Float.valueOf(700));
 		father2.setBirdType(birdType);
 		father2.setCage(cage22);
-//		birdRepository.save(father2);
+		birdRepository.save(father2);
 
 		mother = new Bird();
 		mother.setSex(Sex.FEMALE);
@@ -250,7 +250,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		mother.setWeight(Float.valueOf(600));
 		mother.setBirdType(birdType);
 		mother.setCage(cage2);
-//		birdRepository.save(mother);
+		birdRepository.save(mother);
 
 		mother2 = new Bird();//
 		mother2.setSex(Sex.FEMALE);
@@ -265,7 +265,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		mother2.setWeight(Float.valueOf(600));
 		mother2.setBirdType(birdType);
 		mother2.setCage(cage22);
-//		birdRepository.save(mother2);
+		birdRepository.save(mother2);
 
 		child1 = new Bird();
 		child1.setSex(Sex.MALE);
@@ -280,7 +280,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		child1.setWeight(Float.valueOf(100));
 		child1.setBirdType(birdType);
 		child1.setCage(cage2);
-//		birdRepository.save(child1);
+		birdRepository.save(child1);
 
 		child12 = new Bird();//
 		child12.setSex(Sex.MALE);
@@ -295,7 +295,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		child12.setWeight(Float.valueOf(100));
 		child12.setBirdType(birdType);
 		child12.setCage(cage22);
-//		birdRepository.save(child12);
+		birdRepository.save(child12);
 
 		child2 = new Bird();
 		child2.setSex(Sex.FEMALE);
@@ -310,7 +310,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		child2.setWeight(Float.valueOf(100));
 		child2.setBirdType(birdType);
 		child2.setCage(cage2);
-//		birdRepository.save(child2);
+		birdRepository.save(child2);
 
 		child22 = new Bird();//
 		child22.setSex(Sex.FEMALE);
@@ -325,7 +325,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		child22.setWeight(Float.valueOf(100));
 		child22.setBirdType(birdType);
 		child22.setCage(cage22);
-//		birdRepository.save(child22);
+		birdRepository.save(child22);
 
 		process1 = new ReproductionProcess();
 		process1.setPairingDate(new Date(2023 - 1900,8 - 1,18));
@@ -337,7 +337,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		process1.setFailEgg(1);
 		process1.setIsDone(false);
 		process1.setCage(cage2);
-//		reproductionProcessRepository.save(process1);
+		reproductionProcessRepository.save(process1);
 
 		process12 = new ReproductionProcess();//
 		process12.setPairingDate(new Date(2023 - 1900,7 - 1,7));
@@ -349,31 +349,31 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		process12.setFailEgg(1);
 		process12.setIsDone(false);
 		process12.setCage(cage22);
-//		reproductionProcessRepository.save(process12);
+		reproductionProcessRepository.save(process12);
 
 		fatherRe = new BirdReproduction();
 		fatherRe.setBird(father);
 		fatherRe.setReproductionProcess(process1);
 		fatherRe.setReproductionRole(ReproductionRole.FATHER);
-//		birdReproductionRepository.save(fatherRe);
+		birdReproductionRepository.save(fatherRe);
 
 		father2Re = new BirdReproduction();//
 		father2Re.setBird(father2);
 		father2Re.setReproductionProcess(process12);
 		father2Re.setReproductionRole(ReproductionRole.FATHER);
-//		birdReproductionRepository.save(father2Re);
+		birdReproductionRepository.save(father2Re);
 
 		motherRe = new BirdReproduction();
 		motherRe.setBird(mother);
 		motherRe.setReproductionProcess(process1);
 		motherRe.setReproductionRole(ReproductionRole.MOTHER);
-//		birdReproductionRepository.save(motherRe);
+		birdReproductionRepository.save(motherRe);
 
 		mother2Re = new BirdReproduction();//
 		mother2Re.setBird(mother2);
 		mother2Re.setReproductionProcess(process12);
 		mother2Re.setReproductionRole(ReproductionRole.MOTHER);
-//		birdReproductionRepository.save(mother2Re);
+		birdReproductionRepository.save(mother2Re);
 
 		child1Re = new BirdReproduction();
 		child1Re.setBird(child1);
@@ -385,7 +385,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		child1Re.setFail(false);
 		child1Re.setReproductionRole(ReproductionRole.CHILD);
 		child1Re.setReproductionProcess(process1);
-//		birdReproductionRepository.save(child1Re);
+		birdReproductionRepository.save(child1Re);
 
 		child12Re = new BirdReproduction();//
 		child12Re.setBird(child2);
@@ -397,7 +397,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		child12Re.setFail(false);
 		child12Re.setReproductionRole(ReproductionRole.CHILD);
 		child12Re.setReproductionProcess(process12);
-//		birdReproductionRepository.save(child12Re);
+		birdReproductionRepository.save(child12Re);
 
 		child2Re = new BirdReproduction();
 		child2Re.setBird(child2);
@@ -409,7 +409,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		child2Re.setFail(false);
 		child2Re.setReproductionRole(ReproductionRole.CHILD);
 		child2Re.setReproductionProcess(process1);
-//		birdReproductionRepository.save(child2Re);
+		birdReproductionRepository.save(child2Re);
 
 		child22Re = new BirdReproduction();//
 		child22Re.setBird(child22);
@@ -421,7 +421,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		child22Re.setFail(false);
 		child22Re.setReproductionRole(ReproductionRole.CHILD);
 		child22Re.setReproductionProcess(process12);
-//		birdReproductionRepository.save(child22Re);
+		birdReproductionRepository.save(child22Re);
 
 		cFailRe = new BirdReproduction();
 		cFailRe.setEggLaidDate(new Date(2023 - 1900, 10 - 1, 19));
@@ -431,7 +431,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		cFailRe.setFailDate(new Date(2023 - 1900,10 - 1,23));
 		cFailRe.setReproductionRole(ReproductionRole.EGG);
 		cFailRe.setReproductionProcess(process1);
-//		birdReproductionRepository.save(cFailRe);
+		birdReproductionRepository.save(cFailRe);
 
 		cFail2Re = new BirdReproduction();//
 		cFail2Re.setEggLaidDate(new Date(2023 - 1900, 10 - 1, 20));
@@ -441,7 +441,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		cFail2Re.setFailDate(new Date(2023 - 1900,10 - 1,23));
 		cFail2Re.setReproductionRole(ReproductionRole.EGG);
 		cFail2Re.setReproductionProcess(process12);
-//		birdReproductionRepository.save(cFail2Re);
+		birdReproductionRepository.save(cFail2Re);
 
 	}
 }

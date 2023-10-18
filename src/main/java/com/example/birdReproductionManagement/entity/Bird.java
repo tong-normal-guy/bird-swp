@@ -19,6 +19,7 @@ public class Bird {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(columnDefinition = "nvarchar(255)", name = "sex")
+    @Enumerated(EnumType.STRING)
     private Sex sex;
     @Column(name = "hatch_date")
     private Date hatchDate;

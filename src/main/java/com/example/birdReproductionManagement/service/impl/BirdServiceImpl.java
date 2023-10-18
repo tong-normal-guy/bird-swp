@@ -46,18 +46,25 @@ public class BirdServiceImpl implements BirdService {
         Bird bird = birdRepository.findById(id).orElseThrow(()
                 -> new BirdNotFoundException("Bird could not be updated."));
         birdDto.setId(bird.getId());
-        Bird updatedBird = birdRepository.save(BirdMapper.mapToBird(birdDto));
-        return BirdMapper.mapToBirdDto(updatedBird);
+        Bird updatedBird = BirdMapper.mapToBird(birdDto);
+        updatedBird.setBirdType(bird.getBirdType());
+        Cage cage;
+        if (!bird.getCage().getId().equals(birdDto.getCageId())){
+            cage =  cageRepository.findById(birdDto.getCageId()).orElseThrow(()
+                    -> new CageNotFoundException("Bird could not be updated."));
+        }else {
+            cage = cageRepository.findById(bird.getCage().getId()).orElseThrow(()
+                    -> new CageNotFoundException("Bird could not be updated."));
+        }
+        updatedBird.setCage(cage);
+        return BirdMapper.mapToBirdDto(birdRepository.save(updatedBird));
     }
 
     @Override
-    public BirdDto deleteBird(Long id) {
+    public void deleteBird(Long id) {
         Bird bird = birdRepository.findById(id).orElseThrow(()
                 -> new BirdNotFoundException("Bird could not be deleted."));
-
         birdRepository.delete(bird);
-
-        return BirdMapper.mapToBirdDto(bird);
     }
 
     @Override
@@ -68,6 +75,8 @@ public class BirdServiceImpl implements BirdService {
         Bird bird = BirdMapper.mapToBird(birdDto);
         bird.setBirdType(birdType);
         bird.setCage(cage);
+        cage.setQuantity(cage.getQuantity() + 1);
+        cageRepository.save(cage);
         return BirdMapper.mapToBirdDto(birdRepository.save(bird));
     }
 
