@@ -33,8 +33,10 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
 
     @Override
     public ReproductionProcessDto addReproductionProcess(ReproductionProcessDto reproductionProcessDto) {
-        Cage cage = cageRepository.findById(reproductionProcessDto.getCageId()).orElseThrow(()
-                -> new ReproductionProcessNotFoundException("Reproduction process could not be created."));
+        Cage cage = cageRepository
+                .findById(reproductionProcessDto.getCageId())
+                .orElseThrow(()
+                        -> new ReproductionProcessNotFoundException("Reproduction process could not be created."));
         reproductionProcessDto.setCage(CageMapper.mapToCageDto(cage));
         return ReproductionProcessMapper.mapToReproductionProcessDto(reproductionProcessRepository.save(ReproductionProcessMapper.mapToReproductionProcess(reproductionProcessDto)));
     }

@@ -43,7 +43,7 @@ public class CageServiceImpl implements CageService {
             CageDetailDTOResponse cageDetailDTOResponse = new CageDetailDTOResponse();
             // entity
             ReproductionProcess reproductionProcess = reproductionProcessRepository.findByIsDoneFalseAndCage_Id(cage.getId())
-                    .orElseThrow( () -> new ReproductionProcessNotFoundException("khong co cai long nao theo cage id"));
+                    .orElseThrow( () -> new ReproductionProcessNotFoundException("khong co cai long nao theo cage id")); //khong co process nao theo cage id
             List<BirdReproduction> birdReproductions = birdReproductionRepository.findAllByReproductionProcess_Id(reproductionProcess.getId());
 
             // dto

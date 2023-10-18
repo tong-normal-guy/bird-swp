@@ -30,7 +30,6 @@ public class CageController {
     }
     @GetMapping("/view")
     public ResponseEntity<List<CageDetailDTOResponse>> pickaCages(){
-        // 4 list cages hv id, location, quantity, use in .
         return new ResponseEntity<>(cageService.pickaCages(), HttpStatus.OK);
     }
     @PostMapping ("/add")
