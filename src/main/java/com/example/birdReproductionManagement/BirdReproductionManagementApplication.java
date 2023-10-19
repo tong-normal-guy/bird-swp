@@ -139,6 +139,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		}
 
 
+
 		birdType = new BirdType();
 		birdType.setName("than");
 		birdType.setIncubate(Long.valueOf(16));
@@ -189,6 +190,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		bird.setWeight(Float.valueOf(700));
 		bird.setBirdType(birdType);
 		bird.setCage(cage);
+
 //		birdRepository.save(bird);
 
 		bird2 = new Bird();

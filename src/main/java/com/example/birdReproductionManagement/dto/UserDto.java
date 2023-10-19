@@ -20,7 +20,7 @@ public class UserDto {
     private String fullName;
     private String createdBy;
     private Date createdDate;
-    private Role role;
+    private String role;
 //    private List<Role> roles = new ArrayList<>();
 //    private List<WorkDivision> workDivisions = new ArrayList<>();
 }

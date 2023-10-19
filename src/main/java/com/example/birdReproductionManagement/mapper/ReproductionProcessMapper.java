@@ -20,7 +20,7 @@ public class ReproductionProcessMapper {
                 .stage(reproductionProcessDto.getStage())
                 .failEgg(reproductionProcessDto.getFailEgg())
                 .isDone(reproductionProcessDto.getIsDone())
-                .cage(CageMapper.mapToCage(reproductionProcessDto.getCage()))
+//                .cage(CageMapper.mapToCage(reproductionProcessDto.getCage()))
 //                .birdReproductions(reproductionProcessDto.getBirdReproductions().stream().map(BirdReproductionMapper::mapToBirdReproduction).collect(Collectors.toList()))
                 .build();
     }

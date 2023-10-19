@@ -28,6 +28,7 @@ public class CageServiceImpl implements CageService {
 
     private final ReproductionProcessRepository reproductionProcessRepository;
     private final BirdReproductionRepository birdReproductionRepository;
+
 //    private
 
     @Override
@@ -72,13 +73,12 @@ public class CageServiceImpl implements CageService {
                     bird4CageDetailDTOResponses.add(bird4CageDetailDTOResponse);
                 }
                 //mapper start
-                User4CageDetailDTOResponse user4CageDetailDTOResponse = UserEntityMapper.map2User4CageDetailDTO(cage.getUser());
+                User4CageDetailDTOResponse user4CageDetailDTOResponse = UserMapper.map2User4CageDetailDTO(cage.getUser());
                 cageDetailDTOResponse.setUser(user4CageDetailDTOResponse);
                 cageDetailDTOResponse.setBirdReproduction(bird4CageDetailDTOResponses);
                 cageDetailDTOResponse.setReproductionProcess(reproduction4CageDetailDTOResponse);
                 //mapper end
             }
-
 
             // mapper to CageDetailDTOResponse
             cageDetailDTOResponse.setCageId(cage.getId());
@@ -98,7 +98,7 @@ public class CageServiceImpl implements CageService {
 
     @Override
     public CageDto addCage(CageDto cageDto) {
-
+        cageDto.setQuantity(0);
         return CageMapper.mapToCageDto(cageRepository.save(CageMapper.mapToCage(cageDto)));
     }
 
@@ -116,6 +116,12 @@ public class CageServiceImpl implements CageService {
         Cage cage = cageRepository.findById(id).orElseThrow(()
                 -> new CageNotFoundException("Cage could not be deleted."));
         cageRepository.delete(cage);
+    }
+
+    @Override
+    public List<CageDto> findByLocation(String location) {
+        return cageRepository.findByLocationContains(location).stream().map(CageMapper::mapToCageDto)
+                .collect(Collectors.toList());
     }
 
 

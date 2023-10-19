@@ -33,12 +33,17 @@ public class BirdController {
 
     @DeleteMapping("/{id}/delete")
     public ResponseEntity<?> deleteBird(@PathVariable("id") Long id){
-        BirdDto birdDto = birdService.deleteBird(id);
-        return  new ResponseEntity<>(birdDto, HttpStatus.OK);
+        birdService.deleteBird(id);
+        return  new ResponseEntity<>("Bird is deleted", HttpStatus.OK);
     }
 
     @PostMapping("/create")
     public ResponseEntity<?> createBird(@RequestBody BirdDto birdDto){
         return new ResponseEntity<>(birdService.createBird(birdDto), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/view/{cageid}")
+    public ResponseEntity<List<BirdDto>> getListBirdsByCage(@PathVariable("cageid")Long cageId){
+        return new ResponseEntity<>(birdService.findByCage(cageId), HttpStatus.OK);
     }
 }

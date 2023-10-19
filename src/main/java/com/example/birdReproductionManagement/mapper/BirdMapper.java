@@ -20,12 +20,12 @@ public class BirdMapper {
                 .image(birdDto.getImage())
                 .featherColor(birdDto.getFeatherColor())
                 .weight(birdDto.getWeight())
-                .birdType(BirdTypeMapper.mapToBirdType(birdDto.getBirdType()))
+//                .birdType(BirdTypeMapper.mapToBirdType(birdDto.getBirdType()))
 //                .birdListOfFather(birdDto.getBirdListOfFather().stream().map(BirdMapper::mapToBird).collect(Collectors.toList()))
 
 //                .birdListOfMother(birdDto.getBirdListOfMother().stream().map(BirdMapper::mapToBird).collect(Collectors.toList()))
 
-                .cage(CageMapper.mapToCage(birdDto.getCage()))
+//                .cage(CageMapper.mapToCage(birdDto.getCage()))
 //                .birdCageHistories(birdDto.getBirdCageHistories().stream().map(BirdCageHistoryMapper::mapToBirdCageHistory).collect(Collectors.toList()))
 //                .birdReproductions(birdDto.getBirdReproductions().stream().map(BirdReproductionMapper::mapToBirdReproduction).collect(Collectors.toList()))
                 .build();

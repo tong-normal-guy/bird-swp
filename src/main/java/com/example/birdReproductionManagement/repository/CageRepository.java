@@ -6,7 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
+import java.util.List;
+
 public interface CageRepository extends JpaRepository<Cage, Long> {
     @Query("SELECT c FROM Cage c WHERE c.location LIKE 'B%'")
     List<Cage> findCagesWithLocationStartingWithB();
+    List<Cage> findByLocationContains(String location);
 }
