@@ -29,8 +29,8 @@ public class CageController {
         return new ResponseEntity<>(cageService.getDetailById(id), HttpStatus.OK);
     }
     @GetMapping("/view")
-    public ResponseEntity<List<CageDetailDTOResponse>> pickaCages(){
-        return new ResponseEntity<>(cageService.pickaCages(), HttpStatus.OK);
+    public ResponseEntity<List<CageDetailDTOResponse>> pickaCages(@RequestParam(name = "process",defaultValue = "false") Boolean process){
+        return new ResponseEntity<>(cageService.pickaCages(process), HttpStatus.OK);
     }
     @PostMapping ("/add")
     public ResponseEntity<CageDto> addCage(@RequestBody CageDto cageDto){

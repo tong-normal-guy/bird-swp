@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class User4CageDetailDTOResponse {
-    private Long id;
+    private Long userId;
     private String fullName;
     private String role;
 }
