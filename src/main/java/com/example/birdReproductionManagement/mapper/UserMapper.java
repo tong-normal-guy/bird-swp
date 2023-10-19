@@ -34,7 +34,7 @@ public class UserMapper {
 
     public static User4CageDetailDTOResponse map2User4CageDetailDTO(User userEntity){
         return User4CageDetailDTOResponse.builder()
-                .userId(userEntity.getId())
+                .userId(String.valueOf(userEntity.getId()))
                 .fullName(userEntity.getFullName())
                 .role(String.valueOf(userEntity.getRole()))
                 .build();

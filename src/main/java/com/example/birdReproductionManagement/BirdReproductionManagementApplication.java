@@ -61,6 +61,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 
 		Cage cage2;
 		Cage cage22;
+		Cage cage23;
 
 		ReproductionProcess process1;
 		BirdReproduction fatherRe;

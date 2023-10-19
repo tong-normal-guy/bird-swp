@@ -47,7 +47,7 @@ public class ReproductionProcessMapper {
 
     public static Reproduction4CageDetailDTOResponse map2Reproduction4CageDetailDTO(ReproductionProcess reproductionProcess){
         return Reproduction4CageDetailDTOResponse.builder()
-                .processId(reproductionProcess.getId())
+                .processId(String.valueOf(reproductionProcess.getId()))
                 .pairingDate(reproductionProcess.getPairingDate())
                 .stage(reproductionProcess.getStage())
                 .failEgg(reproductionProcess.getFailEgg())
