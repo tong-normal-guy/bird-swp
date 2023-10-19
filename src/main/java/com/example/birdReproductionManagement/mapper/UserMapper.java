@@ -6,7 +6,7 @@ import com.example.birdReproductionManagement.entity.Role;
 import com.example.birdReproductionManagement.entity.User;
 
 public class UserMapper {
-    public static User mapToUserEntity(UserDto userDto){
+    public static User mapToUser(UserDto userDto){
         return User.builder()
                 .id(userDto.getId())
                 .username(userDto.getUsername())
@@ -19,7 +19,7 @@ public class UserMapper {
                 .build();
     }
 
-    public static UserDto mapToUserEntityDto(User user){
+    public static UserDto mapToUserDto(User user){
         return UserDto.builder()
                 .id(user.getId())
                 .username(user.getUsername())

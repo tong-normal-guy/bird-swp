@@ -10,7 +10,7 @@ public interface CageService {
     List<CageDto> findAllCages();
     List<CageDetailDTOResponse> pickaCages(); // 4 list cages hv id, location, quantity.
 
-    CageDetailDTOResponse getDetailById(Long id);
+    CageDto getDetailById(Long id);
     CageDto addCage(CageDto cageDto);
     CageDto updateCage(Long id, CageDto cageDto);
     void deleteCage(Long id);

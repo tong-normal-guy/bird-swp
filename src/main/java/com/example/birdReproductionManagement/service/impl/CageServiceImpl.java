@@ -11,6 +11,7 @@ import com.example.birdReproductionManagement.mapper.*;
 import com.example.birdReproductionManagement.entity.BirdReproduction;
 import com.example.birdReproductionManagement.entity.Cage;
 import com.example.birdReproductionManagement.entity.ReproductionProcess;
+import com.example.birdReproductionManagement.repository.BirdRepository;
 import com.example.birdReproductionManagement.repository.BirdReproductionRepository;
 import com.example.birdReproductionManagement.repository.CageRepository;
 import com.example.birdReproductionManagement.repository.ReproductionProcessRepository;
@@ -26,7 +27,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CageServiceImpl implements CageService {
     private final CageRepository cageRepository;
-
+    private final BirdRepository birdRepository;
     private final ReproductionProcessRepository reproductionProcessRepository;
     private final BirdReproductionRepository birdReproductionRepository;
 
@@ -71,8 +72,13 @@ public class CageServiceImpl implements CageService {
     }
 
     @Override
-    public CageDetailDTOResponse getDetailById(Long id) {
-        return null;
+    public CageDto getDetailById(Long id) {
+        Cage cage = cageRepository.findById(id).orElseThrow(()
+                -> new CageNotFoundException("Cage could not be found."));
+        CageDto cageDto = CageMapper.mapToCageDto(cage);
+        cageDto.setBirdList(birdRepository.findByCage_Id(cage.getId()).stream()
+                .map(BirdMapper::mapToBirdDto).collect(Collectors.toList()));
+        return cageDto;
     }
 
     @Override

@@ -20,12 +20,12 @@ public class CageController {
     public CageController(CageService cageService) {
         this.cageService = cageService;
     }
-    @GetMapping("/viewall")
+    @GetMapping("/all")
     public ResponseEntity<List<CageDto>> getListCages(){
         return new ResponseEntity<>(cageService.findAllCages(), HttpStatus.OK);
     }
     @GetMapping("/view/{id}")
-    public ResponseEntity<CageDetailDTOResponse> getDetailById(@PathVariable("id")Long id){
+    public ResponseEntity<CageDto> getCageDetailById(@PathVariable("id")Long id){
         return new ResponseEntity<>(cageService.getDetailById(id), HttpStatus.OK);
     }
     @GetMapping("/view")
@@ -46,7 +46,6 @@ public class CageController {
         cageService.deleteCage(id);
         return new ResponseEntity<>("Cage id deleted.", HttpStatus.OK);
     }
-
     @GetMapping("/location/{location}")
     public ResponseEntity<List<CageDto>> findByLocation(@PathVariable("location")String location){
         return new ResponseEntity<>(cageService.findByLocation(location), HttpStatus.OK);

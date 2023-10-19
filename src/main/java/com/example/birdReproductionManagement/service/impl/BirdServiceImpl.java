@@ -1,6 +1,7 @@
 package com.example.birdReproductionManagement.service.impl;
 
 import com.example.birdReproductionManagement.dto.BirdResponse.BirdDto;
+import com.example.birdReproductionManagement.entity.Sex;
 import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
 import com.example.birdReproductionManagement.exceptions.CageNotFoundException;
 import com.example.birdReproductionManagement.mapper.BirdMapper;
@@ -15,8 +16,12 @@ import com.example.birdReproductionManagement.repository.CageRepository;
 import com.example.birdReproductionManagement.service.BirdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,16 +47,22 @@ public class BirdServiceImpl implements BirdService {
 
 
     @Override
-    public BirdDto updateBird(BirdDto birdDto, Long id) {
+    public BirdDto updateBird(Long id, BirdDto birdDto) {
         Bird bird = birdRepository.findById(id).orElseThrow(()
                 -> new BirdNotFoundException("Bird could not be updated."));
         birdDto.setId(bird.getId());
         Bird updatedBird = BirdMapper.mapToBird(birdDto);
         updatedBird.setBirdType(bird.getBirdType());
         Cage cage;
-        if (!bird.getCage().getId().equals(birdDto.getCageId())){
+        if (!birdDto.getCageId().equals(bird.getCage().getId())){
             cage =  cageRepository.findById(birdDto.getCageId()).orElseThrow(()
                     -> new CageNotFoundException("Bird could not be updated."));
+            Cage oldCage = cageRepository.findById(bird.getCage().getId()).orElseThrow(()
+                    -> new CageNotFoundException("Bird could not be updated."));
+            oldCage.setQuantity(oldCage.getQuantity() - 1);
+            cage.setQuantity(cage.getQuantity() + 1);
+            cageRepository.save(oldCage);
+            cageRepository.save(cage);
         }else {
             cage = cageRepository.findById(bird.getCage().getId()).orElseThrow(()
                     -> new CageNotFoundException("Bird could not be updated."));
@@ -83,5 +94,25 @@ public class BirdServiceImpl implements BirdService {
     @Override
     public List<BirdDto> findByCage(Long id) {
         return birdRepository.findByCage_Id(id).stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public BirdDto updateBirdByFields(Long id, Map<String, Object> fields) {
+        Bird bird = birdRepository.findById(id).orElseThrow(()
+                -> new BirdNotFoundException("Bird could not be updated."));
+//        if (fields.containsKey("cageId")){
+//            Cage cage = cageRepository.findById(Long.parseLong((String) fields.get("cageId"))).orElseThrow(()
+//                    -> new CageNotFoundException("Bird could not be updated."));
+//            bird.setCage(cage);
+//        }
+        if(bird != null){
+            fields.forEach((key, value) -> {
+                Field field = ReflectionUtils.findField(Bird.class, key);
+                field.setAccessible(true);
+                ReflectionUtils.setField(field, bird, value);
+            });
+            return BirdMapper.mapToBirdDto(birdRepository.save(bird));
+        }
+        return null;
     }
 }

@@ -151,7 +151,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		birdType2.setIncubate(Long.valueOf(16));
 		birdType2.setChick(Long.valueOf(16));
 		birdType2.setSwingBranch(Long.valueOf(7));
-//		birdTypeRepository.save(birdType);
+//		birdTypeRepository.save(birdType2);
 
 		cage = new Cage();
 		cage.setLocation("A01");

@@ -24,7 +24,6 @@ public class BirdDto {
     private String image;
     private String featherColor;
     private Float weight;
-    private BirdTypeDto birdType;
     private String birdTypeName;
 //    private List<BirdDto> birdListOfFather;
 //    private List<BirdDto> birdListOfMother;

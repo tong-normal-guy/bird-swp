@@ -4,7 +4,8 @@ import com.example.birdReproductionManagement.dto.UserDto;
 
 import java.util.List;
 
-public interface UserEntityService {
+public interface UserService {
     List<UserDto> findAllStaffs();
-//    UserEntityDto createUser(UserEntityDto userEntityDto);
+    UserDto addUser(UserDto userDto);
+    UserDto updateUser(Long id, UserDto userDto);
 }
