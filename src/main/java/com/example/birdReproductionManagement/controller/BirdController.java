@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/birds")
@@ -25,13 +26,12 @@ public class BirdController {
         return new ResponseEntity<>(birdDtos, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}/update")
-    public ResponseEntity<BirdDto> updateBird(@RequestBody BirdDto birdDto, @PathVariable("id") Long id){
-        BirdDto birdDto1 = birdService.updateBird(birdDto, id);
-        return new ResponseEntity<>(birdDto1, HttpStatus.OK);
+    @PutMapping("/{id}")
+    public ResponseEntity<BirdDto> updateBird(@PathVariable("id")Long id, @RequestBody BirdDto birdDto){
+        return new ResponseEntity<>(birdService.updateBird(id, birdDto), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteBird(@PathVariable("id") Long id){
         birdService.deleteBird(id);
         return  new ResponseEntity<>("Bird is deleted", HttpStatus.OK);
@@ -45,5 +45,10 @@ public class BirdController {
     @GetMapping("/view/{cageid}")
     public ResponseEntity<List<BirdDto>> getListBirdsByCage(@PathVariable("cageid")Long cageId){
         return new ResponseEntity<>(birdService.findByCage(cageId), HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<BirdDto> updateBirdByFields(@PathVariable("id")Long id, @RequestBody Map<String, Object> fields){
+        return new ResponseEntity<>(birdService.updateBirdByFields(id, fields), HttpStatus.OK);
     }
 }

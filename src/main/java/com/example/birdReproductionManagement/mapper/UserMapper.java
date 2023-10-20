@@ -6,9 +6,9 @@ import com.example.birdReproductionManagement.entity.Role;
 import com.example.birdReproductionManagement.entity.User;
 
 public class UserMapper {
-    public static User mapToUserEntity(UserDto userDto){
+    public static User mapToUser(UserDto userDto){
         return User.builder()
-                .id(userDto.getId())
+//                .id(userDto.getId())
                 .username(userDto.getUsername())
                 .email(userDto.getEmail())
                 .password(userDto.getPassword())
@@ -19,9 +19,9 @@ public class UserMapper {
                 .build();
     }
 
-    public static UserDto mapToUserEntityDto(User user){
+    public static UserDto mapToUserDto(User user){
         return UserDto.builder()
-                .id(user.getId())
+                .id(String.valueOf(user.getId()))
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .password(user.getPassword())

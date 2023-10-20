@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class BirdDto {
-    private Long id;
+    private String id;
     private String sex;
     private Date hatchDate;
     private String ageRange;
@@ -24,7 +24,6 @@ public class BirdDto {
     private String image;
     private String featherColor;
     private Float weight;
-    private BirdTypeDto birdType;
     private String birdTypeName;
 //    private List<BirdDto> birdListOfFather;
 //    private List<BirdDto> birdListOfMother;

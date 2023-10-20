@@ -124,4 +124,34 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(UserEmailExistedException.class)
+    public ResponseEntity<ErrorObject> handleUserEmailExistedException(UserEmailExistedException ex, WebRequest request){
+        ErrorObject errorObject = new ErrorObject();
+
+        errorObject.setStatusCode(HttpStatus.BAD_REQUEST.value());
+        errorObject.setMessage(ex.getMessage());
+        errorObject.setTimestamp(new Date());
+
+        return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(UsernameExistedException.class)
+    public ResponseEntity<ErrorObject> handleUsernameExistedException(UsernameExistedException ex, WebRequest request){
+        ErrorObject errorObject = new ErrorObject();
+
+        errorObject.setStatusCode(HttpStatus.BAD_REQUEST.value());
+        errorObject.setMessage(ex.getMessage());
+        errorObject.setTimestamp(new Date());
+
+        return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorObject> handleUserNotFoundException(UserNotFoundException ex, WebRequest request){
+        ErrorObject errorObject = new ErrorObject();
+
+        errorObject.setStatusCode(HttpStatus.NOT_FOUND.value());
+        errorObject.setMessage(ex.getMessage());
+        errorObject.setTimestamp(new Date());
+
+        return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.NOT_FOUND);
+    }
 }

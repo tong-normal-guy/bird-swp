@@ -10,7 +10,7 @@ import com.example.birdReproductionManagement.entity.Sex;
 public class BirdMapper {
     public static Bird mapToBird(BirdDto birdDto){
         return Bird.builder()
-                .id(birdDto.getId())
+//                .id(Long.valueOf(birdDto.getId()))
                 .sex(Sex.valueOf(birdDto.getSex()))
                 .hatchDate(birdDto.getHatchDate())
                 .ageRange(birdDto.getAgeRange())
@@ -33,8 +33,8 @@ public class BirdMapper {
 
     public static BirdDto mapToBirdDto(Bird bird){
         return BirdDto.builder()
-                .id(bird.getId())
-                .sex(String.valueOf(bird.getSex()))
+                .id(String.valueOf(bird.getId()))
+                .sex(bird.getSex().name())
                 .hatchDate(bird.getHatchDate())
                 .ageRange(bird.getAgeRange())
                 .mutation(bird.getMutation())
@@ -43,10 +43,12 @@ public class BirdMapper {
                 .image(bird.getImage())
                 .featherColor(bird.getFeatherColor())
                 .weight(bird.getWeight())
-                .birdType(BirdTypeMapper.mapToBirdTypeDto(bird.getBirdType()))
+                .birdTypeName(bird.getBirdType().getName())
+                .cageId(bird.getCage().getId())
+//                .birdType(BirdTypeMapper.mapToBirdTypeDto(bird.getBirdType()))
 //                .birdListOfFather(bird.getBirdListOfFather().stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList()))
 //                .birdListOfMother(bird.getBirdListOfMother().stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList()))
-                .cage(CageMapper.mapToCageDto(bird.getCage()))
+//                .cage(CageMapper.mapToCageDto(bird.getCage()))
 //                .birdCageHistories(bird.getBirdCageHistories().stream().map(BirdCageHistoryMapper::mapToBirdCageHistoryDto).collect(Collectors.toList()))
 //                .birdReproductions(bird.getBirdReproductions().stream().map(BirdReproductionMapper::mapToBirdReproductionDto).collect(Collectors.toList()))
                 .build();

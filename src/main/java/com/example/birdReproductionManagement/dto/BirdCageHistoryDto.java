@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class BirdCageHistoryDto {
-    private Long id;
+    private String id;
     private Date implDate;
     private BirdDto bird;
     private CageDto cage;

@@ -6,7 +6,7 @@ import com.example.birdReproductionManagement.entity.Meal;
 public class MealMapper {
     public static Meal mapToMeal(MealDto mealDto){
         return Meal.builder()
-                .id(mealDto.getId())
+//                .id(mealDto.getId())
                 .food(mealDto.getFood())
                 .foodNorm(mealDto.getFoodNorm())
 //                .birdType(BirdTypeMapper.mapToBirdType(mealDto.getBirdType()))
@@ -16,10 +16,10 @@ public class MealMapper {
 
     public static MealDto mapToMealDto(Meal meal){
         return MealDto.builder()
-                .id(meal.getId())
+                .id(String.valueOf(meal.getId()))
                 .food(meal.getFood())
                 .foodNorm(meal.getFoodNorm())
-                .birdType(BirdTypeMapper.mapToBirdTypeDto(meal.getBirdType()))
+                .birdTypeName(meal.getBirdType().getName())
 //                .food(FoodMapper.mapToFoodDto(meal.getFood()))
                 .build();
     }
