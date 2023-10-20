@@ -26,12 +26,12 @@ public class BirdTypeController {
     public ResponseEntity<BirdTypeDto> createBirdType(@RequestBody BirdTypeDto birdTypeDto){
         return new ResponseEntity<>(birdTypeService.createBirdType(birdTypeDto), HttpStatus.CREATED);
     }
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteBirdType(@PathVariable("id") Long id){
         birdTypeService.deleteBirdType(id);
         return new ResponseEntity<>("Bird type is deleted.", HttpStatus.OK);
     }
-    @PutMapping("/{id}/update")
+    @PutMapping("/{id}")
     public ResponseEntity<BirdTypeDto> updateBirdType(@PathVariable("id") Long id, @RequestBody BirdTypeDto birdTypeDto){
        return new ResponseEntity<>( birdTypeService.updateBirdType(id, birdTypeDto), HttpStatus.OK);
     }

@@ -42,9 +42,9 @@ public class BirdController {
         return new ResponseEntity<>(birdService.createBird(birdDto), HttpStatus.CREATED);
     }
 
-    @GetMapping("/view/{cageid}")
-    public ResponseEntity<List<BirdDto>> getListBirdsByCage(@PathVariable("cageid")Long cageId){
-        return new ResponseEntity<>(birdService.findByCage(cageId), HttpStatus.OK);
+    @GetMapping("/view/{id}")
+    public ResponseEntity<List<BirdDto>> getListBirdsByCage(@PathVariable("id")Long id){
+        return new ResponseEntity<>(birdService.findByCage(id), HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")

@@ -22,8 +22,8 @@ public class BirdReproductionController {
     public ResponseEntity<List<BirdReproductionDto>> getAllBirdReproductions(){
         return new ResponseEntity<>(birdReproductionService.findAllBirdReproductions(), HttpStatus.OK);
     }
-    @PostMapping("/addegg/{processid}")
-    public ResponseEntity<List<BirdReproductionDto>> addEggToProcess(@PathVariable("processid")Long id, @RequestBody EggDto eggDto){
+    @PostMapping("/addegg/{id}")
+    public ResponseEntity<List<BirdReproductionDto>> addEggToProcess(@PathVariable("id")Long id, @RequestBody EggDto eggDto){
         return new ResponseEntity<>(birdReproductionService.createBirdReproduction(id, eggDto), HttpStatus.CREATED);
     }
 }
