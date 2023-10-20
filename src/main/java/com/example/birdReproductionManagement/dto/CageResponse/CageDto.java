@@ -14,10 +14,10 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class CageDto {
-    private Long id;
+    private String id;
     private String location;
 
-//    private Boolean available;
+    private Boolean available;
     private Integer quantity;
 //    private Boolean inProcess;
 //    private CageTypeDto cageType;

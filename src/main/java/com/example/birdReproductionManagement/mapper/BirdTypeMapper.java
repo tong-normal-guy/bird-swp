@@ -6,7 +6,7 @@ import com.example.birdReproductionManagement.entity.BirdType;
 public class BirdTypeMapper {
     public static BirdType mapToBirdType(BirdTypeDto birdTypeDto){
         return BirdType.builder()
-                .id(birdTypeDto.getId())
+//                .id(birdTypeDto.getId())
                 .name(birdTypeDto.getName())
                 .incubate(birdTypeDto.getIncubate())
                 .chick(birdTypeDto.getChick())
@@ -20,7 +20,7 @@ public class BirdTypeMapper {
 
     public static BirdTypeDto mapToBirdTypeDto(BirdType birdType){
         return BirdTypeDto.builder()
-                .id(birdType.getId())
+                .id(String.valueOf(birdType.getId()))
                 .name(birdType.getName())
                 .incubate(birdType.getIncubate())
                 .chick(birdType.getChick())

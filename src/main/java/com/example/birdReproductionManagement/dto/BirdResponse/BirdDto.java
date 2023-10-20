@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class BirdDto {
-    private Long id;
+    private String id;
     private String sex;
     private Date hatchDate;
     private String ageRange;

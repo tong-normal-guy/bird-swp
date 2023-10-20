@@ -19,7 +19,7 @@ public class MealMapper {
                 .id(meal.getId())
                 .food(meal.getFood())
                 .foodNorm(meal.getFoodNorm())
-                .birdType(BirdTypeMapper.mapToBirdTypeDto(meal.getBirdType()))
+                .birdTypeName(meal.getBirdType().getName())
 //                .food(FoodMapper.mapToFoodDto(meal.getFood()))
                 .build();
     }

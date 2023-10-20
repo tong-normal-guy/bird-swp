@@ -92,7 +92,8 @@ public class CageServiceImpl implements CageService {
 
         Cage cage = cageRepository.findById(id).orElseThrow(()
                 -> new CageNotFoundException("Cage could not be updated."));
-        cageDto.setId(id);
+        Cage updatedCage = CageMapper.mapToCage(cageDto);
+        updatedCage.setId(id);
         return CageMapper.mapToCageDto(cageRepository.save(CageMapper.mapToCage(cageDto)));
     }
 

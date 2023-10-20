@@ -7,7 +7,7 @@ import com.example.birdReproductionManagement.entity.ReproductionProcess;
 public class ReproductionProcessMapper {
     public static ReproductionProcess mapToReproductionProcess(ReproductionProcessDto reproductionProcessDto){
         return ReproductionProcess.builder()
-                .id(reproductionProcessDto.getId())
+//                .id(reproductionProcessDto.getId())
                 .pairingDate(reproductionProcessDto.getPairingDate())
 //                .eggLaidDate(reproductionProcessDto.getEggLaidDate())
                 .expEggHatchDate(reproductionProcessDto.getExpEggHatchDate())
@@ -27,7 +27,7 @@ public class ReproductionProcessMapper {
 
     public static ReproductionProcessDto mapToReproductionProcessDto(ReproductionProcess reproductionProcess){
         return ReproductionProcessDto.builder()
-                .id(reproductionProcess.getId())
+                .id(String.valueOf(reproductionProcess.getId()))
                 .pairingDate(reproductionProcess.getPairingDate())
 //                .eggLaidDate(reproductionProcess.getEggLaidDate())
                 .expEggHatchDate(reproductionProcess.getExpEggHatchDate())

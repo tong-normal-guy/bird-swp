@@ -42,7 +42,8 @@ public class BirdTypeServiceImpl implements BirdTypeService {
     public BirdTypeDto updateBirdType(Long id, BirdTypeDto birdTypeDto) {
         BirdType birdType = birdTypeRepository.findById(id).orElseThrow(()
             -> new BirdTypeNotFoundException("Bird type could not be updated."));
-        birdTypeDto.setId(birdType.getId());
-        return BirdTypeMapper.mapToBirdTypeDto(birdTypeRepository.save(BirdTypeMapper.mapToBirdType(birdTypeDto)));
+        BirdType newBirdType = BirdTypeMapper.mapToBirdType(birdTypeDto);
+        newBirdType.setId(id);
+        return BirdTypeMapper.mapToBirdTypeDto(birdTypeRepository.save(newBirdType));
     }
 }

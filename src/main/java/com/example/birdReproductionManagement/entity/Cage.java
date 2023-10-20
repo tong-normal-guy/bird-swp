@@ -21,8 +21,8 @@ public class Cage {
     private Long id;
     @Column(name = "location", columnDefinition = "nvarchar(255)")
     private String location;
-//    @Column(name = "available")
-//    private Boolean available;
+    @Column(name = "available")
+    private Boolean available;
     @Column(name = "bird_quantity")
     private Integer quantity;
 //    @Column(name = "in_process", columnDefinition = "nvarchar(255)")
@@ -35,7 +35,6 @@ public class Cage {
 
     @OneToMany(mappedBy = "cage", cascade = CascadeType.REMOVE)
     private List<ReproductionProcess> reproductionProcesses = new ArrayList<>();
-
 
     @ManyToOne
     @JoinColumn(name = "user_id")

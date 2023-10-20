@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class BirdTypeDto {
-    private Long id;
+    private String id;
     private String name;
     private Long incubate;
     private Long chick;

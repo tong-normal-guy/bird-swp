@@ -45,10 +45,10 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
                 .map(ReproductionProcessMapper::mapToReproductionProcessDto).collect(Collectors.toList());
         for (ReproductionProcessDto reproductionProcessDto : list){
             BirdReproductionDto cock = BirdReproductionMapper.mapToBirdReproductionDto(birdReproductionRepository
-                    .findByReproductionProcessIdAndReproductionRoleEquals(reproductionProcessDto.getId(), ReproductionRole.FATHER));
+                    .findByReproductionProcessIdAndReproductionRoleEquals(Long.valueOf(reproductionProcessDto.getId()), ReproductionRole.FATHER));
             reproductionProcessDto.setCockReproduction(cock);
             BirdReproductionDto hen = BirdReproductionMapper.mapToBirdReproductionDto(birdReproductionRepository
-                    .findByReproductionProcessIdAndReproductionRoleEquals(reproductionProcessDto.getId(), ReproductionRole.MOTHER));
+                    .findByReproductionProcessIdAndReproductionRoleEquals(Long.valueOf(reproductionProcessDto.getId()), ReproductionRole.MOTHER));
             reproductionProcessDto.setHenReproduction(hen);
         }
         return list;

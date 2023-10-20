@@ -50,8 +50,9 @@ public class BirdServiceImpl implements BirdService {
     public BirdDto updateBird(Long id, BirdDto birdDto) {
         Bird bird = birdRepository.findById(id).orElseThrow(()
                 -> new BirdNotFoundException("Bird could not be updated."));
-        birdDto.setId(bird.getId());
+
         Bird updatedBird = BirdMapper.mapToBird(birdDto);
+        updatedBird.setId(bird.getId());
         updatedBird.setBirdType(bird.getBirdType());
         Cage cage;
         if (!birdDto.getCageId().equals(bird.getCage().getId())){

@@ -7,11 +7,11 @@ import com.example.birdReproductionManagement.entity.Cage;
 public class CageMapper {
     public static Cage mapToCage(CageDto cageDto){
         return Cage.builder()
-                .id(cageDto.getId())
+//                .id(cageDto.getId())
                 .location(cageDto.getLocation())
                 .quantity(cageDto.getQuantity())
+                .available(cageDto.getAvailable())
 //                .cageType(CageTypeMapper.mapToCageType(cageDto.getCageType()))
-
 //                .birdList(cageDto.getBirdList().stream().map(BirdMapper::mapToBird).collect(Collectors.toList()))
 //                .birdCageHistories(cageDto.getBirdCageHistories().stream().map(BirdCageHistoryMapper::mapToBirdCageHistory).collect(Collectors.toList()))
 //                .reproductionProcesses(cageDto.getReproductionProcesses().stream().map(ReproductionProcessMapper::mapToReproductionProcess).collect(Collectors.toList()))
@@ -21,9 +21,10 @@ public class CageMapper {
 
     public static CageDto mapToCageDto(Cage cage){
         return CageDto.builder()
-                .id(cage.getId())
+                .id(String.valueOf(cage.getId()))
                 .location(cage.getLocation())
                 .quantity(cage.getQuantity())
+                .available(cage.getAvailable())
 //                .cageType(CageTypeMapper.mapToCageTypeDto(cage.getCageType()))
 //                .birdList(cage.getBirdList().stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList()))
 //                .birdCageHistories(cage.getBirdCageHistories().stream().map(BirdCageHistoryMapper::mapToBirdCageHistoryDto).collect(Collectors.toList()))
@@ -33,7 +34,7 @@ public class CageMapper {
     }
     public static Cage4ListDTO map2Cage4ListDTO(Cage cage){
         return Cage4ListDTO.builder()
-                .id(cage.getId())
+                .id(String.valueOf(cage.getId()))
                 .location(cage.getLocation())
                 .quantity(cage.getQuantity())
                 .build();
