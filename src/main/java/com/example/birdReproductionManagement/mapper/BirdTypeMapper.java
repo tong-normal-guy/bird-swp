@@ -1,6 +1,7 @@
 package com.example.birdReproductionManagement.mapper;
 
 import com.example.birdReproductionManagement.dto.BirdTypeDto;
+import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.entity.BirdType;
 
 public class BirdTypeMapper {
@@ -29,6 +30,17 @@ public class BirdTypeMapper {
                 .lifeExpectancy(birdType.getLifeExpectancy())
 //                .birdList(birdType.getBirdList().stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList()))
 //                .meals(birdType.getMeals().stream().map(MealMapper::mapToMealDto).collect(Collectors.toList()))
+                .build();
+    }
+
+    public static BirdType4CageDetailDTOResponse map2BirdtypeDTO(BirdType birdType){
+        return BirdType4CageDetailDTOResponse.builder()
+                .typeId(String.valueOf(birdType.getId()))
+                .name(birdType.getName())
+                .incubate(birdType.getIncubate())
+                .chick(birdType.getChick())
+                .swingBranch(birdType.getSwingBranch())
+                .lifeExpectancy(birdType.getLifeExpectancy())
                 .build();
     }
 }

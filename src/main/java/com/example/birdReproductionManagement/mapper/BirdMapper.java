@@ -56,9 +56,9 @@ public class BirdMapper {
 
     public static Bird4CageDetailDTOResponse map2Birdd4CageDetailDTO (Bird bird){
         return Bird4CageDetailDTOResponse.builder()
-                .birdId(bird.getId())
+                .birdId(String.valueOf(bird.getId()))
                 .birdSex(String.valueOf(bird.getSex()))
-                .birdType(String.valueOf(bird.getBirdType()))
+                .birdType(BirdTypeMapper.map2BirdtypeDTO(bird.getBirdType()))
                 .birdMutationRate(bird.getMutationRate())
                 .birdWeight(bird.getWeight())
                 .birdImage(bird.getImage())

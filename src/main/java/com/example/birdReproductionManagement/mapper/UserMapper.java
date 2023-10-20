@@ -32,11 +32,11 @@ public class UserMapper {
                 .build();
     }
 
-    public static User4CageDetailDTOResponse map2User4CageDetailDTO(User user){
+    public static User4CageDetailDTOResponse map2User4CageDetailDTO(User userEntity){
         return User4CageDetailDTOResponse.builder()
-                .id(user.getId())
-                .fullName(user.getFullName())
-                .role(String.valueOf(user.getRole()))
+                .userId(String.valueOf(userEntity.getId()))
+                .fullName(userEntity.getFullName())
+                .role(String.valueOf(userEntity.getRole()))
                 .build();
     }
 }

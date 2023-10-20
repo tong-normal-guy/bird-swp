@@ -33,6 +33,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 
 	@Override
 	public void run(String... args) throws Exception {
+
 		User userAdmin = userRepository.findByUsername(ADMIN);
 		User staff1 = userRepository.findByUsername(STAFF);
 		User staff2 = userRepository.findByUsername(STAFF2);
@@ -60,6 +61,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 
 		Cage cage2;
 		Cage cage22;
+		Cage cage23;
 
 		ReproductionProcess process1;
 		BirdReproduction fatherRe;
@@ -91,7 +93,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 			staff1.setFullName(STAFF);
 			staff1.setUsername(STAFF);
 			staff1.setCreatedBy("admin");
-			staff1.setCreatedDate(new Date(2023 - 1900, 1 - 1, 1));
+			staff1.setCreatedDate(new Date(2022 - 1900, 1 - 1, 1));
 			staff1.setEmail(STAFF + "@gmail.com");
 			staff1.setRole(Role.STAFF);
 ////			 save dtb
@@ -104,7 +106,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 			staff2.setUsername(STAFF2);
 			staff2.setFullName(STAFF2);
 			staff2.setCreatedBy("admin");
-			staff1.setCreatedDate(new Date(2023 - 1900, 1 - 1, 1));
+			staff1.setCreatedDate(new Date(2022 - 1900, 1 - 1, 1));
 			staff2.setEmail(STAFF2 + "@gmail.com");
 			staff2.setRole(Role.STAFF);
 ////			 save dtb
@@ -117,7 +119,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 			staff3.setUsername(STAFF3);
 			staff3.setFullName(STAFF3);
 			staff3.setCreatedBy("admin");
-			staff1.setCreatedDate(new Date(2023 - 1900, 1 - 1, 1));
+			staff1.setCreatedDate(new Date(2022 - 1900, 1 - 1, 1));
 			staff3.setEmail(STAFF3 + "@gmail.com");
 			staff3.setRole(Role.STAFF);
 ////			 save dtb
@@ -130,7 +132,7 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 			staff4.setUsername(STAFF4);
 			staff4.setFullName(STAFF4);
 			staff4.setCreatedBy("admin");
-			staff1.setCreatedDate(new Date(2023 - 1900, 1 - 1, 1));
+			staff1.setCreatedDate(new Date(2022 - 1900, 1 - 1, 1));
 			staff4.setEmail(STAFF4 + "@gmail.com");
 			staff4.setRole(Role.STAFF);
 ////			 save dtb
@@ -151,7 +153,9 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		birdType2.setIncubate(Long.valueOf(16));
 		birdType2.setChick(Long.valueOf(16));
 		birdType2.setSwingBranch(Long.valueOf(7));
+
 //		birdTypeRepository.save(birdType2);
+
 
 		cage = new Cage();
 		cage.setLocation("A01");
@@ -189,7 +193,6 @@ public class BirdReproductionManagementApplication implements CommandLineRunner 
 		bird.setWeight(Float.valueOf(700));
 		bird.setBirdType(birdType);
 		bird.setCage(cage);
-
 //		birdRepository.save(bird);
 
 		bird2 = new Bird();
