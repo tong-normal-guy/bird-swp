@@ -13,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class UserDto {
-    private String id;
+    private String userId;
     private String username;
     private String email;
     private String password;

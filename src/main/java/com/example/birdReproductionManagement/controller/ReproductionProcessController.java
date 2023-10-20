@@ -28,12 +28,12 @@ public class ReproductionProcessController {
     public ResponseEntity<ReproductionProcessDto> addReproductionProcess(@RequestBody PairDTO pairDTO){
         return new ResponseEntity<>(reproductionProcessService.addReproductionProcess(pairDTO), HttpStatus.CREATED);
     }
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteReproductionProcess(@PathVariable("id")Long id){
         reproductionProcessService.deleteReproductionProcess(id);
         return new ResponseEntity<>("Reproduction process is deleted.", HttpStatus.OK);
     }
-    @PutMapping("/updated/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ReproductionProcessDto> updateReproductionProcess(@PathVariable("id")Long id,
                                                                             @RequestBody ReproductionProcessDto reproductionProcessDto){
         return new ResponseEntity<>(reproductionProcessService.updateReproductionProcess(id, reproductionProcessDto), HttpStatus.OK);

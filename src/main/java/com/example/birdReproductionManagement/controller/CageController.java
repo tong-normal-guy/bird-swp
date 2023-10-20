@@ -32,7 +32,7 @@ public class CageController {
     public ResponseEntity<List<CageDetailDTOResponse>> pickaCages(@RequestParam(name = "process",defaultValue = "false") Boolean process){
         return new ResponseEntity<>(cageService.pickaCages(process), HttpStatus.OK);
     }
-    @PostMapping ("/add")
+    @PostMapping ("/create")
     public ResponseEntity<CageDto> addCage(@RequestBody CageDto cageDto){
         return new ResponseEntity<>(cageService.addCage(cageDto), HttpStatus.CREATED);
     }

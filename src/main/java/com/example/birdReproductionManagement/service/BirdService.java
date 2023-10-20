@@ -13,5 +13,5 @@ public interface BirdService {
 
     BirdDto createBird(BirdDto birdDto);
     List<BirdDto> findByCage(Long id);
-    BirdDto updateBirdByFields(Long id, Map<String, Object> fields);
+    BirdDto updateBirdByFields(Long id, BirdDto birdDto);
 }

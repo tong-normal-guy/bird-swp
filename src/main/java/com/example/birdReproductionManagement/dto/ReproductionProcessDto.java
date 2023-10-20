@@ -13,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class ReproductionProcessDto {
-    private String id;
+    private String processId;
     private Date pairingDate;
     private Date eggLaidDate;
     private Date expEggHatchDate;
@@ -24,7 +24,7 @@ public class ReproductionProcessDto {
     private Integer failEgg;
     private Boolean isDone;
     private CageDto cage;
-    private Long cageId;
+    private String cageId;
     private BirdReproductionDto cockReproduction;
     private BirdReproductionDto henReproduction;
 //    private List<BirdReproductionDto> birdReproductions;
