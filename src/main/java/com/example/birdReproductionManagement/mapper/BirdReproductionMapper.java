@@ -26,7 +26,7 @@ public class BirdReproductionMapper {
     public static BirdReproductionDto mapToBirdReproductionDto (BirdReproduction birdReproduction){
         if(birdReproduction.getReproductionRole().name().equals("EGG")){
             return BirdReproductionDto.builder()
-                    .id(String.valueOf(birdReproduction.getId()))
+                    .reproductionId(String.valueOf(birdReproduction.getId()))
 //                    .bird(BirdMapper.mapToBirdDto(birdReproduction.getBird()))
                     .eggLaidDate(birdReproduction.getEggLaidDate())
                     .actEggHatchDate(birdReproduction.getActEggHatchDate())
@@ -37,12 +37,12 @@ public class BirdReproductionMapper {
                     .isFail(birdReproduction.isFail())
                     .failDate(birdReproduction.getFailDate())
 //                .reproductionProcess(ReproductionProcessMapper.mapToReproductionProcessDto(birdReproduction.getReproductionProcess()))
-                    .reproductionProcessId(birdReproduction.getReproductionProcess().getId())
+                    .reproductionProcessId(String.valueOf(birdReproduction.getReproductionProcess().getId()))
                     .reproductionRole(String.valueOf(birdReproduction.getReproductionRole()))
                     .build();
         }
         return BirdReproductionDto.builder()
-                .id(String.valueOf(birdReproduction.getId()))
+                .reproductionId(String.valueOf(birdReproduction.getId()))
                 .bird(BirdMapper.mapToBirdDto(birdReproduction.getBird()))
                 .eggLaidDate(birdReproduction.getEggLaidDate())
                 .actEggHatchDate(birdReproduction.getActEggHatchDate())
@@ -53,7 +53,7 @@ public class BirdReproductionMapper {
                 .isFail(birdReproduction.isFail())
                 .failDate(birdReproduction.getFailDate())
 //                .reproductionProcess(ReproductionProcessMapper.mapToReproductionProcessDto(birdReproduction.getReproductionProcess()))
-                .reproductionProcessId(birdReproduction.getReproductionProcess().getId())
+                .reproductionProcessId(String.valueOf(birdReproduction.getReproductionProcess().getId()))
                 .reproductionRole(String.valueOf(birdReproduction.getReproductionRole()))
                 .build();
     }

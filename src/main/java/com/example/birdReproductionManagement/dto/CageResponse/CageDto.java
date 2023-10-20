@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class CageDto {
-    private String id;
+    private String cageId;
     private String location;
 
     private Boolean available;

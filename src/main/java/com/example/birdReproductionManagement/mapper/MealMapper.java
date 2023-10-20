@@ -16,7 +16,7 @@ public class MealMapper {
 
     public static MealDto mapToMealDto(Meal meal){
         return MealDto.builder()
-                .id(String.valueOf(meal.getId()))
+                .mealId(String.valueOf(meal.getId()))
                 .food(meal.getFood())
                 .foodNorm(meal.getFoodNorm())
                 .birdTypeName(meal.getBirdType().getName())

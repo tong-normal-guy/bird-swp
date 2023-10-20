@@ -15,7 +15,7 @@ public class BirdCageHistoryMapper {
 
     public static BirdCageHistoryDto mapToBirdCageHistoryDto(BirdCageHistory birdCageHistory){
         return BirdCageHistoryDto.builder()
-                .id(String.valueOf(birdCageHistory.getId()))
+                .historyId(String.valueOf(birdCageHistory.getId()))
                 .implDate(birdCageHistory.getImplDate())
                 .bird(BirdMapper.mapToBirdDto(birdCageHistory.getBird()))
                 .cage(CageMapper.mapToCageDto(birdCageHistory.getCage()))

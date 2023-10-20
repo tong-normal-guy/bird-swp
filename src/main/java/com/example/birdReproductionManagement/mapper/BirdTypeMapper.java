@@ -21,7 +21,7 @@ public class BirdTypeMapper {
 
     public static BirdTypeDto mapToBirdTypeDto(BirdType birdType){
         return BirdTypeDto.builder()
-                .id(String.valueOf(birdType.getId()))
+                .typeId(String.valueOf(birdType.getId()))
                 .name(birdType.getName())
                 .incubate(birdType.getIncubate())
                 .chick(birdType.getChick())

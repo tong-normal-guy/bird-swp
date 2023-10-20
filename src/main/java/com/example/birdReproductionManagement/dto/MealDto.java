@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class MealDto {
-    private String id;
+    private String mealId;
     private String food;
     private String foodNorm;
 //    private BirdTypeDto birdType;

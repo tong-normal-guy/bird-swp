@@ -21,7 +21,7 @@ public class UserMapper {
 
     public static UserDto mapToUserDto(User user){
         return UserDto.builder()
-                .id(String.valueOf(user.getId()))
+                .userId(String.valueOf(user.getId()))
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .password(user.getPassword())

@@ -55,8 +55,8 @@ public class BirdServiceImpl implements BirdService {
         updatedBird.setId(bird.getId());
         updatedBird.setBirdType(bird.getBirdType());
         Cage cage;
-        if (!birdDto.getCageId().equals(bird.getCage().getId())){
-            cage =  cageRepository.findById(birdDto.getCageId()).orElseThrow(()
+        if (!Long.valueOf(birdDto.getCageId()).equals(bird.getCage().getId())){
+            cage =  cageRepository.findById(Long.valueOf(birdDto.getCageId())).orElseThrow(()
                     -> new CageNotFoundException("Bird could not be updated."));
             Cage oldCage = cageRepository.findById(bird.getCage().getId()).orElseThrow(()
                     -> new CageNotFoundException("Bird could not be updated."));
@@ -82,7 +82,7 @@ public class BirdServiceImpl implements BirdService {
     @Override
     public BirdDto createBird(BirdDto birdDto) {
         BirdType birdType = birdTypeRepository.findByName(birdDto.getBirdTypeName());
-        Cage cage = cageRepository.findById(birdDto.getCageId()).orElseThrow(()
+        Cage cage = cageRepository.findById(Long.valueOf(birdDto.getCageId())).orElseThrow(()
             -> new CageNotFoundException("Bird could not be created."));
         Bird bird = BirdMapper.mapToBird(birdDto);
         bird.setBirdType(birdType);
@@ -98,22 +98,35 @@ public class BirdServiceImpl implements BirdService {
     }
 
     @Override
-    public BirdDto updateBirdByFields(Long id, Map<String, Object> fields) {
+    public BirdDto updateBirdByFields(Long id, BirdDto birdDto) {
         Bird bird = birdRepository.findById(id).orElseThrow(()
                 -> new BirdNotFoundException("Bird could not be updated."));
-//        if (fields.containsKey("cageId")){
-//            Cage cage = cageRepository.findById(Long.parseLong((String) fields.get("cageId"))).orElseThrow(()
-//                    -> new CageNotFoundException("Bird could not be updated."));
-//            bird.setCage(cage);
-//        }
-        if(bird != null){
-            fields.forEach((key, value) -> {
-                Field field = ReflectionUtils.findField(Bird.class, key);
-                field.setAccessible(true);
-                ReflectionUtils.setField(field, bird, value);
-            });
-            return BirdMapper.mapToBirdDto(birdRepository.save(bird));
+        Bird finalBird = bird;
+        ReflectionUtils.doWithFields(birdDto.getClass(), field -> {
+            field.setAccessible(true); // Đảm bảo rằng chúng ta có thể truy cập các trường private
+            Object newValue = field.get(birdDto);
+            if (newValue != null) { // lấy các giá trị ko null
+                String fieldName = field.getName();
+                // Kiểm tra nếu trường đang xem xét không phải là userPermission
+                if (!fieldName.equals("cageId")) {
+                    Field existingField = ReflectionUtils.findField(finalBird.getClass(), fieldName);
+                    if (existingField != null) {
+                        existingField.setAccessible(true);
+                        ReflectionUtils.setField(existingField, finalBird, newValue);
+                    }
+                }
+            }
+        });
+        Cage cage = null;
+        if(birdDto.getCageId() != null){
+            cage = cageRepository.findById(Long.valueOf(birdDto.getCageId())).orElseThrow(
+                    () -> new CageNotFoundException("Cage could not be found in updateBirdByFields with" + birdDto.getCageId()));
+
         }
-        return null;
+        bird = finalBird;
+        bird.setCage(cage);
+        return BirdMapper.mapToBirdDto(birdRepository.save(bird));
     }
+
+
 }

@@ -33,7 +33,7 @@ public class BirdMapper {
 
     public static BirdDto mapToBirdDto(Bird bird){
         return BirdDto.builder()
-                .id(String.valueOf(bird.getId()))
+                .birdId(String.valueOf(bird.getId()))
                 .sex(bird.getSex().name())
                 .hatchDate(bird.getHatchDate())
                 .ageRange(bird.getAgeRange())
@@ -44,8 +44,8 @@ public class BirdMapper {
                 .featherColor(bird.getFeatherColor())
                 .weight(bird.getWeight())
                 .birdTypeName(bird.getBirdType().getName())
-                .cageId(bird.getCage().getId())
-//                .birdType(BirdTypeMapper.mapToBirdTypeDto(bird.getBirdType()))
+                .cageId(String.valueOf(bird.getCage().getId()))
+                .birdType(BirdTypeMapper.mapToBirdTypeDto(bird.getBirdType()))
 //                .birdListOfFather(bird.getBirdListOfFather().stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList()))
 //                .birdListOfMother(bird.getBirdListOfMother().stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList()))
 //                .cage(CageMapper.mapToCageDto(bird.getCage()))

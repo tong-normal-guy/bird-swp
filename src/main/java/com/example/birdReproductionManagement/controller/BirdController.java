@@ -48,7 +48,7 @@ public class BirdController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<BirdDto> updateBirdByFields(@PathVariable("id")Long id, @RequestBody Map<String, Object> fields){
-        return new ResponseEntity<>(birdService.updateBirdByFields(id, fields), HttpStatus.OK);
+    public ResponseEntity<BirdDto> updateBirdByFields(@PathVariable("id")Long id, @RequestBody BirdDto birdDto){
+        return new ResponseEntity<>(birdService.updateBirdByFields(id, birdDto), HttpStatus.OK);
     }
 }

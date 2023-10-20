@@ -21,7 +21,7 @@ public class CageMapper {
 
     public static CageDto mapToCageDto(Cage cage){
         return CageDto.builder()
-                .id(String.valueOf(cage.getId()))
+                .cageId(String.valueOf(cage.getId()))
                 .location(cage.getLocation())
                 .quantity(cage.getQuantity())
                 .available(cage.getAvailable())

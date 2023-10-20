@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class PairDTO {
-    private Long cageId;
-    private Long cockId;
-    private Long henId;
+    private String cageId;
+    private String cockId;
+    private String henId;
 }

@@ -27,7 +27,7 @@ public class ReproductionProcessMapper {
 
     public static ReproductionProcessDto mapToReproductionProcessDto(ReproductionProcess reproductionProcess){
         return ReproductionProcessDto.builder()
-                .id(String.valueOf(reproductionProcess.getId()))
+                .processId(String.valueOf(reproductionProcess.getId()))
                 .pairingDate(reproductionProcess.getPairingDate())
 //                .eggLaidDate(reproductionProcess.getEggLaidDate())
                 .expEggHatchDate(reproductionProcess.getExpEggHatchDate())

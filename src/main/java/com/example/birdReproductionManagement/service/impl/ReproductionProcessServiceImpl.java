@@ -45,10 +45,10 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
                 .map(ReproductionProcessMapper::mapToReproductionProcessDto).collect(Collectors.toList());
         for (ReproductionProcessDto reproductionProcessDto : list){
             BirdReproductionDto cock = BirdReproductionMapper.mapToBirdReproductionDto(birdReproductionRepository
-                    .findByReproductionProcessIdAndReproductionRoleEquals(Long.valueOf(reproductionProcessDto.getId()), ReproductionRole.FATHER));
+                    .findByReproductionProcessIdAndReproductionRoleEquals(Long.valueOf(reproductionProcessDto.getProcessId()), ReproductionRole.FATHER));
             reproductionProcessDto.setCockReproduction(cock);
             BirdReproductionDto hen = BirdReproductionMapper.mapToBirdReproductionDto(birdReproductionRepository
-                    .findByReproductionProcessIdAndReproductionRoleEquals(Long.valueOf(reproductionProcessDto.getId()), ReproductionRole.MOTHER));
+                    .findByReproductionProcessIdAndReproductionRoleEquals(Long.valueOf(reproductionProcessDto.getProcessId()), ReproductionRole.MOTHER));
             reproductionProcessDto.setHenReproduction(hen);
         }
         return list;
@@ -60,8 +60,8 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
     @Override
 
     public ReproductionProcessDto addReproductionProcess(PairDTO pairDTO) {
-        Cage cage = cageRepository.findById(pairDTO.getCageId()).orElseThrow(()
-                -> new ReproductionProcessNotFoundException("Reproduction process could not be created."));
+        Cage cage = cageRepository.findById(Long.valueOf(pairDTO.getCageId())).orElseThrow(()
+                -> new ReproductionProcessNotFoundException("Cage could not be found in addReproductionProcess."));
         ReproductionProcess reproductionProcess = new ReproductionProcess();
         reproductionProcess.setCage(cage);
         reproductionProcess.setPairingDate(new Date());
@@ -70,12 +70,12 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
         ReproductionProcess newProcess = reproductionProcessRepository.save(reproductionProcess);
 
         BirdReproduction cock = new BirdReproduction();
-        cock.setBird(birdRepository.findById(pairDTO.getCockId()).orElseThrow(()
-                -> new BirdNotFoundException("Reproduction process could not be created.")));
+        cock.setBird(birdRepository.findById(Long.valueOf(pairDTO.getCockId())).orElseThrow(()
+                -> new BirdNotFoundException("Cock could not be found in addReproductionProcess.")));
 
         BirdReproduction hen = new BirdReproduction();
-        hen.setBird(birdRepository.findById(pairDTO.getHenId()).orElseThrow(()
-                -> new BirdNotFoundException("Reproduction process could not be created.")));
+        hen.setBird(birdRepository.findById(Long.valueOf(pairDTO.getHenId())).orElseThrow(()
+                -> new BirdNotFoundException("Hen could not be found in addReproductionProcess.")));
 
         if(!cock.getBird().getBirdType().getName().equals(hen.getBird().getBirdType().getName())){
             reproductionProcessRepository.delete(reproductionProcess);
@@ -107,7 +107,7 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
     public ReproductionProcessDto updateReproductionProcess(Long id, ReproductionProcessDto reproductionProcessDto) {
         ReproductionProcess reproductionProcess = reproductionProcessRepository.findById(id).orElseThrow(()
                 -> new ReproductionProcessNotFoundException("Reproduction process could not be updated."));
-        Cage cage = cageRepository.findById(reproductionProcessDto.getCageId()).orElseThrow(()
+        Cage cage = cageRepository.findById(Long.valueOf(reproductionProcessDto.getCageId())).orElseThrow(()
                 -> new ReproductionProcessNotFoundException("Reproduction process could not be updated."));
         reproductionProcessDto.setCage(CageMapper.mapToCageDto(cage));
         return ReproductionProcessMapper.mapToReproductionProcessDto(reproductionProcessRepository.save(ReproductionProcessMapper.mapToReproductionProcess(reproductionProcessDto)));

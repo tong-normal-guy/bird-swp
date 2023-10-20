@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class BirdReproductionDto {
-    private String id;
+    private String reproductionId;
     private BirdDto bird;
     private Date eggLaidDate;
     private Date actEggHatchDate;
@@ -25,6 +25,6 @@ public class BirdReproductionDto {
     private boolean isFail;
     private Date failDate;
     private ReproductionProcessDto reproductionProcess;
-    private Long reproductionProcessId;
+    private String reproductionProcessId;
     private String reproductionRole;
 }
