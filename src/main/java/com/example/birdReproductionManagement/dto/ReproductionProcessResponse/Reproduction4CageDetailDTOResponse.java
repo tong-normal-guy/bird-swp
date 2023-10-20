@@ -9,7 +9,7 @@ import java.util.Date;
 @Getter
 @Builder
 public class Reproduction4CageDetailDTOResponse {
-    private Long processId;
+    private String processId;
     private Date pairingDate;
     private String stage;
     private Integer failEgg;

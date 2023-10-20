@@ -50,4 +50,6 @@ public class CageController {
     public ResponseEntity<List<CageDto>> findByLocation(@PathVariable("location")String location){
         return new ResponseEntity<>(cageService.findByLocation(location), HttpStatus.OK);
     }
+
+
 }

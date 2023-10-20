@@ -81,7 +81,7 @@ public class CageServiceImpl implements CageService {
             }
 
             // mapper to CageDetailDTOResponse
-            cageDetailDTOResponse.setCageId(cage.getId());
+            cageDetailDTOResponse.setCageId(String.valueOf(cage.getId()));
             cageDetailDTOResponse.setLocation(cage.getLocation());
             cageDetailDTOResponse.setQuantity(cage.getQuantity());
 

@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class CageDetailDTOResponse {
-    private Long cageId;
+    private String cageId;
     private String location;
     private int quantity;
 
