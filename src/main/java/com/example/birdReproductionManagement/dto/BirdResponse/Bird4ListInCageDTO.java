@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class Bird4ListInCageDTO {
-    private Long id;
+    private Long birdId;
 //    private
 }

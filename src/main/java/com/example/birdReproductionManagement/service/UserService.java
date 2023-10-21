@@ -5,7 +5,9 @@ import com.example.birdReproductionManagement.dto.UserDto;
 import java.util.List;
 
 public interface UserService {
-    List<UserDto> findAllStaffs();
+    List<UserDto> findAllUsers();
+    List<UserDto> findUserByRole(String role);
     UserDto addUser(UserDto userDto);
     UserDto updateUser(Long id, UserDto userDto);
+    UserDto updateUserByFields(Long id, UserDto userDto);
 }

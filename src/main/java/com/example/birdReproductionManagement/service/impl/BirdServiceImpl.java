@@ -117,15 +117,30 @@ public class BirdServiceImpl implements BirdService {
                 }
             }
         });
-        Cage cage = null;
+//        Cage cage = null;
         if(birdDto.getCageId() != null){
-            cage = cageRepository.findById(Long.valueOf(birdDto.getCageId())).orElseThrow(
+            Cage cage = cageRepository.findById(Long.valueOf(birdDto.getCageId())).orElseThrow(
                     () -> new CageNotFoundException("Cage could not be found in updateBirdByFields with" + birdDto.getCageId()));
-
+            Cage oldCage = cageRepository.findById(bird.getCage().getId()).orElseThrow(
+                    () -> new CageNotFoundException("Cage could not be found in updateBirdByFields with" + birdDto.getCageId()));
+            oldCage.setQuantity(oldCage.getQuantity() - 1);
+            cage.setQuantity(cage.getQuantity() + 1);
+            cageRepository.save(oldCage);
+            cageRepository.save(cage);
+            finalBird.setCage(cage);
         }
+//        else{
+//            cage = cageRepository.findById(bird.getCage().getId()).orElseThrow(
+//                    () -> new CageNotFoundException("Cage could not be found in updateBirdByFields with" + birdDto.getCageId()));
+//        }
         bird = finalBird;
-        bird.setCage(cage);
+//        bird.setCage(cage);
         return BirdMapper.mapToBirdDto(birdRepository.save(bird));
+    }
+
+    @Override
+    public List<BirdDto> findBySex(String sex) {
+        return birdRepository.findBySexIs(Sex.valueOf(sex)).stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList());
     }
 
 
