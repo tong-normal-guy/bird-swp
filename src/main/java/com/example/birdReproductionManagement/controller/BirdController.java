@@ -51,4 +51,9 @@ public class BirdController {
     public ResponseEntity<BirdDto> updateBirdByFields(@PathVariable("id")Long id, @RequestBody BirdDto birdDto){
         return new ResponseEntity<>(birdService.updateBirdByFields(id, birdDto), HttpStatus.OK);
     }
+
+    @GetMapping("/sex/{sex}")
+    public ResponseEntity<List<BirdDto>> findBirdBySex(@PathVariable("sex")String sex){
+        return new ResponseEntity<>(birdService.findBySex(sex), HttpStatus.OK);
+    }
 }

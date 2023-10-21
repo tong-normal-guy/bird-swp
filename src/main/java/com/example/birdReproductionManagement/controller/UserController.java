@@ -14,24 +14,33 @@ import java.util.List;
 @RequestMapping("/api/users")
 @CrossOrigin(origins = "*")
 public class UserController {
-    private UserService userEntityService;
+    private UserService userService;
     @Autowired
 
     public UserController(UserService userEntityService) {
-        this.userEntityService = userEntityService;
+        this.userService = userEntityService;
     }
-    @GetMapping("/staffs")
-    public ResponseEntity<List<UserDto>> getListStaffs(){
-        return new ResponseEntity<>(userEntityService.findAllStaffs(), HttpStatus.OK);
+    @GetMapping("/view")
+    public ResponseEntity<List<UserDto>> getAllUsers(){
+        return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.OK);
+    }
+    @GetMapping("/{role}")
+    public ResponseEntity<List<UserDto>> getListByRole(@PathVariable("role")String role){
+        return new ResponseEntity<>(userService.findUserByRole(role), HttpStatus.OK);
     }
 
     @PostMapping("/create")
     public ResponseEntity<UserDto> createStaff(@RequestBody UserDto userDto){
-        return new ResponseEntity<>(userEntityService.addUser(userDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.addUser(userDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserDto> updateStaff(@PathVariable("id")Long id, @RequestBody UserDto userDto){
-        return new ResponseEntity<>(userEntityService.updateUser(id, userDto), HttpStatus.OK);
+        return new ResponseEntity<>(userService.updateUser(id, userDto), HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<UserDto> updateUserByFields(@PathVariable("id")Long id, @RequestBody UserDto userDto){
+        return new ResponseEntity<>(userService.updateUserByFields(id, userDto), HttpStatus.OK);
     }
 }

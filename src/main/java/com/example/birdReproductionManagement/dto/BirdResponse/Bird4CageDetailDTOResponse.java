@@ -13,12 +13,12 @@ import java.util.Date;
 @Builder
 public class Bird4CageDetailDTOResponse {
     private String birdId;
-    private String birdSex;//
+    private String sex;//
 //    private String birdType;//
     private BirdType4CageDetailDTOResponse birdType;//
-    private Float birdMutationRate;//
-    private Float birdWeight;//
-    private String birdImage;//
+    private Float mutationRate;//
+    private Float weight;//
+    private String image;//
 
     //bird id?
 

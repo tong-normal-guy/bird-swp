@@ -34,7 +34,7 @@ public class CageMapper {
     }
     public static Cage4ListDTO map2Cage4ListDTO(Cage cage){
         return Cage4ListDTO.builder()
-                .id(String.valueOf(cage.getId()))
+                .cageId(String.valueOf(cage.getId()))
                 .location(cage.getLocation())
                 .quantity(cage.getQuantity())
                 .build();

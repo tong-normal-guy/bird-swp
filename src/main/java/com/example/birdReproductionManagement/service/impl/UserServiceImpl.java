@@ -11,7 +11,9 @@ import com.example.birdReproductionManagement.repository.UserRepository;
 import com.example.birdReproductionManagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,9 +24,17 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
     @Override
-    public List<UserDto> findAllStaffs() {
-        return userRepository.findAllByRole(Role.valueOf("STAFF")).stream()
+    public List<UserDto> findAllUsers() {
+        List<User> userList = userRepository.findAll();
+        List<UserDto> userDtoList = userList.stream().map(UserMapper::mapToUserDto).collect(Collectors.toList());
+        return userDtoList;
+    }
+
+    @Override
+    public List<UserDto> findUserByRole(String role) {
+        return userRepository.findAllByRole(Role.valueOf(role)).stream()
                 .map(UserMapper::mapToUserDto).collect(Collectors.toList());
     }
 
@@ -50,6 +60,32 @@ public class UserServiceImpl implements UserService {
         User newUser = UserMapper.mapToUser(userDto);
         newUser.setId(user.getId());
         return UserMapper.mapToUserDto(userRepository.save(newUser));
+    }
+
+    @Override
+    public UserDto updateUserByFields(Long id, UserDto userDto) {
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new UserNotFoundException("User could not be found in updateUserByFields."));
+        User finalUser = user;
+        ReflectionUtils.doWithFields(userDto.getClass(), field -> {
+            field.setAccessible(true);
+            Object newValue = field.get(userDto);
+            if(newValue != null){
+                String fieldName = field.getName();
+                if(!fieldName.equals("role")){
+                    Field existingField = ReflectionUtils.findField(finalUser.getClass(), fieldName);
+                    if(existingField != null){
+                        existingField.setAccessible(true);
+                        ReflectionUtils.setField(existingField, finalUser, newValue);
+                    }
+                }
+            }
+        });
+        user = finalUser;
+        if(userDto.getRole() != null){
+            user.setRole(Role.valueOf(userDto.getRole()));
+        }
+        return UserMapper.mapToUserDto(userRepository.save(user));
     }
 
 }

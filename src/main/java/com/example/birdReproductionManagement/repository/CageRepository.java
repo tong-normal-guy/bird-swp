@@ -12,4 +12,6 @@ public interface CageRepository extends JpaRepository<Cage, Long> {
     @Query("SELECT c FROM Cage c WHERE c.location LIKE 'B%'")
     List<Cage> findCagesWithLocationStartingWithB();
     List<Cage> findByLocationContains(String location);
+
+    List<Cage> findByLocationContainsAndAvailableIsTrue(String location);
 }

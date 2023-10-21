@@ -12,7 +12,8 @@ public interface CageService {
     CageDto getDetailById(Long id);
     CageDto addCage(CageDto cageDto);
     CageDto updateCage(Long id, CageDto cageDto);
+    CageDto updateCageByFields(Long id, CageDto cageDto);
     void deleteCage(Long id);
-    List<CageDto> findByLocation(String location);
+    List<CageDto> findByLocation(String location, boolean available);
 
 }
