@@ -108,7 +108,7 @@ public class BirdServiceImpl implements BirdService {
             if (newValue != null) { // lấy các giá trị ko null
                 String fieldName = field.getName();
                 // Kiểm tra nếu trường đang xem xét không phải là userPermission
-                if (!fieldName.equals("cageId")) {
+                if (!fieldName.equals("cageId") && !fieldName.equals("sex") && !fieldName.equals("birdTypeName")) {
                     Field existingField = ReflectionUtils.findField(finalBird.getClass(), fieldName);
                     if (existingField != null) {
                         existingField.setAccessible(true);
@@ -128,6 +128,13 @@ public class BirdServiceImpl implements BirdService {
             cageRepository.save(oldCage);
             cageRepository.save(cage);
             finalBird.setCage(cage);
+        }
+        if(birdDto.getBirdTypeName() != null){
+            BirdType birdType = birdTypeRepository.findByName(birdDto.getBirdTypeName());
+            finalBird.setBirdType(birdType);
+        }
+        if(birdDto.getSex() != null){
+            finalBird.setSex(Sex.valueOf(birdDto.getSex()));
         }
 //        else{
 //            cage = cageRepository.findById(bird.getCage().getId()).orElseThrow(
