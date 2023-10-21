@@ -6,6 +6,7 @@ import com.example.birdReproductionManagement.dto.CageResponse.CageDto;
 import com.example.birdReproductionManagement.dto.ReproductionProcessResponse.Reproduction4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.UserResponse.User4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.exceptions.CageNotFoundException;
+import com.example.birdReproductionManagement.exceptions.UserNotFoundException;
 import com.example.birdReproductionManagement.mapper.*;
 import com.example.birdReproductionManagement.entity.BirdReproduction;
 import com.example.birdReproductionManagement.entity.Cage;
@@ -17,7 +18,9 @@ import com.example.birdReproductionManagement.repository.ReproductionProcessRepo
 import com.example.birdReproductionManagement.service.CageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -111,6 +114,7 @@ public class CageServiceImpl implements CageService {
     @Override
     public CageDto addCage(CageDto cageDto) {
         cageDto.setQuantity(0);
+        cageDto.setAvailable(true);
         return CageMapper.mapToCageDto(cageRepository.save(CageMapper.mapToCage(cageDto)));
     }
 
@@ -125,6 +129,27 @@ public class CageServiceImpl implements CageService {
     }
 
     @Override
+    public CageDto updateCageByFields(Long id, CageDto cageDto) {
+        Cage cage = cageRepository.findById(id).orElseThrow(
+                () -> new UserNotFoundException("User could not be found in updateCageByFields."));
+        Cage finalCage = cage;
+        ReflectionUtils.doWithFields(cageDto.getClass(), field -> {
+            field.setAccessible(true);
+            Object newValue = field.get(cageDto);
+            if(newValue != null){
+                String fieldName = field.getName();
+                Field existingField = ReflectionUtils.findField(finalCage.getClass(), fieldName);
+                if(existingField != null){
+                    existingField.setAccessible(true);
+                    ReflectionUtils.setField(existingField, finalCage, newValue);
+                }
+            }
+        });
+        cage = finalCage;
+        return CageMapper.mapToCageDto(cageRepository.save(cage));
+    }
+
+    @Override
     public void deleteCage(Long id) {
         Cage cage = cageRepository.findById(id).orElseThrow(()
                 -> new CageNotFoundException("Cage could not be deleted."));
@@ -132,8 +157,12 @@ public class CageServiceImpl implements CageService {
     }
 
     @Override
-    public List<CageDto> findByLocation(String location) {
-        return cageRepository.findByLocationContains(location).stream().map(CageMapper::mapToCageDto)
+    public List<CageDto> findByLocation(String location, boolean available) {
+        if(!available){
+            return cageRepository.findByLocationContains(location).stream().map(CageMapper::mapToCageDto)
+                    .collect(Collectors.toList());
+        }
+        return cageRepository.findByLocationContainsAndAvailableIsTrue(location).stream().map(CageMapper::mapToCageDto)
                 .collect(Collectors.toList());
     }
 

@@ -44,14 +44,18 @@ public class CageController {
     public ResponseEntity<CageDto> updateCage(@PathVariable("id")Long id, @RequestBody CageDto cageDto){
         return new ResponseEntity<>(cageService.updateCage(id, cageDto), HttpStatus.OK);
     }
+    @PatchMapping("/{id}")
+    public ResponseEntity<CageDto> updateCageByFields(@PathVariable("id")Long id, @RequestBody CageDto cageDto){
+        return new ResponseEntity<>(cageService.updateCageByFields(id, cageDto), HttpStatus.OK);
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCage(@PathVariable("id")Long id){
         cageService.deleteCage(id);
         return new ResponseEntity<>("Cage id deleted.", HttpStatus.OK);
     }
     @GetMapping("/location/{location}")
-    public ResponseEntity<List<CageDto>> findByLocation(@PathVariable("location")String location){
-        return new ResponseEntity<>(cageService.findByLocation(location), HttpStatus.OK);
+    public ResponseEntity<List<CageDto>> findByLocation(@PathVariable("location")String location, @RequestParam(name = "available", defaultValue = "false")boolean available){
+        return new ResponseEntity<>(cageService.findByLocation(location, available), HttpStatus.OK);
     }
 
 

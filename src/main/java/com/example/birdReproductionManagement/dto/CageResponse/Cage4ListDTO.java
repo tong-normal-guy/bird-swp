@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Cage4ListDTO { // bo this
-    private String id;
+    private String cageId;
     private String location;
     private int quantity;
 //    private Process4CageDetailDTOResponse reproductionProces;

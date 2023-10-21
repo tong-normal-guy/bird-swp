@@ -13,4 +13,6 @@ public interface CageRepository extends JpaRepository<Cage, Long> {
     List<Cage> findCagesWithLocationStartingWithB();
     List<Cage> findAllByQuantity(int quantity);
     List<Cage> findByLocationContains(String location);
+
+    List<Cage> findByLocationContainsAndAvailableIsTrue(String location);
 }
