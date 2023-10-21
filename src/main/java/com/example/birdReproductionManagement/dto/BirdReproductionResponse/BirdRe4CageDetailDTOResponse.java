@@ -11,7 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class BirdRe4CageDetailDTOResponse {
-    private String birdReproductionId;
+    private String reproductionId;
     private Date eggLaidDate;
     private String reproductionRole;
     private String eggStatus;

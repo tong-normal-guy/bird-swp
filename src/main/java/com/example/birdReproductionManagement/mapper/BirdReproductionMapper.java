@@ -60,7 +60,7 @@ public class BirdReproductionMapper {
 
     public static BirdRe4CageDetailDTOResponse map2Bird4CageDetailDTO(BirdReproduction birdReproduction){
         return BirdRe4CageDetailDTOResponse.builder()
-                .birdReproductionId(String.valueOf(birdReproduction.getId()))
+                .reproductionId(String.valueOf(birdReproduction.getId()))
                 .eggLaidDate(birdReproduction.getEggLaidDate())
                 .reproductionRole(String.valueOf(birdReproduction.getReproductionRole()))
                 .eggStatus(String.valueOf(birdReproduction.getEggStatus()))
