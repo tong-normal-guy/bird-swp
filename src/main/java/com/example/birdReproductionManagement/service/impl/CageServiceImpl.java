@@ -33,6 +33,12 @@ public class CageServiceImpl implements CageService {
 //    private
 
     @Override
+    public List<CageDto> viewCageUsable() {
+        List<Cage> cages = cageRepository.findAllByQuantity(0);
+        return cages.stream().map(CageMapper::mapToCageDto).collect(Collectors.toList());
+    }
+
+    @Override
     public List<CageDto> findAllCages() {
         return cageRepository.findAll().stream().map(CageMapper::mapToCageDto).collect(Collectors.toList());
     }
