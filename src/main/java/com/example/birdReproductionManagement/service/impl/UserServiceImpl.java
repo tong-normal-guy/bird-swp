@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> findUserByRole(String role) {
-        return userRepository.findAllByRole(Role.valueOf(role)).stream()
+        return userRepository.findAllByRole(Role.valueOf(role.toUpperCase())).stream()
                 .map(UserMapper::mapToUserDto).collect(Collectors.toList());
     }
 
@@ -46,6 +47,8 @@ public class UserServiceImpl implements UserService {
         if(userRepository.findByEmail(userDto.getEmail()) != null){
             throw new UserEmailExistedException("User email is existed.");
         }
+        userDto.setCreatedDate(new Date());
+        userDto.setRole(userDto.getRole().toUpperCase());
         User user = UserMapper.mapToUser(userDto);
         return UserMapper.mapToUserDto(userRepository.save(user));
     }
@@ -64,8 +67,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updateUserByFields(Long id, UserDto userDto) {
+        userDto.setRole(userDto.getRole().toUpperCase());
         User user = userRepository.findById(id).orElseThrow(
                 () -> new UserNotFoundException("User could not be found in updateUserByFields."));
+        if(!user.getEmail().equals(userDto.getEmail()) && userRepository.findByEmail(userDto.getEmail()) != null){
+            throw new UserEmailExistedException("User email is existed.");
+        }
         User finalUser = user;
         ReflectionUtils.doWithFields(userDto.getClass(), field -> {
             field.setAccessible(true);
