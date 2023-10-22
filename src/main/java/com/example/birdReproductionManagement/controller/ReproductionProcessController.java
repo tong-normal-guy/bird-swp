@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/reproductionprocess")
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class ReproductionProcessController {
     private ReproductionProcessService reproductionProcessService;
     @Autowired

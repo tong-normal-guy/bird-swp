@@ -22,6 +22,7 @@ public class CageMapper {
     public static CageDto mapToCageDto(Cage cage){
         return CageDto.builder()
                 .cageId(String.valueOf(cage.getId()))
+//                .code(cage.getLocation() + String.valueOf(cage.getId()))
                 .location(cage.getLocation())
                 .quantity(cage.getQuantity())
                 .available(cage.getAvailable())
