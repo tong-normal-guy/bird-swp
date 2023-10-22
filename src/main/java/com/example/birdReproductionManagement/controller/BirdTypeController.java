@@ -11,8 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/birdtypes")
-@CrossOrigin(origins = "*",methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE,
-        RequestMethod.PUT, RequestMethod.PATCH})
 public class BirdTypeController {
     private BirdTypeService birdTypeService;
     @Autowired
