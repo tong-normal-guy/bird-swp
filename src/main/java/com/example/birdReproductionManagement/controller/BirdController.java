@@ -12,7 +12,8 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/birds")
-//@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*",methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE,
+        RequestMethod.PUT, RequestMethod.PATCH})
 public class BirdController {
     private final BirdService birdService;
     @Autowired
