@@ -1,6 +1,7 @@
 package com.example.birdReproductionManagement.controller;
 
 import com.example.birdReproductionManagement.dto.BirdTypeDto;
+import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4ProcessDTOResponse;
 import com.example.birdReproductionManagement.service.BirdTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import java.util.List;
 @CrossOrigin(origins = "*",methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE,
         RequestMethod.PUT, RequestMethod.PATCH})
 public class BirdTypeController {
+    @Autowired
     private BirdTypeService birdTypeService;
     @Autowired
     public BirdTypeController(BirdTypeService birdTypeService) {

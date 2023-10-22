@@ -16,6 +16,7 @@ public class UserMapper {
                 .createdBy(userDto.getCreatedBy())
                 .createdDate(userDto.getCreatedDate())
                 .role(Role.valueOf(userDto.getRole()))
+                .userImage(userDto.getUserImage())
                 .build();
     }
 
@@ -29,6 +30,7 @@ public class UserMapper {
                 .createdBy(user.getCreatedBy())
                 .createdDate(user.getCreatedDate())
                 .role(String.valueOf(user.getRole()))
+                .userImage(user.getUserImage())
                 .build();
     }
 
@@ -37,6 +39,7 @@ public class UserMapper {
                 .userId(String.valueOf(userEntity.getId()))
                 .fullName(userEntity.getFullName())
                 .role(String.valueOf(userEntity.getRole()))
+                .userImage(userEntity.getUserImage())
                 .build();
     }
 }

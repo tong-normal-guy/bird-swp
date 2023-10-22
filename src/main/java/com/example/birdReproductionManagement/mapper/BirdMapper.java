@@ -1,6 +1,7 @@
 package com.example.birdReproductionManagement.mapper;
 
 import com.example.birdReproductionManagement.dto.BirdResponse.Bird4CageDetailDTOResponse;
+import com.example.birdReproductionManagement.dto.BirdResponse.Bird4ProcessDTOResponse;
 import com.example.birdReproductionManagement.dto.BirdResponse.BirdDto;
 import com.example.birdReproductionManagement.entity.Bird;
 
@@ -62,6 +63,20 @@ public class BirdMapper {
                 .mutationRate(bird.getMutationRate())
                 .weight(bird.getWeight())
                 .image(bird.getImage())
+                .build();
+    }
+    public static Bird4ProcessDTOResponse map2Bird4ProcessDTO(Bird bird){
+        return Bird4ProcessDTOResponse.builder()
+                .birdId(bird.getId() + "")
+                .sex(bird.getSex() + "")
+                .hatchDate(bird.getHatchDate())
+                .ageRange(bird.getAgeRange())
+                .mutation(bird.getMutation())
+                .mutationRate(bird.getMutationRate())
+                .isAlive(bird.getIsAlive())
+                .image(bird.getImage())
+                .featherColor(bird.getFeatherColor())
+                .weight(bird.getWeight())
                 .build();
     }
 }
