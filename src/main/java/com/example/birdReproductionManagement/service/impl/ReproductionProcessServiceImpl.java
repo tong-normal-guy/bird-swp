@@ -62,12 +62,6 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
     public ReproductionProcessDto addReproductionProcess(PairDTO pairDTO) {
         Cage cage = cageRepository.findById(Long.valueOf(pairDTO.getCageId())).orElseThrow(()
                 -> new ReproductionProcessNotFoundException("Cage could not be found in addReproductionProcess."));
-        ReproductionProcess reproductionProcess = new ReproductionProcess();
-        reproductionProcess.setCage(cage);
-        reproductionProcess.setPairingDate(new Date());
-        cage.setQuantity(cage.getQuantity() + 2);
-        cageRepository.save(cage);
-        ReproductionProcess newProcess = reproductionProcessRepository.save(reproductionProcess);
 
         BirdReproduction cock = new BirdReproduction();
         cock.setBird(birdRepository.findById(Long.valueOf(pairDTO.getCockId())).orElseThrow(()
@@ -78,16 +72,30 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
                 -> new BirdNotFoundException("Hen could not be found in addReproductionProcess.")));
 
         if(!cock.getBird().getBirdType().getName().equals(hen.getBird().getBirdType().getName())){
-            reproductionProcessRepository.delete(reproductionProcess);
-            cage.setQuantity(cage.getQuantity() + 2);
-            cageRepository.save(cage);
             throw new BirdTypeNotMatchedException("Bird type of this birds pair is not matched.");
         }
+        if(!cock.getBird().getAgeRange().equals("truong thanh") || !hen.getBird().getAgeRange().equals("truong thanh")){
+            throw new BirdTypeNotMatchedException("Age range of cock is not suitable for reproduction");
+        }
+        //Create reproduction process and update quantity of cage
+        ReproductionProcess reproductionProcess = new ReproductionProcess();
+        reproductionProcess.setCage(cage);
+        reproductionProcess.setPairingDate(new Date());
+        cage.setQuantity(cage.getQuantity() + 2);
+        cageRepository.save(cage);
+        ReproductionProcess newProcess = reproductionProcessRepository.save(reproductionProcess);
+        //Update new cage for cock and quantity of old cage
+        Cage cockCage = cock.getBird().getCage();
+        cockCage.setQuantity(cockCage.getQuantity() - 1);
+        cageRepository.save(cockCage);
         cock.setReproductionRole(ReproductionRole.FATHER);
         cock.setReproductionProcess(reproductionProcess);
         cock.getBird().setCage(cage);
         birdReproductionRepository.save(cock);
-
+        //Update new cage for hen and quantity of old cage
+        Cage henCage = hen.getBird().getCage();
+        henCage.setQuantity(henCage.getQuantity() - 1);
+        cageRepository.save(henCage);
         hen.setReproductionRole(ReproductionRole.MOTHER);
         hen.setReproductionProcess(reproductionProcess);
         hen.getBird().setCage(cage);
