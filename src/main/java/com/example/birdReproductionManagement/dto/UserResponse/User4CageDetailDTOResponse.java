@@ -11,4 +11,5 @@ public class User4CageDetailDTOResponse {
     private String userId;
     private String fullName;
     private String role;
+    private String userImage;
 }
