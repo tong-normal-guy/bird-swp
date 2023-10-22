@@ -8,6 +8,6 @@ import java.util.List;
 public interface BirdReproductionService {
     List<BirdReproductionDto> findAllBirdReproductions();
     List<BirdReproductionDto> createBirdReproduction(Long processId, EggDto eggDto);
-
+    BirdReproductionDto updateBirdReproduction(Long id, BirdReproductionDto birdReproductionDto);
 
 }

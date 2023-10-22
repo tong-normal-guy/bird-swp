@@ -16,6 +16,7 @@ import java.util.Date;
 public class BirdReproductionDto {
     private String reproductionId;
     private BirdDto bird;
+    private String birdId;
     private Date eggLaidDate;
     private Date actEggHatchDate;
     private Date actSwingBranch;

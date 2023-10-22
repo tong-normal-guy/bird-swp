@@ -115,8 +115,11 @@ public class CageServiceImpl implements CageService {
     public CageDto addCage(CageDto cageDto) {
         cageDto.setQuantity(0);
         cageDto.setAvailable(true);
-        return CageMapper.mapToCageDto(cageRepository.save(CageMapper.mapToCage(cageDto)));
+        Cage cage = cageRepository.save(CageMapper.mapToCage(cageDto));
+        cage.setLocation(cage.getLocation() + cage.getId());
+        return CageMapper.mapToCageDto(cageRepository.save(cage));
     }
+
 
     @Override
     public CageDto updateCage(Long id, CageDto cageDto) {
@@ -165,6 +168,5 @@ public class CageServiceImpl implements CageService {
         return cageRepository.findByLocationContainsAndAvailableIsTrue(location).stream().map(CageMapper::mapToCageDto)
                 .collect(Collectors.toList());
     }
-
 
 }
