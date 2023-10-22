@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/birdreproductions")
+//@CrossOrigin(origins = "*")
 public class BirdReproductionController {
     private BirdReproductionService birdReproductionService;
     @Autowired

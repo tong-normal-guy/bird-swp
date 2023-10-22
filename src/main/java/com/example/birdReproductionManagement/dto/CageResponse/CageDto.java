@@ -16,7 +16,7 @@ import java.util.List;
 public class CageDto {
     private String cageId;
     private String location;
-
+//    private String code;
     private Boolean available;
     private Integer quantity;
 //    private Boolean inProcess;

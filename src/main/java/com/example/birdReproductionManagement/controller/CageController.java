@@ -13,7 +13,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/cages")
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*",methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE,
+//        RequestMethod.PUT, RequestMethod.PATCH})
+
 public class CageController {
     private CageService cageService;
     @Autowired
@@ -29,7 +31,8 @@ public class CageController {
         return new ResponseEntity<>(cageService.getDetailById(id), HttpStatus.OK);
     }
     @GetMapping("/view")
-    public ResponseEntity<List<CageDetailDTOResponse>> pickaCages(@RequestParam(name = "process",defaultValue = "false") Boolean process){
+    public ResponseEntity<List<CageDetailDTOResponse>> pickaCages(@RequestParam(name = "process",defaultValue = "false")
+                                                                      Boolean process){
         return new ResponseEntity<>(cageService.pickaCages(process), HttpStatus.OK);
     }
     @GetMapping("/useable")
@@ -54,7 +57,9 @@ public class CageController {
         return new ResponseEntity<>("Cage id deleted.", HttpStatus.OK);
     }
     @GetMapping("/location/{location}")
-    public ResponseEntity<List<CageDto>> findByLocation(@PathVariable("location")String location, @RequestParam(name = "available", defaultValue = "false")boolean available){
+    public ResponseEntity<List<CageDto>> findByLocation(@PathVariable("location")String location,
+                                                        @RequestParam(name = "available", defaultValue = "false")
+                                                        boolean available){
         return new ResponseEntity<>(cageService.findByLocation(location, available), HttpStatus.OK);
     }
 

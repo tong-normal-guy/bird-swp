@@ -12,7 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/birds")
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class BirdController {
     private final BirdService birdService;
     @Autowired
