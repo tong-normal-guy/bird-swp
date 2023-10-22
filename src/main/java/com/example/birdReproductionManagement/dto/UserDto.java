@@ -21,6 +21,7 @@ public class UserDto {
     private String createdBy;
     private Date createdDate;
     private String role;
+    private String userImage;
 //    private List<Role> roles = new ArrayList<>();
 //    private List<WorkDivision> workDivisions = new ArrayList<>();
 }

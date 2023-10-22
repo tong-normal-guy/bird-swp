@@ -37,13 +37,17 @@ public class Bird {
     private String featherColor;
     @Column(name = "weight")
     private Float weight;
+    @Column(name = "father_Id")
+    private Long fatherId;
+    @Column(name = "mother_Id")
+    private Long motherId;
 
     @ManyToOne
     @JoinColumn(name = "birdtype_id", nullable = false)
     private BirdType birdType;
 
 //    @OneToMany(mappedBy = "father", cascade = CascadeType.REMOVE)
-//    private List<Bird> birdListOfFather = new ArrayList<>();
+
 //    @ManyToOne
 //    @JoinColumn(name = "father_id", nullable = false)
 //    private Bird father;

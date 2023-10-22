@@ -1,8 +1,10 @@
 package com.example.birdReproductionManagement.controller;
 
 import com.example.birdReproductionManagement.dto.BirdReproductionDto;
+import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4ProcessDTOResponse;
 import com.example.birdReproductionManagement.dto.PairDTO;
 import com.example.birdReproductionManagement.dto.ReproductionProcessDto;
+import com.example.birdReproductionManagement.service.BirdTypeService;
 import com.example.birdReproductionManagement.service.ReproductionProcessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,11 +16,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/reproductionprocess")
 public class ReproductionProcessController {
+    @Autowired
     private ReproductionProcessService reproductionProcessService;
     @Autowired
-    public ReproductionProcessController(ReproductionProcessService reproductionProcessService) {
-        this.reproductionProcessService = reproductionProcessService;
-    }
+    private BirdTypeService birdTypeService;
+
     @GetMapping("/view")
     public ResponseEntity<List<ReproductionProcessDto>> getListOfReproductionProcess(){
         return new ResponseEntity<>(reproductionProcessService.findAllReproductionProcess(), HttpStatus.OK);
@@ -36,6 +38,10 @@ public class ReproductionProcessController {
     public ResponseEntity<ReproductionProcessDto> updateReproductionProcess(@PathVariable("id")Long id,
                                                                             @RequestBody ReproductionProcessDto reproductionProcessDto){
         return new ResponseEntity<>(reproductionProcessService.updateReproductionProcess(id, reproductionProcessDto), HttpStatus.OK);
+    }
+    @GetMapping("/init")
+    public ResponseEntity<List<BirdType4ProcessDTOResponse>> getType4Process(){
+        return new  ResponseEntity<List<BirdType4ProcessDTOResponse>>(birdTypeService.getType4Process(), HttpStatus.OK);
     }
 //    @GetMapping("/findfather/{id}")
 //    public ResponseEntity<BirdReproductionDto> findFather(@PathVariable("id")Long id){

@@ -35,6 +35,8 @@ public class User {
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role;
+    @Column(name = "image", columnDefinition = "nvarchar(500)")
+    private String userImage;
 
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
