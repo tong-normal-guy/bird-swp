@@ -52,6 +52,7 @@ public class UserServiceImpl implements UserService {
         }
         userDto.setCreatedDate(new Date());
         userDto.setRole(userDto.getRole().toUpperCase());
+//        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         User user = UserMapper.mapToUser(userDto);
         return UserMapper.mapToUserDto(userRepository.save(user));
     }
