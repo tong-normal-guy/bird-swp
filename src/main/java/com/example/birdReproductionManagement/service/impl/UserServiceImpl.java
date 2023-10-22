@@ -10,6 +10,7 @@ import com.example.birdReproductionManagement.entity.Role;
 import com.example.birdReproductionManagement.repository.UserRepository;
 import com.example.birdReproductionManagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
@@ -21,9 +22,11 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -49,12 +52,14 @@ public class UserServiceImpl implements UserService {
         }
         userDto.setCreatedDate(new Date());
         userDto.setRole(userDto.getRole().toUpperCase());
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         User user = UserMapper.mapToUser(userDto);
         return UserMapper.mapToUserDto(userRepository.save(user));
     }
 
     @Override
     public UserDto updateUser(Long id, UserDto userDto) {
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         User user = userRepository.findById(id).orElseThrow(()
                 -> new UserNotFoundException("User could not be updated."));
         if(!user.getEmail().equals(userDto.getEmail()) && userRepository.findByEmail(userDto.getEmail()) != null){
@@ -68,6 +73,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto updateUserByFields(Long id, UserDto userDto) {
         userDto.setRole(userDto.getRole().toUpperCase());
+        if(userDto.getPassword() != null){
+            userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        }
         User user = userRepository.findById(id).orElseThrow(
                 () -> new UserNotFoundException("User could not be found in updateUserByFields."));
         if(!user.getEmail().equals(userDto.getEmail()) && userRepository.findByEmail(userDto.getEmail()) != null){
@@ -93,6 +101,12 @@ public class UserServiceImpl implements UserService {
             user.setRole(Role.valueOf(userDto.getRole()));
         }
         return UserMapper.mapToUserDto(userRepository.save(user));
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User could not be found."));
+        userRepository.delete(user);
     }
 
 }

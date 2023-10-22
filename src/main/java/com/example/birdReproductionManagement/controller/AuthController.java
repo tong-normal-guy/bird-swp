@@ -37,16 +37,16 @@ public class AuthController {
         return new ResponseEntity<>("User login success.", HttpStatus.OK);
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto){
-        if(userRepository.existsByUsername(registerDto.getUsername())){
-            return new ResponseEntity<>("Username is existed.", HttpStatus.BAD_REQUEST);
-        }
-        User user = new User();
-        user.setUsername(registerDto.getUsername());
-        user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-        user.setRole(Role.STAFF);
-        userRepository.save(user);
-        return new ResponseEntity<>("Account is created successfully.", HttpStatus.OK);
-    }
+//    @PostMapping("/register")
+//    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto){
+//        if(userRepository.existsByUsername(registerDto.getUsername())){
+//            return new ResponseEntity<>("Username is existed.", HttpStatus.BAD_REQUEST);
+//        }
+//        User user = new User();
+//        user.setUsername(registerDto.getUsername());
+//        user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+//        user.setRole(Role.STAFF);
+//        userRepository.save(user);
+//        return new ResponseEntity<>("Account is created successfully.", HttpStatus.OK);
+//    }
 }

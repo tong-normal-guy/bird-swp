@@ -4,8 +4,10 @@ import com.example.birdReproductionManagement.dto.UserDto;
 import com.example.birdReproductionManagement.dto.UserResponse.User4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.entity.Role;
 import com.example.birdReproductionManagement.entity.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class UserMapper {
+    private static PasswordEncoder passwordEncoder;
     public static User mapToUser(UserDto userDto){
         return User.builder()
 //                .id(userDto.getId())

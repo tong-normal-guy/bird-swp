@@ -26,4 +26,8 @@ public class BirdReproductionController {
     public ResponseEntity<List<BirdReproductionDto>> addEggToProcess(@PathVariable("id")Long id, @RequestBody EggDto eggDto){
         return new ResponseEntity<>(birdReproductionService.createBirdReproduction(id, eggDto), HttpStatus.CREATED);
     }
+    @PatchMapping("/{id}")
+    public ResponseEntity<BirdReproductionDto> updateBirdReproduction(@PathVariable("id")Long id, @RequestBody BirdReproductionDto birdReproductionDto){
+        return new ResponseEntity<>(birdReproductionService.updateBirdReproduction(id, birdReproductionDto), HttpStatus.OK);
+    }
 }

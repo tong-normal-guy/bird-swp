@@ -28,6 +28,8 @@ public class User {
     private String password;
     @Column(name = "full_name", columnDefinition = "nvarchar(255)")
     private String fullName;
+    @Column(name = "image", columnDefinition = "varchar(1000)")
+    private String image;
     @Column(name = "created_by", columnDefinition = "nvarchar(255)")
     private String createdBy;
     @Column(name = "created_date")
