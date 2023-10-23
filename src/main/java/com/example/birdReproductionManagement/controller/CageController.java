@@ -30,7 +30,7 @@ public class CageController {
     @GetMapping("/view")
     public ResponseEntity<List<CageDetailDTOResponse>> pickaCages(@RequestParam(name = "process",defaultValue = "false")
                                                                       Boolean process){
-        return new ResponseEntity<>(cageService.pickaCages(process), HttpStatus.OK);
+        return new ResponseEntity<List<CageDetailDTOResponse>>(cageService.pickaCages(process), HttpStatus.OK);
     }
     @GetMapping("/useable")
     public ResponseEntity<List<CageDto>> viewCagesUseable(){
