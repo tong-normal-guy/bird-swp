@@ -23,6 +23,7 @@ public class CageDto {
 //    private Boolean inProcess;
 //    private CageTypeDto cageType;
 //    private Long cageTypeId;
+    private UserDto user;
     private List<BirdDto> birdList;
 //    private List<BirdCageHistoryDto> birdCageHistories;
 //    private List<ReproductionProcessDto> reproductionProcesses;
