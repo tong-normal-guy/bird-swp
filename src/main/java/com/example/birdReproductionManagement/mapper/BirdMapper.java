@@ -46,6 +46,7 @@ public class BirdMapper {
                 .weight(bird.getWeight())
                 .birdTypeName(bird.getBirdType().getName())
                 .cageId(String.valueOf(bird.getCage().getId()))
+                .cage(CageMapper.mapToCageDto(bird.getCage()))
                 .birdType(BirdTypeMapper.mapToBirdTypeDto(bird.getBirdType()))
 //                .birdListOfFather(bird.getBirdListOfFather().stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList()))
 //                .birdListOfMother(bird.getBirdListOfMother().stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList()))

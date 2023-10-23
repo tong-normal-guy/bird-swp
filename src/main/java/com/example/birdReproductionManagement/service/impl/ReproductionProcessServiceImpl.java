@@ -3,16 +3,13 @@ package com.example.birdReproductionManagement.service.impl;
 import com.example.birdReproductionManagement.dto.BirdReproductionDto;
 import com.example.birdReproductionManagement.dto.PairDTO;
 import com.example.birdReproductionManagement.dto.ReproductionProcessDto;
-import com.example.birdReproductionManagement.entity.BirdReproduction;
-import com.example.birdReproductionManagement.entity.ReproductionRole;
+import com.example.birdReproductionManagement.entity.*;
 import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
 import com.example.birdReproductionManagement.exceptions.BirdTypeNotMatchedException;
 import com.example.birdReproductionManagement.exceptions.ReproductionProcessNotFoundException;
 import com.example.birdReproductionManagement.mapper.BirdReproductionMapper;
 import com.example.birdReproductionManagement.mapper.CageMapper;
 import com.example.birdReproductionManagement.mapper.ReproductionProcessMapper;
-import com.example.birdReproductionManagement.entity.Cage;
-import com.example.birdReproductionManagement.entity.ReproductionProcess;
 import com.example.birdReproductionManagement.repository.BirdRepository;
 import com.example.birdReproductionManagement.repository.BirdReproductionRepository;
 import com.example.birdReproductionManagement.repository.CageRepository;
@@ -54,52 +51,67 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
         return list;
     }
 
-
-
-
     @Override
 
     public ReproductionProcessDto addReproductionProcess(PairDTO pairDTO) {
         Cage cage = cageRepository.findById(Long.valueOf(pairDTO.getCageId())).orElseThrow(()
                 -> new ReproductionProcessNotFoundException("Cage could not be found in addReproductionProcess."));
-
-        BirdReproduction cock = new BirdReproduction();
-        cock.setBird(birdRepository.findById(Long.valueOf(pairDTO.getCockId())).orElseThrow(()
-                -> new BirdNotFoundException("Cock could not be found in addReproductionProcess.")));
-
-        BirdReproduction hen = new BirdReproduction();
-        hen.setBird(birdRepository.findById(Long.valueOf(pairDTO.getHenId())).orElseThrow(()
-                -> new BirdNotFoundException("Hen could not be found in addReproductionProcess.")));
-
-        if(!cock.getBird().getBirdType().getName().equals(hen.getBird().getBirdType().getName())){
+        if(cage.getQuantity() > 0){
+            throw new BirdTypeNotMatchedException("This cage had another reproduction process going on.");
+        }
+        Bird cock = birdRepository.findById(Long.valueOf(pairDTO.getCockId())).orElseThrow(()
+                -> new BirdNotFoundException("Cock could not be found in addReproductionProcess."));
+        Bird hen = birdRepository.findById(Long.valueOf(pairDTO.getHenId())).orElseThrow(()
+                -> new BirdNotFoundException("Hen could not be found in addReproductionProcess."));
+        //Kiểm tra loại chim có giống nhau không
+        if(!cock.getBirdType().getName().equals(hen.getBirdType().getName())){
             throw new BirdTypeNotMatchedException("Bird type of this birds pair is not matched.");
         }
-        if(!cock.getBird().getAgeRange().equals("truong thanh") || !hen.getBird().getAgeRange().equals("truong thanh")){
+        //Kiểm tra lứa tuổi của chim có phù hợp không
+        if(!cock.getAgeRange().equals("Trưởng Thành") || !hen.getAgeRange().equals("Trưởng Thành")){
             throw new BirdTypeNotMatchedException("Age range of cock is not suitable for reproduction");
         }
+        //Kiểm tra chim có đang trong quá trình sinh sản khác không
+        if(birdReproductionRepository
+                .existsByBirdAndReproductionRoleNotAndReproductionRoleNotAndReproductionProcessIsDone(cock,
+                        ReproductionRole.CHILD, ReproductionRole.EGG, false) || birdReproductionRepository
+                .existsByBirdAndReproductionRoleNotAndReproductionRoleNotAndReproductionProcessIsDone(hen,
+                        ReproductionRole.CHILD, ReproductionRole.EGG, false)){
+            throw new BirdTypeNotMatchedException("Cock or hen bird is engaged in another reproduction process.");
+        }
+        //Create bird reproduction for cock and hen
+        BirdReproduction cockReproduction = new BirdReproduction();
+        cockReproduction.setBird(cock);
+        BirdReproduction henReproduction = new BirdReproduction();
+        henReproduction.setBird(hen);
         //Create reproduction process and update quantity of cage
         ReproductionProcess reproductionProcess = new ReproductionProcess();
+        reproductionProcess.setIsDone(false);
         reproductionProcess.setCage(cage);
         reproductionProcess.setPairingDate(new Date());
-        cage.setQuantity(cage.getQuantity() + 2);
-        cageRepository.save(cage);
+        reproductionProcess.setTotalEgg(0);
         ReproductionProcess newProcess = reproductionProcessRepository.save(reproductionProcess);
+        int number = cage.getQuantity() + 2;
+        cage.setQuantity(number);
+        cageRepository.save(cage);
         //Update new cage for cock and quantity of old cage
-        Cage cockCage = cock.getBird().getCage();
-        cockCage.setQuantity(cockCage.getQuantity() - 1);
+        Cage cockCage = cock.getCage();
+        number = cockCage.getQuantity() - 1;
+        cockCage.setQuantity(number);
         cageRepository.save(cockCage);
-        cock.setReproductionRole(ReproductionRole.FATHER);
-        cock.setReproductionProcess(reproductionProcess);
-        cock.getBird().setCage(cage);
-        birdReproductionRepository.save(cock);
+        cockReproduction.setReproductionRole(ReproductionRole.FATHER);
+        cockReproduction.setReproductionProcess(reproductionProcess);
+        cock.setCage(cage);
+        birdReproductionRepository.save(cockReproduction);
         //Update new cage for hen and quantity of old cage
-        Cage henCage = hen.getBird().getCage();
-        henCage.setQuantity(henCage.getQuantity() - 1);
+        Cage henCage = hen.getCage();
+        number = henCage.getQuantity() - 1;
+        henCage.setQuantity(number);
         cageRepository.save(henCage);
-        hen.setReproductionRole(ReproductionRole.MOTHER);
-        hen.setReproductionProcess(reproductionProcess);
-        hen.getBird().setCage(cage);
-        birdReproductionRepository.save(hen);
+        henReproduction.setReproductionRole(ReproductionRole.MOTHER);
+        henReproduction.setReproductionProcess(reproductionProcess);
+        hen.setCage(cage);
+        birdReproductionRepository.save(henReproduction);
 
         return ReproductionProcessMapper.mapToReproductionProcessDto(newProcess);
     }

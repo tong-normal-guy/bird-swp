@@ -20,6 +20,7 @@ import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,6 +49,8 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
             newEgg.setReproductionRole(ReproductionRole.EGG);
             newEggs.add(birdReproductionRepository.save(newEgg));
         }
+        reproductionProcess.setTotalEgg(reproductionProcess.getTotalEgg() + eggDto.getNumber());
+        reproductionProcessRepository.save(reproductionProcess);
         return newEggs.stream().map(BirdReproductionMapper::mapToBirdReproductionDto)
                 .collect(Collectors.toList());
     }
@@ -78,6 +81,37 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
         }
         if(birdReproductionDto.getEggStatus().equals("Hatched")){
             finalReproduction.setReproductionRole(ReproductionRole.CHILD);
+
+            BirdReproduction cockReproduction = birdReproductionRepository
+                    .findByReproductionProcessIdAndReproductionRoleEquals(id, ReproductionRole.FATHER);
+            Bird cock = cockReproduction.getBird();
+            List<BirdReproduction> cockReproductionList = birdReproductionRepository
+                    .findByBirdAndReproductionRoleNot(cock, ReproductionRole.CHILD);
+            List<ReproductionProcess> cockProcessList = new ArrayList<>();
+            int cockProcessNumber = 0;
+            for(BirdReproduction cockWalker : cockReproductionList){
+                cockProcessList.add(cockWalker.getReproductionProcess());
+                cockProcessNumber++;
+            }
+
+
+            BirdReproduction henReproduction = birdReproductionRepository
+                    .findByReproductionProcessIdAndReproductionRoleEquals(id, ReproductionRole.MOTHER);
+            Bird hen = henReproduction.getBird();
+            List<BirdReproduction> henReproductionList = birdReproductionRepository
+                    .findByBirdAndReproductionRoleNot(hen, ReproductionRole.CHILD);
+            List<ReproductionProcess> henProcessList = new ArrayList<>();
+            int henProcessNumber = 0;
+            for (BirdReproduction henWalker : henReproductionList){
+                henProcessList.add(henWalker.getReproductionProcess());
+                henProcessNumber++;
+            }
+
+        }
+        if(!birdReproductionDto.getEggStatus().equals("Hatched")
+                && !birdReproductionDto.getEggStatus().equals("In development")){
+            finalReproduction.setFail(true);
+            finalReproduction.setFailDate(new Date());
         }
         birdReproduction = finalReproduction;
         return BirdReproductionMapper.mapToBirdReproductionDto(birdReproduction);
