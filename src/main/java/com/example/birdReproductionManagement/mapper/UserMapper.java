@@ -34,12 +34,14 @@ public class UserMapper {
                 .build();
     }
 
-    public static User4CageDetailDTOResponse map2User4CageDetailDTO(User userEntity){
-        return User4CageDetailDTOResponse.builder()
-                .userId(String.valueOf(userEntity.getId()))
-                .fullName(userEntity.getFullName())
-                .role(String.valueOf(userEntity.getRole()))
-                .userImage(userEntity.getUserImage())
-                .build();
+    public static User4CageDetailDTOResponse map2User4CageDetailDTO(User user) {
+        if (user != null)
+            return User4CageDetailDTOResponse.builder()
+                    .userId(String.valueOf(user.getId()))
+                    .fullName(user.getFullName())
+                    .role(String.valueOf(user.getRole()))
+                    .userImage(user.getUserImage())
+                    .build();
+        else return null;
     }
 }
