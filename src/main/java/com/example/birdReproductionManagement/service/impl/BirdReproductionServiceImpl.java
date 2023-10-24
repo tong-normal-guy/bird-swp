@@ -2,13 +2,12 @@ package com.example.birdReproductionManagement.service.impl;
 
 import com.example.birdReproductionManagement.dto.BirdReproductionDTO;
 import com.example.birdReproductionManagement.dto.EggDTO;
-import com.example.birdReproductionManagement.entity.Bird;
-import com.example.birdReproductionManagement.entity.BirdReproduction;
-import com.example.birdReproductionManagement.entity.ReproductionProcess;
-import com.example.birdReproductionManagement.entity.ReproductionRole;
+import com.example.birdReproductionManagement.dto.UpdateBirdReproductionDTO;
+import com.example.birdReproductionManagement.entity.*;
 import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
 import com.example.birdReproductionManagement.exceptions.BirdReproductionNotFoundException;
 import com.example.birdReproductionManagement.exceptions.ReproductionProcessNotFoundException;
+import com.example.birdReproductionManagement.mapper.BirdMapper;
 import com.example.birdReproductionManagement.mapper.BirdReproductionMapper;
 import com.example.birdReproductionManagement.repository.BirdRepository;
 import com.example.birdReproductionManagement.repository.BirdReproductionRepository;
@@ -56,17 +55,18 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
     }
 
     @Override
-    public BirdReproductionDTO updateBirdReproduction(Long id, BirdReproductionDTO birdReproductionDto) {
+    public BirdReproductionDTO updateBirdReproduction(Long id, UpdateBirdReproductionDTO updateBirdReproductionDTO) {
         BirdReproduction birdReproduction = birdReproductionRepository.findById(id).orElseThrow(
                 () -> new BirdReproductionNotFoundException("Bird reproduction could not be found."));
         Long processId = birdReproduction.getReproductionProcess().getId();
         BirdReproduction finalReproduction = birdReproduction;
-        ReflectionUtils.doWithFields(birdReproductionDto.getClass(), field -> {
+        ReflectionUtils.doWithFields(updateBirdReproductionDTO.getClass(), field -> {
             field.setAccessible(true);
-            Object newValue = field.get(birdReproductionDto);
+            Object newValue = field.get(updateBirdReproductionDTO);
             if(newValue != null){
                 String fieldName = field.getName();
-                if(!fieldName.equals("birdId")){
+                if(!fieldName.equals("sex") && !fieldName.equals("image") && !fieldName.equals("weight")
+                        && !fieldName.equals("hatchDate")){
                     Field existingField = ReflectionUtils.findField(finalReproduction.getClass(), fieldName);
                     if(existingField != null){
                         existingField.setAccessible(true);
@@ -75,22 +75,35 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
                 }
             }
         });
-        if(birdReproductionDto.getBirdId() != null){
-            Bird bird = birdRepository.findById(Long.valueOf(birdReproductionDto.getBirdId())).orElseThrow(
-                    () -> new BirdNotFoundException("Bird could not be found in updateBirdReproduction"));
-            finalReproduction.setBird(bird);
-        }
-        if(birdReproductionDto.getEggStatus().equals("Hatched")){
+
+//        if(updateBirdReproductionDTO.getBirdId() != null){
+//            Bird bird = birdRepository.findById(Long.valueOf(updateBirdReproductionDTO.getBirdId())).orElseThrow(
+//                    () -> new BirdNotFoundException("Bird could not be found in updateBirdReproduction"));
+//            finalReproduction.setBird(bird);
+//        }
+        if(updateBirdReproductionDTO.getEggStatus().equals("Hatched")){
             finalReproduction.setReproductionRole(ReproductionRole.CHILD);
+            Bird newChick = BirdMapper.mapToBird(updateBirdReproductionDTO);
+            newChick.setAgeRange("Non");
+            newChick.setIsAlive(true);
+            BirdType chickType = birdReproductionRepository
+                    .findByReproductionProcessIdAndReproductionRole(processId, ReproductionRole.FATHER)
+                    .getBird().getBirdType();
+            newChick.setBirdType(chickType);
+            Cage chickCage = birdReproduction.getReproductionProcess().getCage();
+            newChick.setCage(chickCage);
+            Bird bird = birdRepository.save(newChick);
+            finalReproduction.setBird(bird);
+            finalReproduction.setActEggHatchDate(updateBirdReproductionDTO.getHatchDate());
         }
-        if(!birdReproductionDto.getEggStatus().equals("Hatched")
-                && !birdReproductionDto.getEggStatus().equals("In development")){
+        if(!updateBirdReproductionDTO.getEggStatus().equals("Hatched")
+                && !updateBirdReproductionDTO.getEggStatus().equals("In development")){
             finalReproduction.setFail(true);
             finalReproduction.setFailDate(new Date());
         }
         birdReproduction = finalReproduction;
         birdReproductionRepository.save(birdReproduction);
-        if(birdReproductionDto.getEggStatus().equals("Hatched")){
+        if(updateBirdReproductionDTO.getEggStatus().equals("Hatched")){
 //      Tìm list các child của cock, đếm tổng số lượng (T) và số child có đột biến (M) -> mutationRate = M/T
             BirdReproduction cockReproduction = birdReproductionRepository
                     .findByReproductionProcessIdAndReproductionRole(processId, ReproductionRole.FATHER);
