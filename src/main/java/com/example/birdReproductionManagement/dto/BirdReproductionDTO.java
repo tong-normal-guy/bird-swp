@@ -20,6 +20,9 @@ public class BirdReproductionDTO {
     private Date actEggHatchDate;
     private Date actSwingBranch;
     private Date actAdultBirdDate;
+    private Date expEggHatchDate;
+    private Date expSwingBranch;
+    private Date expAdultBirdDate;
     private String eggType;
     private String eggStatus;
     private boolean isFail;

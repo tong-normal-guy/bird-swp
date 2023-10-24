@@ -1,41 +1,40 @@
 package com.example.birdReproductionManagement.service.impl;
 
 import com.example.birdReproductionManagement.dto.BirdReproductionDTO;
+import com.example.birdReproductionManagement.dto.BirdResponse.Bird4ProcessDTOResponse;
+import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4ProcessInitDTOResponse;
+import com.example.birdReproductionManagement.dto.CageResponse.CageDTO;
 import com.example.birdReproductionManagement.dto.PairDTO;
 import com.example.birdReproductionManagement.dto.ReproductionProcessDTO;
+import com.example.birdReproductionManagement.dto.ReproductionProcessResponse.LoadData4InitProcessDTOResponse;
 import com.example.birdReproductionManagement.dto.ReproductionProcessResponse.ProcessForViewAllResponseDTO;
 import com.example.birdReproductionManagement.entity.*;
 import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
 import com.example.birdReproductionManagement.exceptions.BirdTypeNotMatchedException;
 import com.example.birdReproductionManagement.exceptions.ReproductionProcessNotFoundException;
-import com.example.birdReproductionManagement.mapper.BirdReproductionMapper;
-import com.example.birdReproductionManagement.mapper.CageMapper;
-import com.example.birdReproductionManagement.mapper.ReproductionProcessMapper;
-import com.example.birdReproductionManagement.repository.BirdRepository;
-import com.example.birdReproductionManagement.repository.BirdReproductionRepository;
-import com.example.birdReproductionManagement.repository.CageRepository;
-import com.example.birdReproductionManagement.repository.ReproductionProcessRepository;
+import com.example.birdReproductionManagement.mapper.*;
+import com.example.birdReproductionManagement.repository.*;
+import com.example.birdReproductionManagement.service.BirdTypeService;
+import com.example.birdReproductionManagement.service.CageService;
 import com.example.birdReproductionManagement.service.ReproductionProcessService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ReproductionProcessServiceImpl implements ReproductionProcessService {
-    private ReproductionProcessRepository reproductionProcessRepository;
-    private BirdReproductionRepository birdReproductionRepository;
-    private BirdRepository birdRepository;
-    private CageRepository cageRepository;
-    @Autowired
-    public ReproductionProcessServiceImpl(ReproductionProcessRepository reproductionProcessRepository, BirdReproductionRepository birdReproductionRepository, BirdRepository birdRepository, CageRepository cageRepository) {
-        this.reproductionProcessRepository = reproductionProcessRepository;
-        this.birdReproductionRepository = birdReproductionRepository;
-        this.birdRepository = birdRepository;
-        this.cageRepository = cageRepository;
-    }
+    private final ReproductionProcessRepository reproductionProcessRepository;
+    private final BirdReproductionRepository birdReproductionRepository;
+    private final BirdRepository birdRepository;
+    private final CageRepository cageRepository;
+    private final BirdTypeRepository birdTypeRepository;
+
 
     @Override
     public List<ProcessForViewAllResponseDTO> findAllReproductionProcess() {
@@ -140,6 +139,34 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
                 -> new ReproductionProcessNotFoundException("Reproduction process could not be updated."));
         reproductionProcessDto.setCage(CageMapper.mapToCageDto(cage));
         return ReproductionProcessMapper.mapToReproductionProcessDto(reproductionProcessRepository.save(ReproductionProcessMapper.mapToReproductionProcess(reproductionProcessDto)));
+    }
+
+    @Override
+    public LoadData4InitProcessDTOResponse getInitProcess() {
+//      cages
+        List<CageDTO> cages = cageRepository.findCagesWithLocationStartingWithBAndQuantityZeroAndAvailableTrue()
+                .stream().map(CageMapper::mapToCageDto).collect(Collectors.toList());
+//      bird type
+        List<BirdType4ProcessInitDTOResponse> birdType4ProcessInitDTOResponses = getType4ProcessInit();
+//      build
+        return LoadData4InitProcessDTOResponse.builder()
+                .cage(cages)
+                .birdType(birdType4ProcessInitDTOResponses)
+                .build();
+    }
+    public List<BirdType4ProcessInitDTOResponse> getType4ProcessInit() {
+        List<BirdType4ProcessInitDTOResponse> birdTypeDTOs = birdTypeRepository.findAll().stream().map(BirdTypeMapper::map2BirdType4ProcessInitDTO).collect(Collectors.toList());
+        for (BirdType4ProcessInitDTOResponse birdTypeDTO:birdTypeDTOs) {
+//      HENS
+            List<Bird4ProcessDTOResponse> hens = birdRepository.findBirdsWhereIsDoneIsTrueAndSexIsAliveAndBirdType(Sex.FEMALE, Long.parseLong(birdTypeDTO.getTypeId()))
+                    .stream().map(BirdMapper::map2Bird4ProcessDTO).collect(Collectors.toList());
+            birdTypeDTO.setHen(hens);
+//      COCKS
+            List<Bird4ProcessDTOResponse> cocks = birdRepository.findBirdsWhereIsDoneIsTrueAndSexIsAliveAndBirdType(Sex.MALE, Long.parseLong(birdTypeDTO.getTypeId()))
+                    .stream().map(BirdMapper::map2Bird4ProcessDTO).collect(Collectors.toList());
+            birdTypeDTO.setCock(cocks);
+        }
+        return birdTypeDTOs;
     }
 
 //    @Override

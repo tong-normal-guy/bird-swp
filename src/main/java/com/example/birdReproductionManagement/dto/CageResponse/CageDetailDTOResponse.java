@@ -18,7 +18,6 @@ public class CageDetailDTOResponse {
     private String cageId;
     private String location;
     private int quantity;
-
     private Reproduction4CageDetailDTOResponse reproductionProcess;
     private List<BirdRe4CageDetailDTOResponse> birdReproduction;
     private User4CageDetailDTOResponse user;

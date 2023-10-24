@@ -16,5 +16,8 @@ public class BirdRe4CageDetailDTOResponse {
     private String reproductionRole;
     private String eggStatus;
     private Date actEggHatchDate;
+    private Date expEggHatchDate ;
+    private Date expSwingBranch;
+    private Date expAdultBirdDate;
     private Bird4CageDetailDTOResponse bird;
 }

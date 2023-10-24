@@ -4,13 +4,17 @@ import com.example.birdReproductionManagement.dto.BirdResponse.Bird4ProcessDTORe
 import com.example.birdReproductionManagement.dto.BirdResponse.MutationBirdListDTO;
 import com.example.birdReproductionManagement.dto.BirdTypeDTO;
 import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4ProcessDTOResponse;
+import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4ProcessInitDTOResponse;
 import com.example.birdReproductionManagement.dto.BirdTypeResponse.SuperReproductDTO;
+import com.example.birdReproductionManagement.dto.CageResponse.CageDTO;
 import com.example.birdReproductionManagement.dto.NormalBirdListDTO;
+import com.example.birdReproductionManagement.entity.Cage;
 import com.example.birdReproductionManagement.entity.Sex;
 import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
 import com.example.birdReproductionManagement.exceptions.BirdTypeNotFoundException;
 import com.example.birdReproductionManagement.mapper.BirdMapper;
 import com.example.birdReproductionManagement.mapper.BirdTypeMapper;
+import com.example.birdReproductionManagement.repository.CageRepository;
 import com.example.birdReproductionManagement.utils.MyUtils;
 import com.example.birdReproductionManagement.entity.BirdType;
 import com.example.birdReproductionManagement.repository.BirdRepository;
@@ -118,4 +122,6 @@ public class BirdTypeServiceImpl implements BirdTypeService {
 
         return types;
     }
+
+
 }
