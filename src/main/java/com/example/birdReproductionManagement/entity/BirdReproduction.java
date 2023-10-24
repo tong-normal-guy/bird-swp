@@ -33,6 +33,12 @@ public class BirdReproduction {
     private String eggType;
     @Column(name = "egg_status")
     private String eggStatus;
+    @Column(name = "exp_egg_hatch_date")
+    private Date expEggHatchDate;
+    @Column(name = "exp_swing_branch")
+    private Date expSwingBranch;
+    @Column(name = "exp_adult_bird_date")
+    private Date expAdultBirdDate;
     @Column(name = "is_fail")
     private boolean isFail;
     @Column(name = "fail_date")
