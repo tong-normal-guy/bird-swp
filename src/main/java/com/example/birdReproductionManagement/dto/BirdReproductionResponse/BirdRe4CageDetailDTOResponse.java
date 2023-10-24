@@ -14,10 +14,15 @@ public class BirdRe4CageDetailDTOResponse {
     private String reproductionId;
     private Date eggLaidDate;
     private String reproductionRole;
-    private String eggStatus;
     private Date actEggHatchDate;
+    private Date actSwingBranch;
+    private Date actAdultBirdDate;
     private Date expEggHatchDate ;
     private Date expSwingBranch;
     private Date expAdultBirdDate;
+    private String eggType;
+    private String eggStatus;
+    private boolean isFail;
+    private Date failDate;
     private Bird4CageDetailDTOResponse bird;
 }
