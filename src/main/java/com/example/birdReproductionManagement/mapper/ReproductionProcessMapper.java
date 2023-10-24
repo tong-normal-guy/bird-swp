@@ -10,9 +10,6 @@ public class ReproductionProcessMapper {
         return ReproductionProcess.builder()
 //                .id(reproductionProcessDto.getId())
                 .pairingDate(reproductionProcessDto.getPairingDate())
-                .expEggHatchDate(reproductionProcessDto.getExpEggHatchDate())
-                .expSwingBranch(reproductionProcessDto.getExpSwingBranch())
-                .expAdultBirdDate(reproductionProcessDto.getExpAdultBirdDate())
                 .totalEgg(reproductionProcessDto.getTotalEgg())
                 .stage(reproductionProcessDto.getStage())
                 .failEgg(reproductionProcessDto.getFailEgg())
@@ -26,9 +23,6 @@ public class ReproductionProcessMapper {
         return ReproductionProcessDTO.builder()
                 .processId(String.valueOf(reproductionProcess.getId()))
                 .pairingDate(reproductionProcess.getPairingDate())
-                .expEggHatchDate(reproductionProcess.getExpEggHatchDate())
-                .expSwingBranch(reproductionProcess.getExpSwingBranch())
-                .expAdultBirdDate(reproductionProcess.getExpAdultBirdDate())
                 .totalEgg(reproductionProcess.getTotalEgg())
                 .stage(reproductionProcess.getStage())
                 .failEgg(reproductionProcess.getFailEgg())
@@ -45,9 +39,6 @@ public class ReproductionProcessMapper {
                 .stage(reproductionProcess.getStage())
                 .failEgg(reproductionProcess.getFailEgg())
                 .totalEgg(reproductionProcess.getTotalEgg())
-                .expEggHatchDate(reproductionProcess.getExpEggHatchDate())
-                .expSwingBranch(reproductionProcess.getExpSwingBranch())
-                .expAdultBirdDate(reproductionProcess.getExpAdultBirdDate())
                 .build();
     }
 

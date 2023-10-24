@@ -20,12 +20,6 @@ public class ReproductionProcess {
     private Long id;
     @Column(name = "pairing_date")
     private Date pairingDate;
-    @Column(name = "exp_egg_hatch_date")
-    private Date expEggHatchDate;
-    @Column(name = "exp_swing_branch")
-    private Date expSwingBranch;
-    @Column(name = "exp_adult_bird_date")
-    private Date expAdultBirdDate;
     @Column(name = "total_egg")
     private Integer totalEgg;
     @Column(name = "stage", columnDefinition = "nvarchar(255)")
