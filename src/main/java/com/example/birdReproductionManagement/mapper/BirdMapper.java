@@ -3,6 +3,7 @@ package com.example.birdReproductionManagement.mapper;
 import com.example.birdReproductionManagement.dto.BirdResponse.Bird4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.BirdResponse.Bird4ProcessDTOResponse;
 import com.example.birdReproductionManagement.dto.BirdResponse.BirdDto;
+import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4ProcessInitDTOResponse;
 import com.example.birdReproductionManagement.entity.Bird;
 
 import com.example.birdReproductionManagement.entity.Sex;

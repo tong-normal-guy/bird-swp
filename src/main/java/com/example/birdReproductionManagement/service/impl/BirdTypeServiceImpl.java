@@ -5,6 +5,7 @@ import com.example.birdReproductionManagement.dto.BirdResponse.Bird4ProcessDTORe
 import com.example.birdReproductionManagement.dto.BirdResponse.MutationBirdListDTO;
 import com.example.birdReproductionManagement.dto.BirdTypeDto;
 import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4ProcessDTOResponse;
+import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4ProcessInitDTOResponse;
 import com.example.birdReproductionManagement.dto.BirdTypeResponse.SuperReproductDTO;
 import com.example.birdReproductionManagement.dto.NormalBirdListDTO;
 import com.example.birdReproductionManagement.entity.Bird;
@@ -121,5 +122,20 @@ public class BirdTypeServiceImpl implements BirdTypeService {
         }
 
         return types;
+    }
+    @Override
+    public List<BirdType4ProcessInitDTOResponse> getType4ProcessInit() {
+        List<BirdType4ProcessInitDTOResponse> birdTypeDTOs = birdTypeRepository.findAll().stream().map(BirdTypeMapper::map2BirdType4ProcessInitDTO).collect(Collectors.toList());
+        for (BirdType4ProcessInitDTOResponse birdTypeDTO:birdTypeDTOs) {
+//      HENS
+            List<Bird4ProcessDTOResponse> hens = birdRepository.findBirdsWhereIsDoneIsTrueAndSexIsAliveAndBirdType(Sex.FEMALE, Long.parseLong(birdTypeDTO.getTypeId()))
+                    .stream().map(BirdMapper::map2Bird4ProcessDTO).collect(Collectors.toList());
+            birdTypeDTO.setHen(hens);
+//      COCKS
+            List<Bird4ProcessDTOResponse> cocks = birdRepository.findBirdsWhereIsDoneIsTrueAndSexIsAliveAndBirdType(Sex.MALE, Long.parseLong(birdTypeDTO.getTypeId()))
+                    .stream().map(BirdMapper::map2Bird4ProcessDTO).collect(Collectors.toList());
+            birdTypeDTO.setCock(cocks);
+        }
+        return birdTypeDTOs;
     }
 }

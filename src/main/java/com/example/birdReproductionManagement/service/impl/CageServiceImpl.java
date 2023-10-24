@@ -1,10 +1,13 @@
 package com.example.birdReproductionManagement.service.impl;
 
+import com.example.birdReproductionManagement.dto.BirdReproductionDto;
 import com.example.birdReproductionManagement.dto.BirdReproductionResponse.BirdRe4CageDetailDTOResponse;
+import com.example.birdReproductionManagement.dto.BirdTypeDto;
 import com.example.birdReproductionManagement.dto.CageResponse.CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.CageResponse.CageDto;
 import com.example.birdReproductionManagement.dto.ReproductionProcessResponse.Reproduction4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.UserResponse.User4CageDetailDTOResponse;
+import com.example.birdReproductionManagement.entity.BirdType;
 import com.example.birdReproductionManagement.exceptions.CageNotFoundException;
 import com.example.birdReproductionManagement.exceptions.UserNotFoundException;
 import com.example.birdReproductionManagement.mapper.*;
@@ -16,12 +19,14 @@ import com.example.birdReproductionManagement.repository.BirdReproductionReposit
 import com.example.birdReproductionManagement.repository.CageRepository;
 import com.example.birdReproductionManagement.repository.ReproductionProcessRepository;
 import com.example.birdReproductionManagement.service.CageService;
+import com.example.birdReproductionManagement.utils.MyUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -79,6 +84,7 @@ public class CageServiceImpl implements CageService {
                     BirdRe4CageDetailDTOResponse bird4CageDetailDTOResponse = BirdReproductionMapper.map2Bird4CageDetailDTO(birdReproduction);
                     if((birdReproduction.getBird() != null) ){
                         bird4CageDetailDTOResponse.setBird(BirdMapper.map2Birdd4CageDetailDTO(birdReproduction.getBird()));
+                        MyUtils.expDateByLaidDate4BirdReproduct(bird4CageDetailDTOResponse,birdReproduction.getBird().getBirdType());
                     }
                     bird4CageDetailDTOResponses.add(bird4CageDetailDTOResponse);
                 }
@@ -168,5 +174,4 @@ public class CageServiceImpl implements CageService {
         return cageRepository.findByLocationContainsAndAvailableIsTrue(location).stream().map(CageMapper::mapToCageDto)
                 .collect(Collectors.toList());
     }
-
 }

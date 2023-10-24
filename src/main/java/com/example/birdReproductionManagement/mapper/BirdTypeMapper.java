@@ -5,6 +5,7 @@ import com.example.birdReproductionManagement.dto.BirdResponse.MutationBirdListD
 import com.example.birdReproductionManagement.dto.BirdTypeDto;
 import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4ProcessDTOResponse;
+import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4ProcessInitDTOResponse;
 import com.example.birdReproductionManagement.entity.BirdType;
 
 public class BirdTypeMapper {
@@ -48,6 +49,16 @@ public class BirdTypeMapper {
     }
     public static BirdType4ProcessDTOResponse map2BirdType4ProcessDTO(BirdType birdType){
         return BirdType4ProcessDTOResponse.builder()
+                .typeId(birdType.getId() + "")
+                .name(birdType.getName())
+                .incubate(birdType.getIncubate())
+                .chick(birdType.getChick())
+                .swingBranch(birdType.getSwingBranch())
+                .lifeExpectancy(birdType.getLifeExpectancy())
+                .build();
+    }
+    public static BirdType4ProcessInitDTOResponse map2BirdType4ProcessInitDTO(BirdType birdType){
+        return BirdType4ProcessInitDTOResponse.builder()
                 .typeId(birdType.getId() + "")
                 .name(birdType.getName())
                 .incubate(birdType.getIncubate())

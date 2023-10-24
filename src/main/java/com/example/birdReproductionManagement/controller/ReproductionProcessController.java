@@ -2,6 +2,7 @@ package com.example.birdReproductionManagement.controller;
 
 import com.example.birdReproductionManagement.dto.BirdReproductionDto;
 import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4ProcessDTOResponse;
+import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4ProcessInitDTOResponse;
 import com.example.birdReproductionManagement.dto.PairDTO;
 import com.example.birdReproductionManagement.dto.ReproductionProcessDto;
 import com.example.birdReproductionManagement.service.BirdTypeService;
@@ -40,9 +41,10 @@ public class ReproductionProcessController {
         return new ResponseEntity<>(reproductionProcessService.updateReproductionProcess(id, reproductionProcessDto), HttpStatus.OK);
     }
     @GetMapping("/init")
-    public ResponseEntity<List<BirdType4ProcessDTOResponse>> getType4Process(){
-        return new  ResponseEntity<List<BirdType4ProcessDTOResponse>>(birdTypeService.getType4Process(), HttpStatus.OK);
+    public ResponseEntity<List<BirdType4ProcessInitDTOResponse>> getType4ProcessInit(){
+        return new  ResponseEntity<List<BirdType4ProcessInitDTOResponse>>(birdTypeService.getType4ProcessInit(), HttpStatus.OK);
     }
+
 //    @GetMapping("/findfather/{id}")
 //    public ResponseEntity<BirdReproductionDto> findFather(@PathVariable("id")Long id){
 //        return new ResponseEntity<>(reproductionProcessService.findFather(id), HttpStatus.OK);

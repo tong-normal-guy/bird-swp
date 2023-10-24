@@ -1,17 +1,17 @@
 package com.example.birdReproductionManagement.service.impl;
 
 import com.example.birdReproductionManagement.dto.BirdReproductionDto;
+import com.example.birdReproductionManagement.dto.BirdTypeDto;
 import com.example.birdReproductionManagement.dto.EggDto;
-import com.example.birdReproductionManagement.entity.Bird;
-import com.example.birdReproductionManagement.entity.BirdReproduction;
-import com.example.birdReproductionManagement.entity.ReproductionProcess;
-import com.example.birdReproductionManagement.entity.ReproductionRole;
+import com.example.birdReproductionManagement.entity.*;
 import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
 import com.example.birdReproductionManagement.exceptions.BirdReproductionNotFoundException;
 import com.example.birdReproductionManagement.exceptions.ReproductionProcessNotFoundException;
 import com.example.birdReproductionManagement.mapper.BirdReproductionMapper;
+import com.example.birdReproductionManagement.mapper.BirdTypeMapper;
 import com.example.birdReproductionManagement.repository.BirdRepository;
 import com.example.birdReproductionManagement.repository.BirdReproductionRepository;
+import com.example.birdReproductionManagement.repository.BirdTypeRepository;
 import com.example.birdReproductionManagement.repository.ReproductionProcessRepository;
 import com.example.birdReproductionManagement.service.BirdReproductionService;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +30,7 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
     private final BirdReproductionRepository birdReproductionRepository;
     private final ReproductionProcessRepository reproductionProcessRepository;
     private final BirdRepository birdRepository;
+    private final BirdTypeRepository birdTypeRepository;
     @Override
     public List<BirdReproductionDto> findAllBirdReproductions() {
         List<BirdReproduction> birdReproductions = birdReproductionRepository.findAll();
@@ -116,4 +117,6 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
         birdReproduction = finalReproduction;
         return BirdReproductionMapper.mapToBirdReproductionDto(birdReproduction);
     }
+
+
 }

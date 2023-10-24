@@ -41,6 +41,8 @@ public class Bird {
     private Long fatherId;
     @Column(name = "mother_Id")
     private Long motherId;
+    @Column(name = "super_reproduct")
+    private Float superReproduct;
 
     @ManyToOne
     @JoinColumn(name = "birdtype_id", nullable = false)
