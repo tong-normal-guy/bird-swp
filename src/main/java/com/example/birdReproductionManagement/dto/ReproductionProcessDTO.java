@@ -1,6 +1,6 @@
 package com.example.birdReproductionManagement.dto;
 
-import com.example.birdReproductionManagement.dto.CageResponse.CageDto;
+import com.example.birdReproductionManagement.dto.CageResponse.CageDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReproductionProcessDto {
+public class ReproductionProcessDTO {
     private String processId;
     private Date pairingDate;
     private Date eggLaidDate;
@@ -23,9 +23,9 @@ public class ReproductionProcessDto {
     private String stage;
     private Integer failEgg;
     private Boolean isDone;
-    private CageDto cage;
+    private CageDTO cage;
     private String cageId;
-    private BirdReproductionDto cockReproduction;
-    private BirdReproductionDto henReproduction;
+    private BirdReproductionDTO cockReproduction;
+    private BirdReproductionDTO henReproduction;
 //    private List<BirdReproductionDto> birdReproductions;
 }

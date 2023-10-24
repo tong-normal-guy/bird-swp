@@ -1,12 +1,12 @@
 package com.example.birdReproductionManagement.mapper;
 
-import com.example.birdReproductionManagement.dto.UserDto;
+import com.example.birdReproductionManagement.dto.UserDTO;
 import com.example.birdReproductionManagement.dto.UserResponse.User4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.entity.Role;
 import com.example.birdReproductionManagement.entity.User;
 
 public class UserMapper {
-    public static User mapToUser(UserDto userDto){
+    public static User mapToUser(UserDTO userDto){
         return User.builder()
 //                .id(userDto.getId())
                 .username(userDto.getUsername())
@@ -20,8 +20,8 @@ public class UserMapper {
                 .build();
     }
 
-    public static UserDto mapToUserDto(User user){
-        return UserDto.builder()
+    public static UserDTO mapToUserDto(User user){
+        return UserDTO.builder()
                 .userId(String.valueOf(user.getId()))
                 .username(user.getUsername())
                 .email(user.getEmail())

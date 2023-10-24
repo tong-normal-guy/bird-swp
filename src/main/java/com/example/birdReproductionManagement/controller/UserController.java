@@ -1,6 +1,6 @@
 package com.example.birdReproductionManagement.controller;
 
-import com.example.birdReproductionManagement.dto.UserDto;
+import com.example.birdReproductionManagement.dto.UserDTO;
 import com.example.birdReproductionManagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,26 +20,26 @@ public class UserController {
         this.userService = userEntityService;
     }
     @GetMapping("/view")
-    public ResponseEntity<List<UserDto>> getAllUsers(){
+    public ResponseEntity<List<UserDTO>> getAllUsers(){
         return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.OK);
     }
     @GetMapping("/{role}")
-    public ResponseEntity<List<UserDto>> getListByRole(@PathVariable("role")String role){
+    public ResponseEntity<List<UserDTO>> getListByRole(@PathVariable("role")String role){
         return new ResponseEntity<>(userService.findUserByRole(role), HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<UserDto> createStaff(@RequestBody UserDto userDto){
+    public ResponseEntity<UserDTO> createStaff(@RequestBody UserDTO userDto){
         return new ResponseEntity<>(userService.addUser(userDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> updateStaff(@PathVariable("id")Long id, @RequestBody UserDto userDto){
+    public ResponseEntity<UserDTO> updateStaff(@PathVariable("id")Long id, @RequestBody UserDTO userDto){
         return new ResponseEntity<>(userService.updateUser(id, userDto), HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<UserDto> updateUserByFields(@PathVariable("id")Long id, @RequestBody UserDto userDto){
+    public ResponseEntity<UserDTO> updateUserByFields(@PathVariable("id")Long id, @RequestBody UserDTO userDto){
         return new ResponseEntity<>(userService.updateUserByFields(id, userDto), HttpStatus.OK);
     }
     @DeleteMapping("/{id}")

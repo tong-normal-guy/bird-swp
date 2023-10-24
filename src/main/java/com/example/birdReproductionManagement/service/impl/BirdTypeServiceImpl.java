@@ -1,13 +1,11 @@
 package com.example.birdReproductionManagement.service.impl;
 
-import com.example.birdReproductionManagement.dto.BirdParentDTO;
 import com.example.birdReproductionManagement.dto.BirdResponse.Bird4ProcessDTOResponse;
 import com.example.birdReproductionManagement.dto.BirdResponse.MutationBirdListDTO;
-import com.example.birdReproductionManagement.dto.BirdTypeDto;
+import com.example.birdReproductionManagement.dto.BirdTypeDTO;
 import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4ProcessDTOResponse;
 import com.example.birdReproductionManagement.dto.BirdTypeResponse.SuperReproductDTO;
 import com.example.birdReproductionManagement.dto.NormalBirdListDTO;
-import com.example.birdReproductionManagement.entity.Bird;
 import com.example.birdReproductionManagement.entity.Sex;
 import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
 import com.example.birdReproductionManagement.exceptions.BirdTypeNotFoundException;
@@ -21,8 +19,6 @@ import com.example.birdReproductionManagement.service.BirdTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,12 +34,12 @@ public class BirdTypeServiceImpl implements BirdTypeService {
     }
 
     @Override
-    public List<BirdTypeDto> findAllBirdTypes() {
+    public List<BirdTypeDTO> findAllBirdTypes() {
         return birdTypeRepository.findAll().stream().map(BirdTypeMapper::mapToBirdTypeDto).collect(Collectors.toList());
     }
 
     @Override
-    public BirdTypeDto createBirdType(BirdTypeDto birdTypeDto) {
+    public BirdTypeDTO createBirdType(BirdTypeDTO birdTypeDto) {
         return BirdTypeMapper.mapToBirdTypeDto(birdTypeRepository.save(BirdTypeMapper.mapToBirdType(birdTypeDto)));
     }
 
@@ -55,7 +51,7 @@ public class BirdTypeServiceImpl implements BirdTypeService {
     }
 
     @Override
-    public BirdTypeDto updateBirdType(Long id, BirdTypeDto birdTypeDto) {
+    public BirdTypeDTO updateBirdType(Long id, BirdTypeDTO birdTypeDto) {
         BirdType birdType = birdTypeRepository.findById(id).orElseThrow(()
             -> new BirdTypeNotFoundException("Bird type could not be updated."));
         BirdType newBirdType = BirdTypeMapper.mapToBirdType(birdTypeDto);

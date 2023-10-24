@@ -1,10 +1,10 @@
 package com.example.birdReproductionManagement.mapper;
 
-import com.example.birdReproductionManagement.dto.BirdCageHistoryDto;
+import com.example.birdReproductionManagement.dto.BirdCageHistoryDTO;
 import com.example.birdReproductionManagement.entity.BirdCageHistory;
 
 public class BirdCageHistoryMapper {
-    public static BirdCageHistory mapToBirdCageHistory(BirdCageHistoryDto birdCageHistoryDto){
+    public static BirdCageHistory mapToBirdCageHistory(BirdCageHistoryDTO birdCageHistoryDto){
         return BirdCageHistory.builder()
 //                .id(birdCageHistoryDto.getId())
                 .implDate(birdCageHistoryDto.getImplDate())
@@ -13,8 +13,8 @@ public class BirdCageHistoryMapper {
                 .build();
     }
 
-    public static BirdCageHistoryDto mapToBirdCageHistoryDto(BirdCageHistory birdCageHistory){
-        return BirdCageHistoryDto.builder()
+    public static BirdCageHistoryDTO mapToBirdCageHistoryDto(BirdCageHistory birdCageHistory){
+        return BirdCageHistoryDTO.builder()
                 .historyId(String.valueOf(birdCageHistory.getId()))
                 .implDate(birdCageHistory.getImplDate())
                 .bird(BirdMapper.mapToBirdDto(birdCageHistory.getBird()))

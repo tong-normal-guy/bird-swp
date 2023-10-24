@@ -1,11 +1,11 @@
 package com.example.birdReproductionManagement.mapper;
 
 import com.example.birdReproductionManagement.dto.CageResponse.Cage4ListDTO;
-import com.example.birdReproductionManagement.dto.CageResponse.CageDto;
+import com.example.birdReproductionManagement.dto.CageResponse.CageDTO;
 import com.example.birdReproductionManagement.entity.Cage;
 
 public class CageMapper {
-    public static Cage mapToCage(CageDto cageDto){
+    public static Cage mapToCage(CageDTO cageDto){
         return Cage.builder()
 //                .id(cageDto.getId())
                 .location(cageDto.getLocation())
@@ -19,9 +19,9 @@ public class CageMapper {
                 .build();
     }
 
-    public static CageDto mapToCageDto(Cage cage){
+    public static CageDTO mapToCageDto(Cage cage){
         if(cage.getUser() == null){
-            return CageDto.builder()
+            return CageDTO.builder()
                     .cageId(String.valueOf(cage.getId()))
 //                .code(cage.getLocation() + String.valueOf(cage.getId()))
                     .location(cage.getLocation())
@@ -34,7 +34,7 @@ public class CageMapper {
 //                .workDivisions(cage.getWorkDivisions().stream().map(WorkDivisionMapper::mapToWorkDivisionDto).collect(Collectors.toList()))
                     .build();
         }
-        return CageDto.builder()
+        return CageDTO.builder()
                 .cageId(String.valueOf(cage.getId()))
 //                .code(cage.getLocation() + String.valueOf(cage.getId()))
                 .location(cage.getLocation())

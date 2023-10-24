@@ -1,7 +1,7 @@
 package com.example.birdReproductionManagement.controller;
 
-import com.example.birdReproductionManagement.dto.BirdReproductionDto;
-import com.example.birdReproductionManagement.dto.EggDto;
+import com.example.birdReproductionManagement.dto.BirdReproductionDTO;
+import com.example.birdReproductionManagement.dto.EggDTO;
 import com.example.birdReproductionManagement.service.BirdReproductionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,15 +19,19 @@ public class BirdReproductionController {
         this.birdReproductionService = birdReproductionService;
     }
     @GetMapping("/all")
-    public ResponseEntity<List<BirdReproductionDto>> getAllBirdReproductions(){
+    public ResponseEntity<List<BirdReproductionDTO>> getAllBirdReproductions(){
         return new ResponseEntity<>(birdReproductionService.findAllBirdReproductions(), HttpStatus.OK);
     }
     @PostMapping("/addegg/{id}")
-    public ResponseEntity<List<BirdReproductionDto>> addEggToProcess(@PathVariable("id")Long id, @RequestBody EggDto eggDto){
+    public ResponseEntity<List<BirdReproductionDTO>> addEggToProcess(@PathVariable("id")Long id, @RequestBody EggDTO eggDto){
         return new ResponseEntity<>(birdReproductionService.createBirdReproduction(id, eggDto), HttpStatus.CREATED);
     }
     @PatchMapping("/{id}")
-    public ResponseEntity<BirdReproductionDto> updateBirdReproduction(@PathVariable("id")Long id, @RequestBody BirdReproductionDto birdReproductionDto){
+    public ResponseEntity<BirdReproductionDTO> updateBirdReproduction(@PathVariable("id")Long id, @RequestBody BirdReproductionDTO birdReproductionDto){
         return new ResponseEntity<>(birdReproductionService.updateBirdReproduction(id, birdReproductionDto), HttpStatus.OK);
+    }
+    @GetMapping("/child/{id}")
+    public ResponseEntity<List<BirdReproductionDTO>> getListChildOfProcess(@PathVariable("id")Long id){
+        return new ResponseEntity<>(birdReproductionService.findChildOfProcess(id), HttpStatus.OK);
     }
 }
