@@ -15,6 +15,8 @@ public class UpdateBirdReproductionDTO {
     private String eggStatus;
     private String eggType;
     private Date hatchDate;
+    private Date actSwingBranchDate;
+    private Date actAdultBirdDate;
     //Data of new bird
     private String sex;
     private String image;

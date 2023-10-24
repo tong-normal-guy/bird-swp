@@ -5,15 +5,14 @@ import com.example.birdReproductionManagement.dto.UpdateBirdReproductionDTO;
 import com.example.birdReproductionManagement.entity.*;
 import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
 import com.example.birdReproductionManagement.exceptions.BirdReproductionNotFoundException;
+import com.example.birdReproductionManagement.exceptions.CageNotFoundException;
 import com.example.birdReproductionManagement.exceptions.ReproductionProcessNotFoundException;
 import com.example.birdReproductionManagement.mapper.BirdMapper;
 import com.example.birdReproductionManagement.mapper.BirdReproductionMapper;
 import com.example.birdReproductionManagement.mapper.BirdTypeMapper;
-import com.example.birdReproductionManagement.repository.BirdRepository;
-import com.example.birdReproductionManagement.repository.BirdReproductionRepository;
-import com.example.birdReproductionManagement.repository.BirdTypeRepository;
-import com.example.birdReproductionManagement.repository.ReproductionProcessRepository;
+import com.example.birdReproductionManagement.repository.*;
 import com.example.birdReproductionManagement.service.BirdReproductionService;
+import com.example.birdReproductionManagement.utils.MyUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
@@ -31,6 +30,7 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
     private final ReproductionProcessRepository reproductionProcessRepository;
     private final BirdRepository birdRepository;
     private final BirdTypeRepository birdTypeRepository;
+    private final CageRepository cageRepository;
     @Override
     public List<BirdReproductionDTO> findAllBirdReproductions() {
         List<BirdReproduction> birdReproductions = birdReproductionRepository.findAll();
@@ -38,9 +38,15 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
                 .collect(Collectors.toList());
     }
     @Override
-    public List<BirdReproductionDTO> createBirdReproduction(Long processId, EggDTO eggDto) {
-        ReproductionProcess reproductionProcess = reproductionProcessRepository.findById(processId).orElseThrow(()
-                -> new ReproductionProcessNotFoundException("Egg could not be added."));
+    public List<BirdReproductionDTO> createBirdReproduction(Long cageId, EggDTO eggDto) {
+        Cage cage = cageRepository.findById(cageId).orElseThrow(
+                () -> new CageNotFoundException("Cage could not be found."));
+        ReproductionProcess reproductionProcess = reproductionProcessRepository.findByIsDoneFalseAndCage(cage);
+        Long processId = reproductionProcess.getId();
+        BirdReproduction birdReproduction = birdReproductionRepository
+                .findByReproductionProcessIdAndReproductionRole(processId, ReproductionRole.FATHER);
+        Bird bird = birdReproduction.getBird();
+        BirdType birdType = bird.getBirdType();
         List<BirdReproduction> newEggs = new ArrayList<>();
         for (int i = 0; i < eggDto.getNumber(); i++){
             BirdReproduction newEgg = new BirdReproduction();
@@ -48,6 +54,12 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
             newEgg.setReproductionProcess(reproductionProcess);
             newEgg.setEggStatus("In development");
             newEgg.setReproductionRole(ReproductionRole.EGG);
+            Date expEggHatchDate = MyUtils.calculateDate(newEgg.getEggLaidDate(), birdType.getIncubate());
+            newEgg.setExpEggHatchDate(expEggHatchDate);
+            Date expSwingBranch = MyUtils.calculateDate(newEgg.getExpEggHatchDate(), birdType.getChick());
+            newEgg.setExpSwingBranch(expSwingBranch);
+            Date expAdultBirdDate = MyUtils.calculateDate(newEgg.getExpSwingBranch(), birdType.getSwingBranch());
+            newEgg.setExpAdultBirdDate(expAdultBirdDate);
             newEggs.add(birdReproductionRepository.save(newEgg));
         }
         reproductionProcess.setTotalEgg(reproductionProcess.getTotalEgg() + eggDto.getNumber());
@@ -60,6 +72,7 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
     public BirdReproductionDTO updateBirdReproduction(Long id, UpdateBirdReproductionDTO updateBirdReproductionDTO) {
         BirdReproduction birdReproduction = birdReproductionRepository.findById(id).orElseThrow(
                 () -> new BirdReproductionNotFoundException("Bird reproduction could not be found."));
+        Cage cage = birdReproduction.getReproductionProcess().getCage();
         Long processId = birdReproduction.getReproductionProcess().getId();
         BirdReproduction finalReproduction = birdReproduction;
         ReflectionUtils.doWithFields(updateBirdReproductionDTO.getClass(), field -> {
@@ -77,7 +90,6 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
                 }
             }
         });
-
 //        if(updateBirdReproductionDTO.getBirdId() != null){
 //            Bird bird = birdRepository.findById(Long.valueOf(updateBirdReproductionDTO.getBirdId())).orElseThrow(
 //                    () -> new BirdNotFoundException("Bird could not be found in updateBirdReproduction"));
@@ -94,6 +106,8 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
             newChick.setBirdType(chickType);
             Cage chickCage = birdReproduction.getReproductionProcess().getCage();
             newChick.setCage(chickCage);
+            cage.setQuantity(cage.getQuantity() + 1);
+            cageRepository.save(cage);
             Bird bird = birdRepository.save(newChick);
             finalReproduction.setBird(bird);
             finalReproduction.setActEggHatchDate(updateBirdReproductionDTO.getHatchDate());

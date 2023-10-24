@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface BirdReproductionService {
     List<BirdReproductionDTO> findAllBirdReproductions();
-    List<BirdReproductionDTO> createBirdReproduction(Long processId, EggDTO eggDto);
+    List<BirdReproductionDTO> createBirdReproduction(Long cageId, EggDTO eggDto);
     BirdReproductionDTO updateBirdReproduction(Long id, UpdateBirdReproductionDTO updateBirdReproductionDTO);
     List<BirdReproductionDTO> findChildOfProcess(Long id);
 
