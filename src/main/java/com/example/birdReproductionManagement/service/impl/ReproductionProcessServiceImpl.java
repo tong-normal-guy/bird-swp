@@ -76,7 +76,7 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
             throw new BirdTypeNotMatchedException("Bird type of this birds pair is not matched.");
         }
         //Kiểm tra lứa tuổi của chim có phù hợp không
-        if(!cock.getAgeRange().equals("Trưởng Thành") || !hen.getAgeRange().equals("Trưởng Thành")){
+        if(!cock.getAgeRange().equals("Trưởng thành") || !hen.getAgeRange().equals("Trưởng thành")){
             throw new BirdTypeNotMatchedException("Age range of cock is not suitable for reproduction");
         }
         //Kiểm tra chim có đang trong quá trình sinh sản khác không

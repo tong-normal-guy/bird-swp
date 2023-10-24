@@ -3,6 +3,7 @@ package com.example.birdReproductionManagement.mapper;
 import com.example.birdReproductionManagement.dto.BirdResponse.Bird4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.BirdResponse.Bird4ProcessDTOResponse;
 import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
+import com.example.birdReproductionManagement.dto.UpdateBirdReproductionDTO;
 import com.example.birdReproductionManagement.entity.Bird;
 
 import com.example.birdReproductionManagement.entity.Sex;
@@ -78,6 +79,15 @@ public class BirdMapper {
                 .image(bird.getImage())
                 .featherColor(bird.getFeatherColor())
                 .weight(bird.getWeight())
+                .build();
+    }
+
+    public static Bird mapToBird(UpdateBirdReproductionDTO updateBirdReproductionDTO){
+        return Bird.builder()
+                .sex(Sex.valueOf(updateBirdReproductionDTO.getSex()))
+                .image(updateBirdReproductionDTO.getImage())
+                .weight(updateBirdReproductionDTO.getWeight())
+                .hatchDate(updateBirdReproductionDTO.getHatchDate())
                 .build();
     }
 }
