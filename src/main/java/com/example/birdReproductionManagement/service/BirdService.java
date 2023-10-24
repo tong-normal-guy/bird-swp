@@ -1,16 +1,15 @@
 package com.example.birdReproductionManagement.service;
 
-import com.example.birdReproductionManagement.dto.BirdResponse.BirdDto;
+import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
 
 import java.util.List;
-import java.util.Map;
 
 public interface BirdService {
-    List<BirdDto> findAllBirds();
-    BirdDto updateBird(Long id, BirdDto birdDto);
+    List<BirdDTO> findAllBirds();
+    BirdDTO updateBird(Long id, BirdDTO birdDto);
     void deleteBird(Long id);
-    BirdDto createBird(BirdDto birdDto);
-    List<BirdDto> findByCage(Long id);
-    BirdDto updateBirdByFields(Long id, BirdDto birdDto);
-    List<BirdDto> findBySex(String sex);
+    BirdDTO createBird(BirdDTO birdDto);
+    List<BirdDTO> findByCage(Long id);
+    BirdDTO updateBirdByFields(Long id, BirdDTO birdDto);
+    List<BirdDTO> findBySex(String sex);
 }

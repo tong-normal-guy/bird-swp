@@ -1,12 +1,12 @@
 package com.example.birdReproductionManagement.mapper;
 
-import com.example.birdReproductionManagement.dto.BirdReproductionDto;
+import com.example.birdReproductionManagement.dto.BirdReproductionDTO;
 import com.example.birdReproductionManagement.dto.BirdReproductionResponse.BirdRe4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.entity.BirdReproduction;
 import com.example.birdReproductionManagement.entity.ReproductionRole;
 
 public class BirdReproductionMapper {
-    public static BirdReproduction mapToBirdReproduction (BirdReproductionDto birdReproductionDto){
+    public static BirdReproduction mapToBirdReproduction (BirdReproductionDTO birdReproductionDto){
         return BirdReproduction.builder()
 //                .id(birdReproductionDto.getId())
 //                .bird(BirdMapper.mapToBird(birdReproductionDto.getBird()))
@@ -23,9 +23,9 @@ public class BirdReproductionMapper {
                 .build();
     }
 
-    public static BirdReproductionDto mapToBirdReproductionDto (BirdReproduction birdReproduction){
+    public static BirdReproductionDTO mapToBirdReproductionDto (BirdReproduction birdReproduction){
         if(birdReproduction.getReproductionRole().name().equals("EGG")){
-            return BirdReproductionDto.builder()
+            return BirdReproductionDTO.builder()
                     .reproductionId(String.valueOf(birdReproduction.getId()))
 //                    .bird(BirdMapper.mapToBirdDto(birdReproduction.getBird()))
                     .eggLaidDate(birdReproduction.getEggLaidDate())
@@ -41,7 +41,7 @@ public class BirdReproductionMapper {
                     .reproductionRole(String.valueOf(birdReproduction.getReproductionRole()))
                     .build();
         }
-        return BirdReproductionDto.builder()
+        return BirdReproductionDTO.builder()
                 .reproductionId(String.valueOf(birdReproduction.getId()))
                 .bird(BirdMapper.mapToBirdDto(birdReproduction.getBird()))
                 .eggLaidDate(birdReproduction.getEggLaidDate())

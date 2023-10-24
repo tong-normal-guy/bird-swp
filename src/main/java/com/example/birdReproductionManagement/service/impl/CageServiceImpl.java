@@ -2,7 +2,7 @@ package com.example.birdReproductionManagement.service.impl;
 
 import com.example.birdReproductionManagement.dto.BirdReproductionResponse.BirdRe4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.CageResponse.CageDetailDTOResponse;
-import com.example.birdReproductionManagement.dto.CageResponse.CageDto;
+import com.example.birdReproductionManagement.dto.CageResponse.CageDTO;
 import com.example.birdReproductionManagement.dto.ReproductionProcessResponse.Reproduction4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.UserResponse.User4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.exceptions.CageNotFoundException;
@@ -36,13 +36,13 @@ public class CageServiceImpl implements CageService {
 //    private
 
     @Override
-    public List<CageDto> viewCageUsable() {
+    public List<CageDTO> viewCageUsable() {
         List<Cage> cages = cageRepository.findAllByQuantity(0);
         return cages.stream().map(CageMapper::mapToCageDto).collect(Collectors.toList());
     }
 
     @Override
-    public List<CageDto> findAllCages() {
+    public List<CageDTO> findAllCages() {
         return cageRepository.findAll().stream().map(CageMapper::mapToCageDto).collect(Collectors.toList());
     }
     @Override
@@ -102,17 +102,17 @@ public class CageServiceImpl implements CageService {
     }
 
     @Override
-    public CageDto getDetailById(Long id) {
+    public CageDTO getDetailById(Long id) {
         Cage cage = cageRepository.findById(id).orElseThrow(()
                 -> new CageNotFoundException("Cage could not be found."));
-        CageDto cageDto = CageMapper.mapToCageDto(cage);
+        CageDTO cageDto = CageMapper.mapToCageDto(cage);
         cageDto.setBirdList(birdRepository.findByCage_Id(cage.getId()).stream()
                 .map(BirdMapper::mapToBirdDto).collect(Collectors.toList()));
         return cageDto;
     }
 
     @Override
-    public CageDto addCage(CageDto cageDto) {
+    public CageDTO addCage(CageDTO cageDto) {
         cageDto.setQuantity(0);
         cageDto.setAvailable(true);
         Cage cage = cageRepository.save(CageMapper.mapToCage(cageDto));
@@ -122,7 +122,7 @@ public class CageServiceImpl implements CageService {
 
 
     @Override
-    public CageDto updateCage(Long id, CageDto cageDto) {
+    public CageDTO updateCage(Long id, CageDTO cageDto) {
 
         Cage cage = cageRepository.findById(id).orElseThrow(()
                 -> new CageNotFoundException("Cage could not be updated."));
@@ -132,7 +132,7 @@ public class CageServiceImpl implements CageService {
     }
 
     @Override
-    public CageDto updateCageByFields(Long id, CageDto cageDto) {
+    public CageDTO updateCageByFields(Long id, CageDTO cageDto) {
         Cage cage = cageRepository.findById(id).orElseThrow(
                 () -> new UserNotFoundException("User could not be found in updateCageByFields."));
         Cage finalCage = cage;
@@ -160,12 +160,12 @@ public class CageServiceImpl implements CageService {
     }
 
     @Override
-    public List<CageDto> findByLocation(String location, boolean available) {
+    public List<CageDTO> findByLocation(String location, boolean available) {
         if(!available){
             return cageRepository.findByLocationContains(location).stream().map(CageMapper::mapToCageDto)
                     .collect(Collectors.toList());
         }
-        return cageRepository.findByLocationContainsAndAvailableIsTrue(location).stream().map(CageMapper::mapToCageDto)
+        return cageRepository.findByLocationContainsAndAvailableIsTrueAndQuantityEquals(location, 0).stream().map(CageMapper::mapToCageDto)
                 .collect(Collectors.toList());
     }
 

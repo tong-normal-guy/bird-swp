@@ -1,24 +1,18 @@
 package com.example.birdReproductionManagement.mapper;
 
-import com.example.birdReproductionManagement.dto.BirdReproductionDto;
-import com.example.birdReproductionManagement.dto.ReproductionProcessDto;
+import com.example.birdReproductionManagement.dto.ReproductionProcessDTO;
+import com.example.birdReproductionManagement.dto.ReproductionProcessResponse.ProcessForViewAllResponseDTO;
 import com.example.birdReproductionManagement.dto.ReproductionProcessResponse.Reproduction4CageDetailDTOResponse;
-import com.example.birdReproductionManagement.entity.BirdReproduction;
 import com.example.birdReproductionManagement.entity.ReproductionProcess;
-import com.example.birdReproductionManagement.entity.ReproductionRole;
 
 public class ReproductionProcessMapper {
-    public static ReproductionProcess mapToReproductionProcess(ReproductionProcessDto reproductionProcessDto){
+    public static ReproductionProcess mapToReproductionProcess(ReproductionProcessDTO reproductionProcessDto){
         return ReproductionProcess.builder()
 //                .id(reproductionProcessDto.getId())
                 .pairingDate(reproductionProcessDto.getPairingDate())
-//                .eggLaidDate(reproductionProcessDto.getEggLaidDate())
                 .expEggHatchDate(reproductionProcessDto.getExpEggHatchDate())
-//                .actEggHatchDate(reproductionProcessDto.getActEggHatchDate())
                 .expSwingBranch(reproductionProcessDto.getExpSwingBranch())
-//                .actSwingBranch(reproductionProcessDto.getActSwingBranch())
                 .expAdultBirdDate(reproductionProcessDto.getExpAdultBirdDate())
-//                .actAdultBirdDate(reproductionProcessDto.getActAdultBirdDate())
                 .totalEgg(reproductionProcessDto.getTotalEgg())
                 .stage(reproductionProcessDto.getStage())
                 .failEgg(reproductionProcessDto.getFailEgg())
@@ -28,17 +22,13 @@ public class ReproductionProcessMapper {
                 .build();
     }
 
-    public static ReproductionProcessDto mapToReproductionProcessDto(ReproductionProcess reproductionProcess){
-        return ReproductionProcessDto.builder()
+    public static ReproductionProcessDTO mapToReproductionProcessDto(ReproductionProcess reproductionProcess){
+        return ReproductionProcessDTO.builder()
                 .processId(String.valueOf(reproductionProcess.getId()))
                 .pairingDate(reproductionProcess.getPairingDate())
-//                .eggLaidDate(reproductionProcess.getEggLaidDate())
                 .expEggHatchDate(reproductionProcess.getExpEggHatchDate())
-//                .actEggHatchDate(reproductionProcess.getActEggHatchDate())
                 .expSwingBranch(reproductionProcess.getExpSwingBranch())
-//                .actSwingBranch(reproductionProcess.getActSwingBranch())
                 .expAdultBirdDate(reproductionProcess.getExpAdultBirdDate())
-//                .actAdultBirdDate(reproductionProcess.getActAdultBirdDate())
                 .totalEgg(reproductionProcess.getTotalEgg())
                 .stage(reproductionProcess.getStage())
                 .failEgg(reproductionProcess.getFailEgg())
@@ -58,6 +48,15 @@ public class ReproductionProcessMapper {
                 .expEggHatchDate(reproductionProcess.getExpEggHatchDate())
                 .expSwingBranch(reproductionProcess.getExpSwingBranch())
                 .expAdultBirdDate(reproductionProcess.getExpAdultBirdDate())
+                .build();
+    }
+
+    public static ProcessForViewAllResponseDTO mapToProcessForViewAllResponseDTO(ReproductionProcess reproductionProcess){
+        return ProcessForViewAllResponseDTO.builder()
+                .processId(String.valueOf(reproductionProcess.getId()))
+                .cageId(String.valueOf(reproductionProcess.getCage().getId()))
+                .isDone(reproductionProcess.getIsDone())
+                .pairingDate(reproductionProcess.getPairingDate())
                 .build();
     }
 }

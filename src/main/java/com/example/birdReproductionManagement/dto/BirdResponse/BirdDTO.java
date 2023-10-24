@@ -1,7 +1,7 @@
 package com.example.birdReproductionManagement.dto.BirdResponse;
 
-import com.example.birdReproductionManagement.dto.BirdTypeDto;
-import com.example.birdReproductionManagement.dto.CageResponse.CageDto;
+import com.example.birdReproductionManagement.dto.BirdTypeDTO;
+import com.example.birdReproductionManagement.dto.CageResponse.CageDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BirdDto {
+public class BirdDTO {
     private String birdId;
     private String sex;
     private Date hatchDate;
@@ -25,10 +25,10 @@ public class BirdDto {
     private String featherColor;
     private Float weight;
     private String birdTypeName;
-    private BirdTypeDto birdType;
+    private BirdTypeDTO birdType;
 //    private List<BirdDto> birdListOfFather;
 //    private List<BirdDto> birdListOfMother;
-    private CageDto cage;
+    private CageDTO cage;
     private String cageId;
 //    private List<BirdCageHistoryDto> birdCageHistories;
 //    private List<BirdReproductionDto> birdReproductions;

@@ -1,10 +1,10 @@
 package com.example.birdReproductionManagement.mapper;
 
-import com.example.birdReproductionManagement.dto.MealDto;
+import com.example.birdReproductionManagement.dto.MealDTO;
 import com.example.birdReproductionManagement.entity.Meal;
 
 public class MealMapper {
-    public static Meal mapToMeal(MealDto mealDto){
+    public static Meal mapToMeal(MealDTO mealDto){
         return Meal.builder()
 //                .id(mealDto.getId())
                 .food(mealDto.getFood())
@@ -14,8 +14,8 @@ public class MealMapper {
                 .build();
     }
 
-    public static MealDto mapToMealDto(Meal meal){
-        return MealDto.builder()
+    public static MealDTO mapToMealDto(Meal meal){
+        return MealDTO.builder()
                 .mealId(String.valueOf(meal.getId()))
                 .food(meal.getFood())
                 .foodNorm(meal.getFoodNorm())

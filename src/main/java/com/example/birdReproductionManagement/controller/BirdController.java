@@ -1,6 +1,6 @@
 package com.example.birdReproductionManagement.controller;
 
-import com.example.birdReproductionManagement.dto.BirdResponse.BirdDto;
+import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
 import com.example.birdReproductionManagement.service.BirdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/birds")
@@ -20,13 +19,13 @@ public class BirdController {
     }
 
     @GetMapping("/view")
-    public ResponseEntity<List<BirdDto>> getListBirds(){
-        List<BirdDto> birdDtos = birdService.findAllBirds();
+    public ResponseEntity<List<BirdDTO>> getListBirds(){
+        List<BirdDTO> birdDtos = birdService.findAllBirds();
         return new ResponseEntity<>(birdDtos, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BirdDto> updateBird(@PathVariable("id")Long id, @RequestBody BirdDto birdDto){
+    public ResponseEntity<BirdDTO> updateBird(@PathVariable("id")Long id, @RequestBody BirdDTO birdDto){
         return new ResponseEntity<>(birdService.updateBird(id, birdDto), HttpStatus.OK);
     }
 
@@ -37,22 +36,22 @@ public class BirdController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createBird(@RequestBody BirdDto birdDto){
+    public ResponseEntity<?> createBird(@RequestBody BirdDTO birdDto){
         return new ResponseEntity<>(birdService.createBird(birdDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/view/{id}")
-    public ResponseEntity<List<BirdDto>> getListBirdsByCage(@PathVariable("id")Long id){
+    public ResponseEntity<List<BirdDTO>> getListBirdsByCage(@PathVariable("id")Long id){
         return new ResponseEntity<>(birdService.findByCage(id), HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<BirdDto> updateBirdByFields(@PathVariable("id")Long id, @RequestBody BirdDto birdDto){
+    public ResponseEntity<BirdDTO> updateBirdByFields(@PathVariable("id")Long id, @RequestBody BirdDTO birdDto){
         return new ResponseEntity<>(birdService.updateBirdByFields(id, birdDto), HttpStatus.OK);
     }
 
     @GetMapping("/sex/{sex}")
-    public ResponseEntity<List<BirdDto>> findBirdBySex(@PathVariable("sex")String sex){
+    public ResponseEntity<List<BirdDTO>> findBirdBySex(@PathVariable("sex")String sex){
         return new ResponseEntity<>(birdService.findBySex(sex), HttpStatus.OK);
     }
 }

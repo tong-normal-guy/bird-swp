@@ -1,7 +1,6 @@
 package com.example.birdReproductionManagement.controller;
 
-import com.example.birdReproductionManagement.dto.BirdTypeDto;
-import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4ProcessDTOResponse;
+import com.example.birdReproductionManagement.dto.BirdTypeDTO;
 import com.example.birdReproductionManagement.service.BirdTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,11 +19,11 @@ public class BirdTypeController {
         this.birdTypeService = birdTypeService;
     }
     @GetMapping("/view")
-    public ResponseEntity<List<BirdTypeDto>> getListBirdTypes(){
+    public ResponseEntity<List<BirdTypeDTO>> getListBirdTypes(){
         return new ResponseEntity<>(birdTypeService.findAllBirdTypes(), HttpStatus.OK);
     }
     @PostMapping("/create")
-    public ResponseEntity<BirdTypeDto> createBirdType(@RequestBody BirdTypeDto birdTypeDto){
+    public ResponseEntity<BirdTypeDTO> createBirdType(@RequestBody BirdTypeDTO birdTypeDto){
         return new ResponseEntity<>(birdTypeService.createBirdType(birdTypeDto), HttpStatus.CREATED);
     }
     @DeleteMapping("/{id}")
@@ -33,7 +32,7 @@ public class BirdTypeController {
         return new ResponseEntity<>("Bird type is deleted.", HttpStatus.OK);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<BirdTypeDto> updateBirdType(@PathVariable("id") Long id, @RequestBody BirdTypeDto birdTypeDto){
+    public ResponseEntity<BirdTypeDTO> updateBirdType(@PathVariable("id") Long id, @RequestBody BirdTypeDTO birdTypeDto){
        return new ResponseEntity<>( birdTypeService.updateBirdType(id, birdTypeDto), HttpStatus.OK);
     }
 }

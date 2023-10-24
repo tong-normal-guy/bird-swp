@@ -1,7 +1,7 @@
 package com.example.birdReproductionManagement.dto.CageResponse;
 
-import com.example.birdReproductionManagement.dto.BirdResponse.BirdDto;
-import com.example.birdReproductionManagement.dto.UserDto;
+import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
+import com.example.birdReproductionManagement.dto.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CageDto {
+public class CageDTO {
     private String cageId;
     private String location;
 //    private String code;
@@ -23,8 +23,8 @@ public class CageDto {
 //    private Boolean inProcess;
 //    private CageTypeDto cageType;
 //    private Long cageTypeId;
-    private UserDto user;
-    private List<BirdDto> birdList;
+    private UserDTO user;
+    private List<BirdDTO> birdList;
 //    private List<BirdCageHistoryDto> birdCageHistories;
 //    private List<ReproductionProcessDto> reproductionProcesses;
 //    private List<WorkDivisionDto> workDivisions;
