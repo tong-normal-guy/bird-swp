@@ -1,17 +1,18 @@
 package com.example.birdReproductionManagement.utils;
-
 import com.example.birdReproductionManagement.dto.BirdParentDTO;
+import com.example.birdReproductionManagement.dto.BirdReproductionDTO;
+import com.example.birdReproductionManagement.dto.BirdReproductionResponse.BirdRe4CageDetailDTOResponse;
+import com.example.birdReproductionManagement.dto.BirdTypeDTO;
 import com.example.birdReproductionManagement.entity.Bird;
+import com.example.birdReproductionManagement.entity.BirdType;
 import com.example.birdReproductionManagement.entity.ReproductionRole;
 import com.example.birdReproductionManagement.entity.Sex;
+import com.example.birdReproductionManagement.mapper.BirdTypeMapper;
 import com.example.birdReproductionManagement.repository.BirdRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class MyUtils {
@@ -79,5 +80,91 @@ public class MyUtils {
                 .collect(Collectors.toList());
     }
 
+    public static BirdRe4CageDetailDTOResponse expDateByLaidDate4BirdReproduct (BirdRe4CageDetailDTOResponse birdReproductionDto, BirdType birdType ){
+        if (birdReproductionDto.getEggLaidDate() != null && birdReproductionDto != null){
+            // Tạo một đối tượng Date
+            Date currentDate = new Date();
 
+            // Số ngày cần thêm vào (dưới dạng long)
+            long daysToAdd = birdType.getIncubate();
+
+            // Chuyển long thành int (nếu cần)
+            int daysToAddAsInt = (int) daysToAdd;
+
+            // Sử dụng Calendar để thực hiện phép tính
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(currentDate);  // Đặt thời điểm ban đầu
+
+            // Thêm số ngày vào ngày hiện tại
+            calendar.add(Calendar.DAY_OF_MONTH, daysToAddAsInt);
+            Date expHatched = calendar.getTime();
+
+            birdReproductionDto.setExpEggHatchDate(expHatched);
+
+            // Số ngày cần thêm vào (dưới dạng long)
+             daysToAdd = birdType.getChick();
+
+            // Chuyển long thành int (nếu cần)
+            daysToAddAsInt = (int) daysToAdd;
+            calendar.add(Calendar.DAY_OF_MONTH, daysToAddAsInt);
+
+            Date expChick = calendar.getTime();
+            birdReproductionDto.setExpSwingBranch(expChick);
+
+            // Số ngày cần thêm vào (dưới dạng long)
+            daysToAdd = birdType.getSwingBranch();
+
+            // Chuyển long thành int (nếu cần)
+            daysToAddAsInt = (int) daysToAdd;
+            calendar.add(Calendar.DAY_OF_MONTH, daysToAddAsInt);
+
+            Date expSwing = calendar.getTime();
+            birdReproductionDto.setExpAdultBirdDate(expSwing);
+        }
+        return birdReproductionDto;
+    }
+
+    public static BirdReproductionDTO expDateByLaidDate4BirdReproduct (BirdReproductionDTO birdReproductionDto, BirdType birdType ){
+        if (birdReproductionDto.getEggLaidDate() != null && birdReproductionDto != null){
+            // Tạo một đối tượng Date
+            Date currentDate = new Date();
+
+            // Số ngày cần thêm vào (dưới dạng long)
+            long daysToAdd = birdType.getIncubate();
+
+            // Chuyển long thành int (nếu cần)
+            int daysToAddAsInt = (int) daysToAdd;
+
+            // Sử dụng Calendar để thực hiện phép tính
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(currentDate);  // Đặt thời điểm ban đầu
+
+            // Thêm số ngày vào ngày hiện tại
+            calendar.add(Calendar.DAY_OF_MONTH, daysToAddAsInt);
+            Date expHatched = calendar.getTime();
+
+            birdReproductionDto.setExpEggHatchDate(expHatched);
+
+            // Số ngày cần thêm vào (dưới dạng long)
+            daysToAdd = birdType.getChick();
+
+            // Chuyển long thành int (nếu cần)
+            daysToAddAsInt = (int) daysToAdd;
+            calendar.add(Calendar.DAY_OF_MONTH, daysToAddAsInt);
+
+            Date expChick = calendar.getTime();
+            birdReproductionDto.setExpSwingBranch(expChick);
+
+            // Số ngày cần thêm vào (dưới dạng long)
+            daysToAdd = birdType.getSwingBranch();
+
+            // Chuyển long thành int (nếu cần)
+            daysToAddAsInt = (int) daysToAdd;
+            calendar.add(Calendar.DAY_OF_MONTH, daysToAddAsInt);
+
+            Date expSwing = calendar.getTime();
+            birdReproductionDto.setExpAdultBirdDate(expSwing);
+        }
+        return birdReproductionDto;
+    }
 }

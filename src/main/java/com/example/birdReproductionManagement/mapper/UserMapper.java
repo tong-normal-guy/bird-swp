@@ -42,6 +42,6 @@ public class UserMapper {
                     .role(String.valueOf(user.getRole()))
                     .userImage(user.getUserImage())
                     .build();
-        else return null;
+        else throw new RuntimeException("error at user is null");
     }
 }
