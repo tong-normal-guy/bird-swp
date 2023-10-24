@@ -7,13 +7,10 @@ import com.example.birdReproductionManagement.dto.CageResponse.CageDetailDTOResp
 import com.example.birdReproductionManagement.dto.CageResponse.CageDTO;
 import com.example.birdReproductionManagement.dto.ReproductionProcessResponse.Reproduction4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.UserResponse.User4CageDetailDTOResponse;
-import com.example.birdReproductionManagement.entity.BirdType;
+import com.example.birdReproductionManagement.entity.*;
 import com.example.birdReproductionManagement.exceptions.CageNotFoundException;
 import com.example.birdReproductionManagement.exceptions.UserNotFoundException;
 import com.example.birdReproductionManagement.mapper.*;
-import com.example.birdReproductionManagement.entity.BirdReproduction;
-import com.example.birdReproductionManagement.entity.Cage;
-import com.example.birdReproductionManagement.entity.ReproductionProcess;
 import com.example.birdReproductionManagement.repository.BirdRepository;
 import com.example.birdReproductionManagement.repository.BirdReproductionRepository;
 import com.example.birdReproductionManagement.repository.CageRepository;
@@ -84,19 +81,22 @@ public class CageServiceImpl implements CageService {
                     BirdRe4CageDetailDTOResponse bird4CageDetailDTOResponse = BirdReproductionMapper.map2Bird4CageDetailDTO(birdReproduction);
                     if((birdReproduction.getBird() != null) ){
                         bird4CageDetailDTOResponse.setBird(BirdMapper.map2Birdd4CageDetailDTO(birdReproduction.getBird()));
-                        MyUtils.expDateByLaidDate4BirdReproduct(bird4CageDetailDTOResponse,birdReproduction.getBird().getBirdType());
+                        if (birdReproduction.getReproductionRole() == ReproductionRole.EGG || birdReproduction.getReproductionRole() == ReproductionRole.CHILD){
+                            MyUtils.expDateByLaidDate4BirdReproduct(bird4CageDetailDTOResponse,birdReproduction.getBird().getBirdType());
+                        }
                     }
                     bird4CageDetailDTOResponses.add(bird4CageDetailDTOResponse);
                 }
                 //mapper start
-                User4CageDetailDTOResponse user4CageDetailDTOResponse = UserMapper.map2User4CageDetailDTO(cage.getUser());
-                cageDetailDTOResponse.setUser(user4CageDetailDTOResponse);
+
                 cageDetailDTOResponse.setBirdReproduction(bird4CageDetailDTOResponses);
                 cageDetailDTOResponse.setReproductionProcess(reproduction4CageDetailDTOResponse);
                 //mapper end
             }
 
             // mapper to CageDetailDTOResponse
+            User4CageDetailDTOResponse user4CageDetailDTOResponse = UserMapper.map2User4CageDetailDTO(cage.getUser());
+            cageDetailDTOResponse.setUser(user4CageDetailDTOResponse);
             cageDetailDTOResponse.setCageId(String.valueOf(cage.getId()));
             cageDetailDTOResponse.setLocation(cage.getLocation());
             cageDetailDTOResponse.setQuantity(cage.getQuantity());

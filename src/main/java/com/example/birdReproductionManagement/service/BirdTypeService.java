@@ -14,5 +14,5 @@ public interface BirdTypeService {
 
     List<BirdType4ProcessDTOResponse> getType4Process();
 
-    List<BirdType4ProcessInitDTOResponse> getType4ProcessInit();
+    //List<BirdType4ProcessInitDTOResponse> getType4ProcessInit();
 }
