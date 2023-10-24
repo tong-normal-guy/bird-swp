@@ -2,15 +2,14 @@ package com.example.birdReproductionManagement.mapper;
 
 import com.example.birdReproductionManagement.dto.BirdResponse.Bird4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.BirdResponse.Bird4ProcessDTOResponse;
-import com.example.birdReproductionManagement.dto.BirdResponse.BirdDto;
-import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4ProcessInitDTOResponse;
+import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
 import com.example.birdReproductionManagement.entity.Bird;
 
 import com.example.birdReproductionManagement.entity.Sex;
 
 
 public class BirdMapper {
-    public static Bird mapToBird(BirdDto birdDto){
+    public static Bird mapToBird(BirdDTO birdDto){
         return Bird.builder()
 //                .id(Long.valueOf(birdDto.getId()))
                 .sex(Sex.valueOf(birdDto.getSex()))
@@ -33,8 +32,8 @@ public class BirdMapper {
                 .build();
     }
 
-    public static BirdDto mapToBirdDto(Bird bird){
-        return BirdDto.builder()
+    public static BirdDTO mapToBirdDto(Bird bird){
+        return BirdDTO.builder()
                 .birdId(String.valueOf(bird.getId()))
                 .sex(bird.getSex().name())
                 .hatchDate(bird.getHatchDate())

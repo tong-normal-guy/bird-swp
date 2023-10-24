@@ -1,9 +1,6 @@
 package com.example.birdReproductionManagement.controller;
 
-import com.example.birdReproductionManagement.dto.LoginDto;
-import com.example.birdReproductionManagement.dto.RegisterDto;
-import com.example.birdReproductionManagement.entity.Role;
-import com.example.birdReproductionManagement.entity.User;
+import com.example.birdReproductionManagement.dto.LoginDTO;
 import com.example.birdReproductionManagement.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +23,7 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto){
+    public ResponseEntity<String> login(@RequestBody LoginDTO loginDto){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginDto.getUsername(),

@@ -5,13 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class EggDto {
-    private int number;
-    private Date laidDate;
+public class MealDTO {
+    private String mealId;
+    private String food;
+    private String foodNorm;
+//    private BirdTypeDto birdType;
+    private String birdTypeName;
 }

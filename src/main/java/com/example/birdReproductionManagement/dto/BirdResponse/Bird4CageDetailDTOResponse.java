@@ -1,10 +1,7 @@
 package com.example.birdReproductionManagement.dto.BirdResponse;
 
-import com.example.birdReproductionManagement.dto.BirdTypeDto;
 import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4CageDetailDTOResponse;
 import lombok.*;
-
-import java.util.Date;
 
 @Getter
 @Setter

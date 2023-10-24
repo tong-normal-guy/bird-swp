@@ -1,16 +1,16 @@
 package com.example.birdReproductionManagement.service;
 
-import com.example.birdReproductionManagement.dto.BirdTypeDto;
+import com.example.birdReproductionManagement.dto.BirdTypeDTO;
 import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4ProcessDTOResponse;
 import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4ProcessInitDTOResponse;
 
 import java.util.List;
 
 public interface BirdTypeService {
-    List<BirdTypeDto> findAllBirdTypes();
-    BirdTypeDto createBirdType(BirdTypeDto birdTypeDto);
+    List<BirdTypeDTO> findAllBirdTypes();
+    BirdTypeDTO createBirdType(BirdTypeDTO birdTypeDto);
     void deleteBirdType(Long id);
-    BirdTypeDto updateBirdType(Long id, BirdTypeDto birdTypeDto);
+    BirdTypeDTO updateBirdType(Long id, BirdTypeDTO birdTypeDto);
 
     List<BirdType4ProcessDTOResponse> getType4Process();
 

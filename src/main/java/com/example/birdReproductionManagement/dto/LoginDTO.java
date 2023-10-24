@@ -9,10 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MealDto {
-    private String mealId;
-    private String food;
-    private String foodNorm;
-//    private BirdTypeDto birdType;
-    private String birdTypeName;
+public class LoginDTO {
+    private String username;
+    private String password;
 }

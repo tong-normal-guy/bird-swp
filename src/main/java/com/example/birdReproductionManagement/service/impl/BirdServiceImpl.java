@@ -1,12 +1,10 @@
 package com.example.birdReproductionManagement.service.impl;
 
-import com.example.birdReproductionManagement.dto.BirdResponse.BirdDto;
+import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
 import com.example.birdReproductionManagement.entity.Sex;
 import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
 import com.example.birdReproductionManagement.exceptions.CageNotFoundException;
 import com.example.birdReproductionManagement.mapper.BirdMapper;
-import com.example.birdReproductionManagement.mapper.BirdTypeMapper;
-import com.example.birdReproductionManagement.mapper.CageMapper;
 import com.example.birdReproductionManagement.entity.Bird;
 import com.example.birdReproductionManagement.entity.BirdType;
 import com.example.birdReproductionManagement.entity.Cage;
@@ -20,8 +18,6 @@ import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,7 +35,7 @@ public class BirdServiceImpl implements BirdService {
 //    @Autowired
 
     @Override
-    public List<BirdDto> findAllBirds() {
+    public List<BirdDTO> findAllBirds() {
         List<Bird> birds = birdRepository.findAll();
         return birds.stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList());
     }
@@ -47,7 +43,7 @@ public class BirdServiceImpl implements BirdService {
 
 
     @Override
-    public BirdDto updateBird(Long id, BirdDto birdDto) {
+    public BirdDTO updateBird(Long id, BirdDTO birdDto) {
         Bird bird = birdRepository.findById(id).orElseThrow(()
                 -> new BirdNotFoundException("Bird could not be updated."));
 
@@ -80,7 +76,7 @@ public class BirdServiceImpl implements BirdService {
     }
 
     @Override
-    public BirdDto createBird(BirdDto birdDto) {
+    public BirdDTO createBird(BirdDTO birdDto) {
         BirdType birdType = birdTypeRepository.findByName(birdDto.getBirdTypeName());
         Cage cage = cageRepository.findById(Long.valueOf(birdDto.getCageId())).orElseThrow(()
             -> new CageNotFoundException("Bird could not be created."));
@@ -93,12 +89,12 @@ public class BirdServiceImpl implements BirdService {
     }
 
     @Override
-    public List<BirdDto> findByCage(Long id) {
+    public List<BirdDTO> findByCage(Long id) {
         return birdRepository.findByCage_Id(id).stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList());
     }
 
     @Override
-    public BirdDto updateBirdByFields(Long id, BirdDto birdDto) {
+    public BirdDTO updateBirdByFields(Long id, BirdDTO birdDto) {
         Bird bird = birdRepository.findById(id).orElseThrow(()
                 -> new BirdNotFoundException("Bird could not be updated."));
         Bird finalBird = bird;
@@ -146,7 +142,7 @@ public class BirdServiceImpl implements BirdService {
     }
 
     @Override
-    public List<BirdDto> findBySex(String sex) {
+    public List<BirdDTO> findBySex(String sex) {
         return birdRepository.findBySexIs(Sex.valueOf(sex)).stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList());
     }
 

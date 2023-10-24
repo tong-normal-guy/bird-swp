@@ -1,7 +1,5 @@
 package com.example.birdReproductionManagement.dto.BirdResponse;
 
-import com.example.birdReproductionManagement.dto.BirdTypeDto;
-import com.example.birdReproductionManagement.dto.CageResponse.CageDto;
 import lombok.*;
 
 import java.util.Date;

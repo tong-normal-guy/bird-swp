@@ -1,8 +1,9 @@
 package com.example.birdReproductionManagement.service.impl;
 
-import com.example.birdReproductionManagement.dto.BirdReproductionDto;
+import com.example.birdReproductionManagement.dto.BirdReproductionDTO;
 import com.example.birdReproductionManagement.dto.PairDTO;
-import com.example.birdReproductionManagement.dto.ReproductionProcessDto;
+import com.example.birdReproductionManagement.dto.ReproductionProcessDTO;
+import com.example.birdReproductionManagement.dto.ReproductionProcessResponse.ProcessForViewAllResponseDTO;
 import com.example.birdReproductionManagement.entity.*;
 import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
 import com.example.birdReproductionManagement.exceptions.BirdTypeNotMatchedException;
@@ -37,23 +38,31 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
     }
 
     @Override
-    public List<ReproductionProcessDto> findAllReproductionProcess() {
-        List<ReproductionProcessDto> list = reproductionProcessRepository.findAll().stream()
-                .map(ReproductionProcessMapper::mapToReproductionProcessDto).collect(Collectors.toList());
-        for (ReproductionProcessDto reproductionProcessDto : list){
-            BirdReproductionDto cock = BirdReproductionMapper.mapToBirdReproductionDto(birdReproductionRepository
-                    .findByReproductionProcessIdAndReproductionRoleEquals(Long.valueOf(reproductionProcessDto.getProcessId()), ReproductionRole.FATHER));
-            reproductionProcessDto.setCockReproduction(cock);
-            BirdReproductionDto hen = BirdReproductionMapper.mapToBirdReproductionDto(birdReproductionRepository
-                    .findByReproductionProcessIdAndReproductionRoleEquals(Long.valueOf(reproductionProcessDto.getProcessId()), ReproductionRole.MOTHER));
-            reproductionProcessDto.setHenReproduction(hen);
+    public List<ProcessForViewAllResponseDTO> findAllReproductionProcess() {
+        List<ProcessForViewAllResponseDTO> list = reproductionProcessRepository.findAll().stream()
+                .map(ReproductionProcessMapper::mapToProcessForViewAllResponseDTO).collect(Collectors.toList());
+        for (ProcessForViewAllResponseDTO process : list){
+            ReproductionProcess reproductionProcess = reproductionProcessRepository
+                    .findById(Long.valueOf(process.getProcessId())).orElseThrow(
+                            () -> new ReproductionProcessNotFoundException("Process could not be found in findAllReproductionProcess."));
+            BirdReproductionDTO cock = BirdReproductionMapper.mapToBirdReproductionDto(birdReproductionRepository
+                    .findByReproductionProcessIdAndReproductionRole(Long.valueOf(process.getProcessId()), ReproductionRole.FATHER));
+            process.setCockId(cock.getBird().getBirdId());
+            BirdReproductionDTO hen = BirdReproductionMapper.mapToBirdReproductionDto(birdReproductionRepository
+                    .findByReproductionProcessIdAndReproductionRole(Long.valueOf(process.getProcessId()), ReproductionRole.MOTHER));
+            process.setHenId(hen.getBird().getBirdId());
+            List<BirdReproduction> childList = birdReproductionRepository
+                    .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.EGG);
+            List<BirdReproductionDTO> childListDTO = childList.stream()
+                    .map(BirdReproductionMapper::mapToBirdReproductionDto).collect(Collectors.toList());
+            process.setEggsList(childListDTO);
         }
         return list;
     }
 
     @Override
 
-    public ReproductionProcessDto addReproductionProcess(PairDTO pairDTO) {
+    public ReproductionProcessDTO addReproductionProcess(PairDTO pairDTO) {
         Cage cage = cageRepository.findById(Long.valueOf(pairDTO.getCageId())).orElseThrow(()
                 -> new ReproductionProcessNotFoundException("Cage could not be found in addReproductionProcess."));
         if(cage.getQuantity() > 0){
@@ -124,7 +133,7 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
     }
 
     @Override
-    public ReproductionProcessDto updateReproductionProcess(Long id, ReproductionProcessDto reproductionProcessDto) {
+    public ReproductionProcessDTO updateReproductionProcess(Long id, ReproductionProcessDTO reproductionProcessDto) {
         ReproductionProcess reproductionProcess = reproductionProcessRepository.findById(id).orElseThrow(()
                 -> new ReproductionProcessNotFoundException("Reproduction process could not be updated."));
         Cage cage = cageRepository.findById(Long.valueOf(reproductionProcessDto.getCageId())).orElseThrow(()

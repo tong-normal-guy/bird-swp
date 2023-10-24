@@ -1,15 +1,13 @@
 package com.example.birdReproductionManagement.mapper;
 
-import com.example.birdReproductionManagement.dto.BirdResponse.Bird4ProcessDTOResponse;
-import com.example.birdReproductionManagement.dto.BirdResponse.MutationBirdListDTO;
-import com.example.birdReproductionManagement.dto.BirdTypeDto;
+import com.example.birdReproductionManagement.dto.BirdTypeDTO;
 import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4ProcessDTOResponse;
 import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4ProcessInitDTOResponse;
 import com.example.birdReproductionManagement.entity.BirdType;
 
 public class BirdTypeMapper {
-    public static BirdType mapToBirdType(BirdTypeDto birdTypeDto){
+    public static BirdType mapToBirdType(BirdTypeDTO birdTypeDto){
         return BirdType.builder()
 //                .id(birdTypeDto.getId())
                 .name(birdTypeDto.getName())
@@ -23,8 +21,8 @@ public class BirdTypeMapper {
                 .build();
     }
 
-    public static BirdTypeDto mapToBirdTypeDto(BirdType birdType){
-        return BirdTypeDto.builder()
+    public static BirdTypeDTO mapToBirdTypeDto(BirdType birdType){
+        return BirdTypeDTO.builder()
                 .typeId(String.valueOf(birdType.getId()))
                 .name(birdType.getName())
                 .incubate(birdType.getIncubate())

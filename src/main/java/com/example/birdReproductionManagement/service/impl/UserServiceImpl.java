@@ -1,6 +1,6 @@
 package com.example.birdReproductionManagement.service.impl;
 
-import com.example.birdReproductionManagement.dto.UserDto;
+import com.example.birdReproductionManagement.dto.UserDTO;
 import com.example.birdReproductionManagement.entity.User;
 import com.example.birdReproductionManagement.exceptions.UserEmailExistedException;
 import com.example.birdReproductionManagement.exceptions.UserNotFoundException;
@@ -30,20 +30,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> findAllUsers() {
+    public List<UserDTO> findAllUsers() {
         List<User> userList = userRepository.findAll();
-        List<UserDto> userDtoList = userList.stream().map(UserMapper::mapToUserDto).collect(Collectors.toList());
+        List<UserDTO> userDtoList = userList.stream().map(UserMapper::mapToUserDto).collect(Collectors.toList());
         return userDtoList;
     }
 
     @Override
-    public List<UserDto> findUserByRole(String role) {
+    public List<UserDTO> findUserByRole(String role) {
         return userRepository.findAllByRole(Role.valueOf(role.toUpperCase())).stream()
                 .map(UserMapper::mapToUserDto).collect(Collectors.toList());
     }
 
     @Override
-    public UserDto addUser(UserDto userDto) {
+    public UserDTO addUser(UserDTO userDto) {
         if(userRepository.findByUsername(userDto.getUsername()) != null){
             throw new UsernameExistedException("Username is existed.");
         }
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto updateUser(Long id, UserDto userDto) {
+    public UserDTO updateUser(Long id, UserDTO userDto) {
         User user = userRepository.findById(id).orElseThrow(()
                 -> new UserNotFoundException("User could not be updated."));
         if(!user.getEmail().equals(userDto.getEmail()) && userRepository.findByEmail(userDto.getEmail()) != null){
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto updateUserByFields(Long id, UserDto userDto) {
+    public UserDTO updateUserByFields(Long id, UserDTO userDto) {
         userDto.setRole(userDto.getRole().toUpperCase());
 //        if(userDto.getPassword() != null){
 //            userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));

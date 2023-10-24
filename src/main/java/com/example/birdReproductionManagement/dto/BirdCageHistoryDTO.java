@@ -1,7 +1,7 @@
 package com.example.birdReproductionManagement.dto;
 
-import com.example.birdReproductionManagement.dto.BirdResponse.BirdDto;
-import com.example.birdReproductionManagement.dto.CageResponse.CageDto;
+import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
+import com.example.birdReproductionManagement.dto.CageResponse.CageDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,9 +13,9 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BirdCageHistoryDto {
+public class BirdCageHistoryDTO {
     private String historyId;
     private Date implDate;
-    private BirdDto bird;
-    private CageDto cage;
+    private BirdDTO bird;
+    private CageDTO cage;
 }

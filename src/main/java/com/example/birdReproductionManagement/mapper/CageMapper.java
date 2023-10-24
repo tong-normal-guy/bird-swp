@@ -1,11 +1,11 @@
 package com.example.birdReproductionManagement.mapper;
 
 import com.example.birdReproductionManagement.dto.CageResponse.Cage4ListDTO;
-import com.example.birdReproductionManagement.dto.CageResponse.CageDto;
+import com.example.birdReproductionManagement.dto.CageResponse.CageDTO;
 import com.example.birdReproductionManagement.entity.Cage;
 
 public class CageMapper {
-    public static Cage mapToCage(CageDto cageDto){
+    public static Cage mapToCage(CageDTO cageDto){
         return Cage.builder()
 //                .id(cageDto.getId())
                 .location(cageDto.getLocation())
@@ -19,13 +19,28 @@ public class CageMapper {
                 .build();
     }
 
-    public static CageDto mapToCageDto(Cage cage){
-        return CageDto.builder()
+    public static CageDTO mapToCageDto(Cage cage){
+        if(cage.getUser() == null){
+            return CageDTO.builder()
+                    .cageId(String.valueOf(cage.getId()))
+//                .code(cage.getLocation() + String.valueOf(cage.getId()))
+                    .location(cage.getLocation())
+                    .quantity(cage.getQuantity())
+                    .available(cage.getAvailable())
+//                .cageType(CageTypeMapper.mapToCageTypeDto(cage.getCageType()))
+//                .birdList(cage.getBirdList().stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList()))
+//                .birdCageHistories(cage.getBirdCageHistories().stream().map(BirdCageHistoryMapper::mapToBirdCageHistoryDto).collect(Collectors.toList()))
+//                .reproductionProcesses(cage.getReproductionProcesses().stream().map(ReproductionProcessMapper::mapToReproductionProcessDto).collect(Collectors.toList()))
+//                .workDivisions(cage.getWorkDivisions().stream().map(WorkDivisionMapper::mapToWorkDivisionDto).collect(Collectors.toList()))
+                    .build();
+        }
+        return CageDTO.builder()
                 .cageId(String.valueOf(cage.getId()))
 //                .code(cage.getLocation() + String.valueOf(cage.getId()))
                 .location(cage.getLocation())
                 .quantity(cage.getQuantity())
                 .available(cage.getAvailable())
+                .user(UserMapper.mapToUserDto(cage.getUser()))
 //                .cageType(CageTypeMapper.mapToCageTypeDto(cage.getCageType()))
 //                .birdList(cage.getBirdList().stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList()))
 //                .birdCageHistories(cage.getBirdCageHistories().stream().map(BirdCageHistoryMapper::mapToBirdCageHistoryDto).collect(Collectors.toList()))

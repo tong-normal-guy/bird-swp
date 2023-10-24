@@ -1,9 +1,8 @@
 package com.example.birdReproductionManagement.utils;
-
 import com.example.birdReproductionManagement.dto.BirdParentDTO;
-import com.example.birdReproductionManagement.dto.BirdReproductionDto;
+import com.example.birdReproductionManagement.dto.BirdReproductionDTO;
 import com.example.birdReproductionManagement.dto.BirdReproductionResponse.BirdRe4CageDetailDTOResponse;
-import com.example.birdReproductionManagement.dto.BirdTypeDto;
+import com.example.birdReproductionManagement.dto.BirdTypeDTO;
 import com.example.birdReproductionManagement.entity.Bird;
 import com.example.birdReproductionManagement.entity.BirdType;
 import com.example.birdReproductionManagement.entity.ReproductionRole;
@@ -125,7 +124,7 @@ public class MyUtils {
         return birdReproductionDto;
     }
 
-    public static BirdReproductionDto expDateByLaidDate4BirdReproduct (BirdReproductionDto birdReproductionDto, BirdType birdType ){
+    public static BirdReproductionDTO expDateByLaidDate4BirdReproduct (BirdReproductionDTO birdReproductionDto, BirdType birdType ){
         if (birdReproductionDto.getEggLaidDate() != null && birdReproductionDto != null){
             // Tạo một đối tượng Date
             Date currentDate = new Date();

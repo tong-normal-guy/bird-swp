@@ -1,14 +1,14 @@
 package com.example.birdReproductionManagement.service;
 
-import com.example.birdReproductionManagement.dto.UserDto;
+import com.example.birdReproductionManagement.dto.UserDTO;
 
 import java.util.List;
 
 public interface UserService {
-    List<UserDto> findAllUsers();
-    List<UserDto> findUserByRole(String role);
-    UserDto addUser(UserDto userDto);
-    UserDto updateUser(Long id, UserDto userDto);
-    UserDto updateUserByFields(Long id, UserDto userDto);
+    List<UserDTO> findAllUsers();
+    List<UserDTO> findUserByRole(String role);
+    UserDTO addUser(UserDTO userDto);
+    UserDTO updateUser(Long id, UserDTO userDto);
+    UserDTO updateUserByFields(Long id, UserDTO userDto);
     void deleteUser(Long id);
 }
