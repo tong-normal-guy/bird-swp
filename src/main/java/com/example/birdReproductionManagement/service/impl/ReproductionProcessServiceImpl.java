@@ -52,11 +52,16 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
             BirdReproductionDTO hen = BirdReproductionMapper.mapToBirdReproductionDto(birdReproductionRepository
                     .findByReproductionProcessIdAndReproductionRole(Long.valueOf(process.getProcessId()), ReproductionRole.MOTHER));
             process.setHenId(hen.getBird().getBirdId());
-            List<BirdReproduction> childList = birdReproductionRepository
+            List<BirdReproduction> eggList = birdReproductionRepository
                     .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.EGG);
-            List<BirdReproductionDTO> childListDTO = childList.stream()
+            List<BirdReproduction> childList = birdReproductionRepository
+                    .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.CHILD);
+            List<BirdReproduction> reproductionList = new ArrayList<>();
+            reproductionList.addAll(eggList);
+            reproductionList.addAll(childList);
+            List<BirdReproductionDTO> reproductionListDTO = reproductionList.stream()
                     .map(BirdReproductionMapper::mapToBirdReproductionDto).collect(Collectors.toList());
-            process.setEggsList(childListDTO);
+            process.setEggsList(reproductionListDTO);
             process.setBirdTypeName(cock.getBird().getBirdType().getName());
         }
         return list;
