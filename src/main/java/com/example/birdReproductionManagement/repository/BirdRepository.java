@@ -52,5 +52,4 @@ public interface BirdRepository extends JpaRepository<Bird, Long> {
     List<Bird> findAllByMotherId(Long motherId);
 
 
-
 }

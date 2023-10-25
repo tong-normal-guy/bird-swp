@@ -18,5 +18,6 @@ public class ProcessForViewAllResponseDTO {
     private String henId;
     private Boolean isDone;
     private Date pairingDate;
+    private String birdTypeName;
     private List<BirdReproductionDTO> eggsList;
 }
