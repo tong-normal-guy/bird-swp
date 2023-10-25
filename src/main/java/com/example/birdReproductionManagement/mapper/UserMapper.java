@@ -35,13 +35,13 @@ public class UserMapper {
     }
 
     public static User4CageDetailDTOResponse map2User4CageDetailDTO(User user) {
-        if (user != null)
+//        if (user != null)
             return User4CageDetailDTOResponse.builder()
                     .userId(String.valueOf(user.getId()))
                     .fullName(user.getFullName())
                     .role(String.valueOf(user.getRole()))
                     .userImage(user.getUserImage())
                     .build();
-        else throw new RuntimeException("error at user is null");
+//        else throw new RuntimeException("error at user is null");
     }
 }
