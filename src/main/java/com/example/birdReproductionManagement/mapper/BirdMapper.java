@@ -59,7 +59,7 @@ public class BirdMapper {
     }
 
     public static Bird4CageDetailDTOResponse map2Birdd4CageDetailDTO (Bird bird){
-        if (bird != null) return Bird4CageDetailDTOResponse.builder()
+        return Bird4CageDetailDTOResponse.builder()
                 .birdId(String.valueOf(bird.getId()))
                 .sex(String.valueOf(bird.getSex()))
                 .hatchDate(bird.getHatchDate())
@@ -72,7 +72,6 @@ public class BirdMapper {
                 .weight(bird.getWeight())
                 .image(bird.getImage())
                 .build();
-        else throw new RuntimeException("error at bird null");
     }
     public static Bird4ProcessDTOResponse map2Bird4ProcessDTO(Bird bird){
         return Bird4ProcessDTOResponse.builder()
