@@ -1,44 +1,79 @@
 package com.example.birdReproductionManagement.service.impl;
 
 import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
-import com.example.birdReproductionManagement.entity.Sex;
+import com.example.birdReproductionManagement.dto.BirdResponse.BirdDetailReponseDTO;
+import com.example.birdReproductionManagement.entity.*;
 import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
 import com.example.birdReproductionManagement.exceptions.CageNotFoundException;
 import com.example.birdReproductionManagement.mapper.BirdMapper;
-import com.example.birdReproductionManagement.entity.Bird;
-import com.example.birdReproductionManagement.entity.BirdType;
-import com.example.birdReproductionManagement.entity.Cage;
 import com.example.birdReproductionManagement.repository.BirdRepository;
+import com.example.birdReproductionManagement.repository.BirdReproductionRepository;
 import com.example.birdReproductionManagement.repository.BirdTypeRepository;
 import com.example.birdReproductionManagement.repository.CageRepository;
 import com.example.birdReproductionManagement.service.BirdService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class BirdServiceImpl implements BirdService {
-    private BirdRepository birdRepository;
-    private BirdTypeRepository birdTypeRepository;
-    private CageRepository cageRepository;
-    @Autowired
-    public BirdServiceImpl(BirdRepository birdRepository, BirdTypeRepository birdTypeRepository, CageRepository cageRepository) {
-        this.birdRepository = birdRepository;
-        this.birdTypeRepository = birdTypeRepository;
-        this.cageRepository = cageRepository;
-    }
-
-//    @Autowired
+    private final BirdRepository birdRepository;
+    private final BirdTypeRepository birdTypeRepository;
+    private final CageRepository cageRepository;
+    private final BirdReproductionRepository birdReproductionRepository;
 
     @Override
-    public List<BirdDTO> findAllBirds() {
+    public List<BirdDetailReponseDTO> findAllBirds() {
         List<Bird> birds = birdRepository.findAll();
-        return birds.stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList());
+        List<BirdDetailReponseDTO> birdDTOs = birds.stream().map(BirdMapper::mapToBirdDetailReponseDTO)
+                .collect(Collectors.toList());
+        for (BirdDetailReponseDTO birdWalker : birdDTOs){
+
+            Bird bird = birdRepository.findById(Long.valueOf(birdWalker.getBirdId())).orElseThrow(
+                    () -> new BirdNotFoundException("Bird could not be found."));
+            //Tìm chim bố và chim mẹ
+            BirdReproduction birdReproduction = birdReproductionRepository.findByBirdAndReproductionRole(bird, ReproductionRole.CHILD);
+            if(birdReproduction != null){
+                ReproductionProcess reproductionProcess = birdReproduction.getReproductionProcess();
+                Bird father = birdReproductionRepository
+                        .findByReproductionProcessIdAndReproductionRole(reproductionProcess.getId(), ReproductionRole.FATHER)
+                        .getBird();
+                BirdDTO fatherDTO = BirdMapper.mapToBirdDto(father);
+                birdWalker.setFather(fatherDTO);
+                Bird mother = birdReproductionRepository
+                        .findByReproductionProcessIdAndReproductionRole(reproductionProcess.getId(), ReproductionRole.MOTHER)
+                        .getBird();
+                BirdDTO motherDTO = BirdMapper.mapToBirdDto(mother);
+                birdWalker.setMother(motherDTO);
+            }
+            //Tìm danh sách các chim con
+            List<BirdReproduction> birdReproductions = birdReproductionRepository
+                    .findByBirdAndReproductionRoleNot(bird, ReproductionRole.CHILD);
+            List<ReproductionProcess> reproductionProcesses = new ArrayList<>();
+            for (BirdReproduction birdReproductionWalker : birdReproductions){
+                reproductionProcesses.add(birdReproductionWalker.getReproductionProcess());
+            }
+            List<Bird> descendantsList = new ArrayList<>();
+            List<BirdReproduction> descendantsReproductions;
+            for (ReproductionProcess reproductionProcess : reproductionProcesses){
+                descendantsReproductions = birdReproductionRepository
+                        .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.CHILD);
+                for (BirdReproduction descendantReproduction : descendantsReproductions){
+                    descendantsList.add(descendantReproduction.getBird());
+                }
+            }
+            List<BirdDTO> descendantsDTOs = descendantsList.stream().map(BirdMapper::mapToBirdDto)
+                    .collect(Collectors.toList());
+        }
+        return birdDTOs;
     }
+
 
 
 
