@@ -36,4 +36,9 @@ public class BirdReproductionController {
     public ResponseEntity<List<BirdReproductionDTO>> getListChildOfProcess(@PathVariable("id")Long id){
         return new ResponseEntity<>(birdReproductionService.findChildOfProcess(id), HttpStatus.OK);
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteBirdReproduction(@PathVariable("id")Long id){
+        birdReproductionService.deleteBirdReproduction(id);
+        return new ResponseEntity<>("Bird reproduction deleted success.", HttpStatus.OK);
+    }
 }

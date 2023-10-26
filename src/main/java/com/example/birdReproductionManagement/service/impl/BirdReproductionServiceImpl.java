@@ -192,4 +192,11 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
                 .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.CHILD);
         return childList.stream().map(BirdReproductionMapper::mapToBirdReproductionDto).collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteBirdReproduction(Long id) {
+        BirdReproduction birdReproduction = birdReproductionRepository.findById(id).orElseThrow(
+                () -> new BirdReproductionNotFoundException("Bird reproduction could not be found."));
+        birdReproductionRepository.delete(birdReproduction);
+    }
 }

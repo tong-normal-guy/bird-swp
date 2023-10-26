@@ -3,6 +3,7 @@ package com.example.birdReproductionManagement.mapper;
 import com.example.birdReproductionManagement.dto.BirdResponse.Bird4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.BirdResponse.Bird4ProcessDTOResponse;
 import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
+import com.example.birdReproductionManagement.dto.BirdResponse.BirdDetailReponseDTO;
 import com.example.birdReproductionManagement.dto.UpdateBirdReproductionDTO;
 import com.example.birdReproductionManagement.entity.Bird;
 
@@ -88,6 +89,25 @@ public class BirdMapper {
                 .image(updateBirdReproductionDTO.getImage())
                 .weight(updateBirdReproductionDTO.getWeight())
                 .hatchDate(updateBirdReproductionDTO.getHatchDate())
+                .build();
+    }
+
+    public static BirdDetailReponseDTO mapToBirdDetailReponseDTO(Bird bird){
+        return BirdDetailReponseDTO.builder()
+                .birdId(String.valueOf(bird.getId()))
+                .sex(bird.getSex().name())
+                .hatchDate(bird.getHatchDate())
+                .ageRange(bird.getAgeRange())
+                .mutation(bird.getMutation())
+                .mutationRate(bird.getMutationRate())
+                .isAlive(bird.getIsAlive())
+                .image(bird.getImage())
+                .featherColor(bird.getFeatherColor())
+                .weight(bird.getWeight())
+                .birdTypeName(bird.getBirdType().getName())
+                .cageId(String.valueOf(bird.getCage().getId()))
+                .cage(CageMapper.mapToCageDto(bird.getCage()))
+                .birdType(BirdTypeMapper.mapToBirdTypeDto(bird.getBirdType()))
                 .build();
     }
 }
