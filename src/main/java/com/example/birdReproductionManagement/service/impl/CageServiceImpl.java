@@ -2,6 +2,8 @@ package com.example.birdReproductionManagement.service.impl;
 
 import com.example.birdReproductionManagement.dto.BirdReproductionDTO;
 import com.example.birdReproductionManagement.dto.BirdReproductionResponse.BirdRe4CageDetailDTOResponse;
+import com.example.birdReproductionManagement.dto.BirdResponse.Bird4CageDetailDTOResponse;
+import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
 import com.example.birdReproductionManagement.dto.BirdTypeDTO;
 import com.example.birdReproductionManagement.dto.CageResponse.CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.CageResponse.CageDTO;
@@ -69,6 +71,9 @@ public class CageServiceImpl implements CageService {
             ReproductionProcess reproductionProcess = reproductionProcessRepository.findByIsDoneFalseAndCage_Id(cage.getId()).orElse(null);
             if (reproductionProcess != null){
                 List<BirdReproduction> birdReproductions = birdReproductionRepository.findAllByReproductionProcess_Id(reproductionProcess.getId());
+
+//                List<BirdReproduction> eggReproductions = birdReproductionRepository.findAllEggsByReproductionProcessId(reproductionProcess.getId());
+//                List<BirdReproduction> parentReproductions = birdReproductionRepository.findAllParentsByReproductionProcessId(reproductionProcess.getId());
             // entity end
 
                 // dto
@@ -90,6 +95,10 @@ public class CageServiceImpl implements CageService {
                 cageDetailDTOResponse.setBirdReproduction(bird4CageDetailDTOResponses);
                 cageDetailDTOResponse.setReproductionProcess(reproduction4CageDetailDTOResponse);
                 //mapper end
+            } else {
+                List<Bird> birds = birdRepository.findByCage_Id(cage.getId());
+                List<Bird4CageDetailDTOResponse> birdDTO = birds.stream().map(BirdMapper::map2Birdd4CageDetailDTO).collect(Collectors.toList());
+                cageDetailDTOResponse.setBird(birdDTO);
             }
 
             // mapper to CageDetailDTOResponse
@@ -99,8 +108,8 @@ public class CageServiceImpl implements CageService {
             }
             cageDetailDTOResponse.setCageId(String.valueOf(cage.getId()));
             cageDetailDTOResponse.setLocation(cage.getLocation());
+            cageDetailDTOResponse.setAvailable(cage.getAvailable());
             cageDetailDTOResponse.setQuantity(cage.getQuantity());
-
             cageDetailDTOResponses.add(cageDetailDTOResponse);
         }
         return cageDetailDTOResponses;

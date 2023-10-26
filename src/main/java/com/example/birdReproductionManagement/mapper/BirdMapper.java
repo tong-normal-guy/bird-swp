@@ -62,8 +62,13 @@ public class BirdMapper {
         return Bird4CageDetailDTOResponse.builder()
                 .birdId(String.valueOf(bird.getId()))
                 .sex(String.valueOf(bird.getSex()))
+                .hatchDate(bird.getHatchDate())
+                .ageRange(bird.getAgeRange())
+                .isAlive(bird.getIsAlive())
                 .birdType(BirdTypeMapper.map2BirdtypeDTO(bird.getBirdType()))
+                .mutation(bird.getMutation())
                 .mutationRate(bird.getMutationRate())
+                .featherColor(bird.getFeatherColor())
                 .weight(bird.getWeight())
                 .image(bird.getImage())
                 .build();

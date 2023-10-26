@@ -13,6 +13,7 @@ public interface BirdRepository extends JpaRepository<Bird, Long> {
 
     String birdAgeRange = "Trưởng Thành";
     List<Bird> findByCage_Id(Long id);
+    Bird findByCageId(Long cageId);
     List<Bird> findBySexIs(Sex sex);
 
     @Query("SELECT DISTINCT b FROM Bird b " +

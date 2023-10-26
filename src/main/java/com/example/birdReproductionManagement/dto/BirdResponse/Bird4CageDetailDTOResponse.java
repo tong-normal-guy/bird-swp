@@ -18,7 +18,9 @@ public class Bird4CageDetailDTOResponse {
     private String ageRange;
     private Boolean isAlive;
     private BirdType4CageDetailDTOResponse birdType;//
+    private String mutation;
     private Float mutationRate;//
+    private String featherColor;
     private Float weight;//
     private String image;//
 
