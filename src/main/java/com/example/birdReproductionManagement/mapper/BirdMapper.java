@@ -57,14 +57,20 @@ public class BirdMapper {
     }
 
     public static Bird4CageDetailDTOResponse map2Birdd4CageDetailDTO (Bird bird){
-        return Bird4CageDetailDTOResponse.builder()
+        if (bird != null) return Bird4CageDetailDTOResponse.builder()
                 .birdId(String.valueOf(bird.getId()))
                 .sex(String.valueOf(bird.getSex()))
+                .hatchDate(bird.getHatchDate())
+                .ageRange(bird.getAgeRange())
+                .isAlive(bird.getIsAlive())
                 .birdType(BirdTypeMapper.map2BirdtypeDTO(bird.getBirdType()))
+                .mutation(bird.getMutation())
                 .mutationRate(bird.getMutationRate())
+                .featherColor(bird.getFeatherColor())
                 .weight(bird.getWeight())
                 .image(bird.getImage())
                 .build();
+        else throw new RuntimeException("error at bird null");
     }
     public static Bird4ProcessDTOResponse map2Bird4ProcessDTO(Bird bird){
         return Bird4ProcessDTOResponse.builder()
