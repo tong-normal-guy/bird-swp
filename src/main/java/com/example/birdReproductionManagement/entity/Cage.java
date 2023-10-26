@@ -1,6 +1,8 @@
 package com.example.birdReproductionManagement.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,13 +28,15 @@ public class Cage {
 //    @Column(name = "in_process", columnDefinition = "nvarchar(255)")
 //    private Boolean inProcess;
     @OneToMany(mappedBy = "cage", cascade = CascadeType.REMOVE)
-    private List<Bird> birdList = new ArrayList<>();
+    @Fetch(FetchMode.SELECT)
+    private List<Bird> birdList;
 
     @OneToMany(mappedBy = "cage", cascade = CascadeType.REMOVE)
-    private List<BirdCageHistory> birdCageHistories = new ArrayList<>();
+    private List<BirdCageHistory> birdCageHistories;
 
     @OneToMany(mappedBy = "cage", cascade = CascadeType.REMOVE)
-    private List<ReproductionProcess> reproductionProcesses = new ArrayList<>();
+    @Fetch(FetchMode.SELECT)
+    private List<ReproductionProcess> reproductionProcesses;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
