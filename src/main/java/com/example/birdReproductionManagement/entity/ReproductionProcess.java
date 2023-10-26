@@ -1,6 +1,8 @@
 package com.example.birdReproductionManagement.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -34,7 +36,8 @@ public class ReproductionProcess {
     @JoinColumn(name = "cage_id", nullable = false)
     private Cage cage;
     @OneToMany(mappedBy = "reproductionProcess", cascade = CascadeType.REMOVE)
-    private List<BirdReproduction> birdReproductions = new ArrayList<>();
+    @Fetch(FetchMode.SELECT)
+    private List<BirdReproduction> birdReproductions;
 }
 
 

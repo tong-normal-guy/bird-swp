@@ -70,7 +70,8 @@ public class CageServiceImpl implements CageService {
             // entity start
             ReproductionProcess reproductionProcess = reproductionProcessRepository.findByIsDoneFalseAndCage_Id(cage.getId()).orElse(null);
             if (reproductionProcess != null){
-                List<BirdReproduction> birdReproductions = birdReproductionRepository.findAllByReproductionProcess_Id(reproductionProcess.getId());
+                List<BirdReproduction> birdReproductions = reproductionProcess.getBirdReproductions();
+//                        birdReproductionRepository.findAllByReproductionProcess_Id(reproductionProcess.getId());
 
 //                List<BirdReproduction> eggReproductions = birdReproductionRepository.findAllEggsByReproductionProcessId(reproductionProcess.getId());
 //                List<BirdReproduction> parentReproductions = birdReproductionRepository.findAllParentsByReproductionProcessId(reproductionProcess.getId());
@@ -84,9 +85,6 @@ public class CageServiceImpl implements CageService {
                     BirdRe4CageDetailDTOResponse bird4CageDetailDTOResponse = BirdReproductionMapper.map2Bird4CageDetailDTO(birdReproduction);
                     if((birdReproduction.getBird() != null) ){
                         bird4CageDetailDTOResponse.setBird(BirdMapper.map2Birdd4CageDetailDTO(birdReproduction.getBird()));
-                        if (birdReproduction.getReproductionRole() == ReproductionRole.EGG || birdReproduction.getReproductionRole() == ReproductionRole.CHILD){
-                            MyUtils.expDateByLaidDate4BirdReproduct(bird4CageDetailDTOResponse,birdReproduction.getBird().getBirdType());
-                        }
                     }
                     bird4CageDetailDTOResponses.add(bird4CageDetailDTOResponse);
                 }
@@ -96,9 +94,10 @@ public class CageServiceImpl implements CageService {
                 cageDetailDTOResponse.setReproductionProcess(reproduction4CageDetailDTOResponse);
                 //mapper end
             } else {
-                List<Bird> birds = birdRepository.findByCage_Id(cage.getId());
-                List<Bird4CageDetailDTOResponse> birdDTO = birds.stream().map(BirdMapper::map2Birdd4CageDetailDTO).collect(Collectors.toList());
-                cageDetailDTOResponse.setBird(birdDTO);
+                if (!cage.getBirdList().isEmpty()){
+                    cageDetailDTOResponse.setBird(cage.getBirdList()
+                            .stream().map(BirdMapper::map2Birdd4CageDetailDTO).collect(Collectors.toList()));
+                }
             }
 
             // mapper to CageDetailDTOResponse
