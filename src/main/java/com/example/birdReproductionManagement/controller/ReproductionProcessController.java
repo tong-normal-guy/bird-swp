@@ -36,7 +36,7 @@ public class ReproductionProcessController {
         reproductionProcessService.deleteReproductionProcess(id);
         return new ResponseEntity<>("Reproduction process is deleted.", HttpStatus.OK);
     }
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<ReproductionProcessDTO> updateReproductionProcess(@PathVariable("id")Long id,
                                                                             @RequestBody ReproductionProcessDTO reproductionProcessDto){
         return new ResponseEntity<>(reproductionProcessService.updateReproductionProcess(id, reproductionProcessDto), HttpStatus.OK);

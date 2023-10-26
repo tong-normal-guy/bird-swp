@@ -1,11 +1,12 @@
 package com.example.birdReproductionManagement.service;
 
 import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
+import com.example.birdReproductionManagement.dto.BirdResponse.BirdDetailReponseDTO;
 
 import java.util.List;
 
 public interface BirdService {
-    List<BirdDTO> findAllBirds();
+    List<BirdDetailReponseDTO> findAllBirds();
     BirdDTO updateBird(Long id, BirdDTO birdDto);
     void deleteBird(Long id);
     BirdDTO createBird(BirdDTO birdDto);

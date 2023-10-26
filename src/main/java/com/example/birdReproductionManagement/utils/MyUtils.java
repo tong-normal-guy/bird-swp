@@ -85,6 +85,7 @@ public class MyUtils {
             // Tạo một đối tượng Date
             Date currentDate = new Date();
 
+
             // Số ngày cần thêm vào (dưới dạng long)
             long daysToAdd = birdType.getIncubate();
 
@@ -167,4 +168,13 @@ public class MyUtils {
         }
         return birdReproductionDto;
     }
+
+    public static Date calculateDate(Date date, long number){
+        int dayToAdd = (int) number;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_MONTH, dayToAdd);
+        return calendar.getTime();
+    }
+
 }

@@ -13,10 +13,7 @@ import com.example.birdReproductionManagement.entity.*;
 import com.example.birdReproductionManagement.exceptions.CageNotFoundException;
 import com.example.birdReproductionManagement.exceptions.UserNotFoundException;
 import com.example.birdReproductionManagement.mapper.*;
-import com.example.birdReproductionManagement.repository.BirdRepository;
-import com.example.birdReproductionManagement.repository.BirdReproductionRepository;
-import com.example.birdReproductionManagement.repository.CageRepository;
-import com.example.birdReproductionManagement.repository.ReproductionProcessRepository;
+import com.example.birdReproductionManagement.repository.*;
 import com.example.birdReproductionManagement.service.CageService;
 import com.example.birdReproductionManagement.utils.MyUtils;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +33,7 @@ public class CageServiceImpl implements CageService {
     private final BirdRepository birdRepository;
     private final ReproductionProcessRepository reproductionProcessRepository;
     private final BirdReproductionRepository birdReproductionRepository;
+    private final UserRepository userRepository;
 
 //    private
 
@@ -104,8 +102,10 @@ public class CageServiceImpl implements CageService {
             }
 
             // mapper to CageDetailDTOResponse
-            User4CageDetailDTOResponse user4CageDetailDTOResponse = UserMapper.map2User4CageDetailDTO(cage.getUser());
-            cageDetailDTOResponse.setUser(user4CageDetailDTOResponse);
+            if(cage.getUser() != null){
+                User4CageDetailDTOResponse user4CageDetailDTOResponse = UserMapper.map2User4CageDetailDTO(cage.getUser());
+                cageDetailDTOResponse.setUser(user4CageDetailDTOResponse);
+            }
             cageDetailDTOResponse.setCageId(String.valueOf(cage.getId()));
             cageDetailDTOResponse.setLocation(cage.getLocation());
             cageDetailDTOResponse.setAvailable(cage.getAvailable());
@@ -132,6 +132,10 @@ public class CageServiceImpl implements CageService {
         cageDto.setAvailable(true);
         Cage cage = cageRepository.save(CageMapper.mapToCage(cageDto));
         cage.setLocation(cage.getLocation() + cage.getId());
+//        long userId = 1;
+//        User user = userRepository.findById(userId).orElseThrow(
+//                () -> new UserNotFoundException("User could not be found."));
+//        cage.setUser(user);
         return CageMapper.mapToCageDto(cageRepository.save(cage));
     }
 

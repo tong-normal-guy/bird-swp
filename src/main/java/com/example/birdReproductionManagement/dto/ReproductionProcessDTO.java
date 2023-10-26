@@ -15,10 +15,6 @@ import java.util.Date;
 public class ReproductionProcessDTO {
     private String processId;
     private Date pairingDate;
-    private Date eggLaidDate;
-    private Date expEggHatchDate;
-    private Date expSwingBranch;
-    private Date expAdultBirdDate;
     private Integer totalEgg;
     private String stage;
     private Integer failEgg;

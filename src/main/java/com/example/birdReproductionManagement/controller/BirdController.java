@@ -1,6 +1,7 @@
 package com.example.birdReproductionManagement.controller;
 
 import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
+import com.example.birdReproductionManagement.dto.BirdResponse.BirdDetailReponseDTO;
 import com.example.birdReproductionManagement.service.BirdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,9 +20,8 @@ public class BirdController {
     }
 
     @GetMapping("/view")
-    public ResponseEntity<List<BirdDTO>> getListBirds(){
-        List<BirdDTO> birdDtos = birdService.findAllBirds();
-        return new ResponseEntity<>(birdDtos, HttpStatus.OK);
+    public ResponseEntity<List<BirdDetailReponseDTO>> getListBirds(){
+        return new ResponseEntity<>(birdService.findAllBirds(), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

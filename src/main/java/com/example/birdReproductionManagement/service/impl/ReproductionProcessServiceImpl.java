@@ -20,7 +20,9 @@ import com.example.birdReproductionManagement.service.ReproductionProcessService
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -50,11 +52,17 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
             BirdReproductionDTO hen = BirdReproductionMapper.mapToBirdReproductionDto(birdReproductionRepository
                     .findByReproductionProcessIdAndReproductionRole(Long.valueOf(process.getProcessId()), ReproductionRole.MOTHER));
             process.setHenId(hen.getBird().getBirdId());
-            List<BirdReproduction> childList = birdReproductionRepository
+            List<BirdReproduction> eggList = birdReproductionRepository
                     .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.EGG);
-            List<BirdReproductionDTO> childListDTO = childList.stream()
+            List<BirdReproduction> childList = birdReproductionRepository
+                    .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.CHILD);
+            List<BirdReproduction> reproductionList = new ArrayList<>();
+            reproductionList.addAll(eggList);
+            reproductionList.addAll(childList);
+            List<BirdReproductionDTO> reproductionListDTO = reproductionList.stream()
                     .map(BirdReproductionMapper::mapToBirdReproductionDto).collect(Collectors.toList());
-            process.setEggsList(childListDTO);
+            process.setEggsList(reproductionListDTO);
+            process.setBirdTypeName(cock.getBird().getBirdType().getName());
         }
         return list;
     }
@@ -76,7 +84,7 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
             throw new BirdTypeNotMatchedException("Bird type of this birds pair is not matched.");
         }
         //Kiểm tra lứa tuổi của chim có phù hợp không
-        if(!cock.getAgeRange().equals("Trưởng Thành") || !hen.getAgeRange().equals("Trưởng Thành")){
+        if(!cock.getAgeRange().equals("Trưởng thành") || !hen.getAgeRange().equals("Trưởng thành")){
             throw new BirdTypeNotMatchedException("Age range of cock is not suitable for reproduction");
         }
         //Kiểm tra chim có đang trong quá trình sinh sản khác không
@@ -135,10 +143,40 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
     public ReproductionProcessDTO updateReproductionProcess(Long id, ReproductionProcessDTO reproductionProcessDto) {
         ReproductionProcess reproductionProcess = reproductionProcessRepository.findById(id).orElseThrow(()
                 -> new ReproductionProcessNotFoundException("Reproduction process could not be updated."));
-        Cage cage = cageRepository.findById(Long.valueOf(reproductionProcessDto.getCageId())).orElseThrow(()
-                -> new ReproductionProcessNotFoundException("Reproduction process could not be updated."));
-        reproductionProcessDto.setCage(CageMapper.mapToCageDto(cage));
-        return ReproductionProcessMapper.mapToReproductionProcessDto(reproductionProcessRepository.save(ReproductionProcessMapper.mapToReproductionProcess(reproductionProcessDto)));
+        ReproductionProcess finalReproductionProcess = reproductionProcess;
+        ReflectionUtils.doWithFields(reproductionProcessDto.getClass(), field -> {
+            field.setAccessible(true);
+            Object newValue = field.get(reproductionProcessDto);
+            if(newValue != null){
+                String fieldName = field.getName();
+                if(!fieldName.equals("cageId")){
+                    Field existingField = ReflectionUtils.findField(finalReproductionProcess.getClass(), fieldName);
+                    if(existingField != null){
+                        ReflectionUtils.setField(existingField, finalReproductionProcess, newValue);
+                    }
+                }
+            }
+        });
+        if(reproductionProcessDto.getCageId() != null){
+            Cage newCage = cageRepository.findById(Long.valueOf(reproductionProcessDto.getCageId())).orElseThrow(()
+                    -> new ReproductionProcessNotFoundException("Reproduction process could not be updated."));
+            finalReproductionProcess.setCage(newCage);
+        }
+        if(finalReproductionProcess.getStage().equals("Nuôi con")){
+            List<BirdReproduction> birdReproductions = birdReproductionRepository
+                    .findByReproductionProcessAndReproductionRole(finalReproductionProcess, ReproductionRole.CHILD);
+            boolean flag = false;
+            for (BirdReproduction birdReproductionWalker : birdReproductions){
+                if (!birdReproductionWalker.getBird().getAgeRange().equals("Trưởng thành")){
+                    flag = true;
+                }
+            }
+            if (!flag){
+                finalReproductionProcess.setIsDone(true);
+            }
+        }
+        reproductionProcess = finalReproductionProcess;
+        return ReproductionProcessMapper.mapToReproductionProcessDto(reproductionProcessRepository.save(reproductionProcess));
     }
 
     @Override

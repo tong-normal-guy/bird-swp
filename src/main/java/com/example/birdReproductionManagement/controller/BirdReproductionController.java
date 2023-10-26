@@ -2,6 +2,7 @@ package com.example.birdReproductionManagement.controller;
 
 import com.example.birdReproductionManagement.dto.BirdReproductionDTO;
 import com.example.birdReproductionManagement.dto.EggDTO;
+import com.example.birdReproductionManagement.dto.UpdateBirdReproductionDTO;
 import com.example.birdReproductionManagement.service.BirdReproductionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,11 +28,17 @@ public class BirdReproductionController {
         return new ResponseEntity<>(birdReproductionService.createBirdReproduction(id, eggDto), HttpStatus.CREATED);
     }
     @PatchMapping("/{id}")
-    public ResponseEntity<BirdReproductionDTO> updateBirdReproduction(@PathVariable("id")Long id, @RequestBody BirdReproductionDTO birdReproductionDto){
-        return new ResponseEntity<>(birdReproductionService.updateBirdReproduction(id, birdReproductionDto), HttpStatus.OK);
+    public ResponseEntity<BirdReproductionDTO> updateBirdReproduction(@PathVariable("id")Long id,
+                                                                      @RequestBody UpdateBirdReproductionDTO updateBirdReproductionDTO){
+        return new ResponseEntity<>(birdReproductionService.updateBirdReproduction(id, updateBirdReproductionDTO), HttpStatus.OK);
     }
     @GetMapping("/child/{id}")
     public ResponseEntity<List<BirdReproductionDTO>> getListChildOfProcess(@PathVariable("id")Long id){
         return new ResponseEntity<>(birdReproductionService.findChildOfProcess(id), HttpStatus.OK);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteBirdReproduction(@PathVariable("id")Long id){
+        birdReproductionService.deleteBirdReproduction(id);
+        return new ResponseEntity<>("Bird reproduction deleted success.", HttpStatus.OK);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BirdReproductionRepository extends JpaRepository<BirdReproduction, Long> {
     List<BirdReproduction> findAllByReproductionProcess_Id(Long id);
@@ -20,6 +21,7 @@ public interface BirdReproductionRepository extends JpaRepository<BirdReproducti
     Boolean existsByBirdAndReproductionRoleNotAndReproductionRoleNotAndReproductionProcessIsDone
             (Bird bird, ReproductionRole reproductionRole1, ReproductionRole reproductionRole2, Boolean isDone);
     List<BirdReproduction> findByBirdAndReproductionRoleNot(Bird bird, ReproductionRole reproductionRole);
+    BirdReproduction findByBirdAndReproductionRole(Bird bird, ReproductionRole reproductionRole);
 //    List<BirdReproduction> findByReproductionProcessIdAndReproductionRoleEquals(Long id, ReproductionRole reproductionRole);
     List<BirdReproduction> findByReproductionProcessAndReproductionRole(ReproductionProcess reproductionProcess, ReproductionRole reproductionRole);
 }
