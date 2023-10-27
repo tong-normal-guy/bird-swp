@@ -1,12 +1,10 @@
 package com.example.birdReproductionManagement.mapper;
 
-import com.example.birdReproductionManagement.dto.BirdResponse.Bird4CageDetailDTOResponse;
-import com.example.birdReproductionManagement.dto.BirdResponse.Bird4ProcessDTOResponse;
-import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
-import com.example.birdReproductionManagement.dto.BirdResponse.BirdDetailReponseDTO;
+import com.example.birdReproductionManagement.dto.BirdResponse.*;
 import com.example.birdReproductionManagement.dto.UpdateBirdReproductionDTO;
 import com.example.birdReproductionManagement.entity.Bird;
 
+import com.example.birdReproductionManagement.entity.BirdReproduction;
 import com.example.birdReproductionManagement.entity.Sex;
 
 
@@ -35,6 +33,29 @@ public class BirdMapper {
     }
 
     public static BirdDTO mapToBirdDto(Bird bird){
+        if (bird.getCage() != null){
+            return BirdDTO.builder()
+                    .birdId(String.valueOf(bird.getId()))
+                    .sex(bird.getSex().name())
+                    .hatchDate(bird.getHatchDate())
+                    .ageRange(bird.getAgeRange())
+                    .mutation(bird.getMutation())
+                    .mutationRate(bird.getMutationRate())
+                    .isAlive(bird.getIsAlive())
+                    .image(bird.getImage())
+                    .featherColor(bird.getFeatherColor())
+                    .weight(bird.getWeight())
+                    .birdTypeName(bird.getBirdType().getName())
+                    .cageId(String.valueOf(bird.getCage().getId()))
+                    .cage(CageMapper.mapToCageDto(bird.getCage()))
+                    .birdType(BirdTypeMapper.mapToBirdTypeDto(bird.getBirdType()))
+//                .birdListOfFather(bird.getBirdListOfFather().stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList()))
+//                .birdListOfMother(bird.getBirdListOfMother().stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList()))
+//                .cage(CageMapper.mapToCageDto(bird.getCage()))
+//                .birdCageHistories(bird.getBirdCageHistories().stream().map(BirdCageHistoryMapper::mapToBirdCageHistoryDto).collect(Collectors.toList()))
+//                .birdReproductions(bird.getBirdReproductions().stream().map(BirdReproductionMapper::mapToBirdReproductionDto).collect(Collectors.toList()))
+                    .build();
+        }
         return BirdDTO.builder()
                 .birdId(String.valueOf(bird.getId()))
                 .sex(bird.getSex().name())
@@ -47,14 +68,7 @@ public class BirdMapper {
                 .featherColor(bird.getFeatherColor())
                 .weight(bird.getWeight())
                 .birdTypeName(bird.getBirdType().getName())
-                .cageId(String.valueOf(bird.getCage().getId()))
-                .cage(CageMapper.mapToCageDto(bird.getCage()))
                 .birdType(BirdTypeMapper.mapToBirdTypeDto(bird.getBirdType()))
-//                .birdListOfFather(bird.getBirdListOfFather().stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList()))
-//                .birdListOfMother(bird.getBirdListOfMother().stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList()))
-//                .cage(CageMapper.mapToCageDto(bird.getCage()))
-//                .birdCageHistories(bird.getBirdCageHistories().stream().map(BirdCageHistoryMapper::mapToBirdCageHistoryDto).collect(Collectors.toList()))
-//                .birdReproductions(bird.getBirdReproductions().stream().map(BirdReproductionMapper::mapToBirdReproductionDto).collect(Collectors.toList()))
                 .build();
     }
 
@@ -99,6 +113,24 @@ public class BirdMapper {
     }
 
     public static BirdDetailReponseDTO mapToBirdDetailReponseDTO(Bird bird){
+        if (bird.getCage() != null){
+            return BirdDetailReponseDTO.builder()
+                    .birdId(String.valueOf(bird.getId()))
+                    .sex(bird.getSex().name())
+                    .hatchDate(bird.getHatchDate())
+                    .ageRange(bird.getAgeRange())
+                    .mutation(bird.getMutation())
+                    .mutationRate(bird.getMutationRate())
+                    .isAlive(bird.getIsAlive())
+                    .image(bird.getImage())
+                    .featherColor(bird.getFeatherColor())
+                    .weight(bird.getWeight())
+                    .birdTypeName(bird.getBirdType().getName())
+                    .cageId(String.valueOf(bird.getCage().getId()))
+                    .cage(CageMapper.mapToCageDto(bird.getCage()))
+                    .birdType(BirdTypeMapper.mapToBirdTypeDto(bird.getBirdType()))
+                    .build();
+        }
         return BirdDetailReponseDTO.builder()
                 .birdId(String.valueOf(bird.getId()))
                 .sex(bird.getSex().name())
@@ -111,9 +143,39 @@ public class BirdMapper {
                 .featherColor(bird.getFeatherColor())
                 .weight(bird.getWeight())
                 .birdTypeName(bird.getBirdType().getName())
-                .cageId(String.valueOf(bird.getCage().getId()))
-                .cage(CageMapper.mapToCageDto(bird.getCage()))
                 .birdType(BirdTypeMapper.mapToBirdTypeDto(bird.getBirdType()))
+                .build();
+    }
+
+    public static DescendantResponseDTO mapToDescendantResponseDTO(Bird bird){
+        if (bird.getCage() != null){
+            return DescendantResponseDTO.builder()
+                    .birdId(String.valueOf(bird.getId()))
+                    .sex(bird.getSex().name())
+                    .hatchDate(bird.getHatchDate())
+                    .ageRange(bird.getAgeRange())
+                    .mutation(bird.getMutation())
+                    .mutationRate(bird.getMutationRate())
+                    .isAlive(bird.getIsAlive())
+                    .image(bird.getImage())
+                    .featherColor(bird.getFeatherColor())
+                    .weight(bird.getWeight())
+                    .birdTypeName(bird.getBirdType().getName())
+                    .cageId(String.valueOf(bird.getCage().getId()))
+                    .build();
+        }
+        return DescendantResponseDTO.builder()
+                .birdId(String.valueOf(bird.getId()))
+                .sex(bird.getSex().name())
+                .hatchDate(bird.getHatchDate())
+                .ageRange(bird.getAgeRange())
+                .mutation(bird.getMutation())
+                .mutationRate(bird.getMutationRate())
+                .isAlive(bird.getIsAlive())
+                .image(bird.getImage())
+                .featherColor(bird.getFeatherColor())
+                .weight(bird.getWeight())
+                .birdTypeName(bird.getBirdType().getName())
                 .build();
     }
 }

@@ -179,11 +179,30 @@ public class CageServiceImpl implements CageService {
 
     @Override
     public List<CageDTO> findByLocation(String location, boolean available) {
-        if(!available){
-            return cageRepository.findByLocationContains(location).stream().map(CageMapper::mapToCageDto)
-                    .collect(Collectors.toList());
+        if(!location.equals("A")){
+            return cageRepository.findByLocationContainsAndAvailableIsTrueAndQuantityEquals(location, 0)
+                    .stream().map(CageMapper::mapToCageDto).collect(Collectors.toList());
         }
-        return cageRepository.findByLocationContainsAndAvailableIsTrueAndQuantityEquals(location, 0).stream().map(CageMapper::mapToCageDto)
+        return cageRepository.findByLocationContainsAndAvailableIsTrue(location).stream().map(CageMapper::mapToCageDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CageDetailDTOResponse> viewCageByLocation(String location) {
+        List<Cage> cages = cageRepository.findByLocationContains(location);
+        List<CageDetailDTOResponse> cageDetailDTOResponses = new ArrayList<>();
+        for (Cage cage : cages){
+            CageDetailDTOResponse cageDetailDTOResponse = CageMapper.mapToCageDetailDTOResponse(cage);
+            if(cage.getUser() != null){
+                User4CageDetailDTOResponse user = UserMapper.map2User4CageDetailDTO(cage.getUser());
+                cageDetailDTOResponse.setUser(user);
+            }
+            List<Bird> birds = birdRepository.findByCage_Id(cage.getId());
+            List<Bird4CageDetailDTOResponse> bird4CageDetailDTOResponses = birds.stream()
+                    .map(BirdMapper::map2Birdd4CageDetailDTO).collect(Collectors.toList());
+            cageDetailDTOResponse.setBird(bird4CageDetailDTOResponses);
+            cageDetailDTOResponses.add(cageDetailDTOResponse);
+        }
+        return cageDetailDTOResponses;
     }
 }

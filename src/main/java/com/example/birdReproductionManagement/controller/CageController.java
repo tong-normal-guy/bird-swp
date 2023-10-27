@@ -58,6 +58,9 @@ public class CageController {
                                                         boolean available){
         return new ResponseEntity<>(cageService.findByLocation(location, available), HttpStatus.OK);
     }
-
+    @GetMapping("/{location}")
+    public ResponseEntity<List<CageDetailDTOResponse>> viewCageByLocation(@PathVariable("location")String location){
+        return new ResponseEntity<>(cageService.viewCageByLocation(location), HttpStatus.OK);
+    }
 
 }
