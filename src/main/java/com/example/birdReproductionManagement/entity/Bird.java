@@ -48,17 +48,6 @@ public class Bird {
     @JoinColumn(name = "birdtype_id", nullable = false)
     private BirdType birdType;
 
-//    @OneToMany(mappedBy = "father", cascade = CascadeType.REMOVE)
-
-//    @ManyToOne
-//    @JoinColumn(name = "father_id", nullable = false)
-//    private Bird father;
-//    @OneToMany(mappedBy = "mother", cascade = CascadeType.REMOVE)
-//    private List<Bird> birdListOfMother = new ArrayList<>();
-//    @ManyToOne
-//    @JoinColumn(name = "mother_id", nullable = false)
-//    private Bird mother;
-
     @ManyToOne
     @JoinColumn(name = "cage_id")
     private Cage cage;

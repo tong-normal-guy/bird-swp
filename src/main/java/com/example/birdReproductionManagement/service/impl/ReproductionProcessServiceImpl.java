@@ -198,7 +198,7 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
 //      HENS
             List<Bird4ProcessDTOResponse> hens = birdRepository.findBirdsWhereIsDoneIsTrueAndSexIsAliveAndBirdTypeSortedByMutationRateDesc(Sex.FEMALE, Long.parseLong(birdTypeDTO.getTypeId()))
                     .stream().map(BirdMapper::map2Bird4ProcessDTO).collect(Collectors.toList());
-            birdTypeDTO.setHen(hens);
+                birdTypeDTO.setHen(hens);
 //      COCKS
             List<Bird4ProcessDTOResponse> cocks = birdRepository.findBirdsWhereIsDoneIsTrueAndSexIsAliveAndBirdTypeSortedByMutationRateDesc(Sex.MALE, Long.parseLong(birdTypeDTO.getTypeId()))
                     .stream().map(BirdMapper::map2Bird4ProcessDTO).collect(Collectors.toList());
