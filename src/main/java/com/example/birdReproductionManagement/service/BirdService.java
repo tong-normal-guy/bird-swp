@@ -4,6 +4,7 @@ import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
 import com.example.birdReproductionManagement.dto.BirdResponse.BirdDetailReponseDTO;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BirdService {
     List<BirdDetailReponseDTO> findAllBirds();
@@ -13,4 +14,5 @@ public interface BirdService {
     List<BirdDTO> findByCage(Long id);
     BirdDTO updateBirdByFields(Long id, BirdDTO birdDto);
     List<BirdDTO> findBySex(String sex);
+    List<BirdDTO> findOutcastBirds();
 }

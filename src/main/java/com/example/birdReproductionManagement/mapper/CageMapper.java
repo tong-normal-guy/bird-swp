@@ -2,6 +2,7 @@ package com.example.birdReproductionManagement.mapper;
 
 import com.example.birdReproductionManagement.dto.CageResponse.Cage4ListDTO;
 import com.example.birdReproductionManagement.dto.CageResponse.CageDTO;
+import com.example.birdReproductionManagement.dto.CageResponse.CageDetailDTOResponse;
 import com.example.birdReproductionManagement.entity.Cage;
 
 public class CageMapper {
@@ -23,7 +24,6 @@ public class CageMapper {
         if(cage.getUser() == null){
             return CageDTO.builder()
                     .cageId(String.valueOf(cage.getId()))
-//                .code(cage.getLocation() + String.valueOf(cage.getId()))
                     .location(cage.getLocation())
                     .quantity(cage.getQuantity())
                     .available(cage.getAvailable())
@@ -56,5 +56,13 @@ public class CageMapper {
                 .build();
     }
 
+    public static CageDetailDTOResponse mapToCageDetailDTOResponse(Cage cage){
+        return CageDetailDTOResponse.builder()
+                .cageId(String.valueOf(cage.getId()))
+                .location(cage.getLocation())
+                .quantity(cage.getQuantity())
+                .available(cage.getAvailable())
+                .build();
+    }
 
 }

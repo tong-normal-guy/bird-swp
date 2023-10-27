@@ -60,7 +60,7 @@ public class Bird {
 //    private Bird mother;
 
     @ManyToOne
-    @JoinColumn(name = "cage_id", nullable = false)
+    @JoinColumn(name = "cage_id")
     private Cage cage;
 
     @OneToMany(mappedBy = "bird", cascade = CascadeType.REMOVE)

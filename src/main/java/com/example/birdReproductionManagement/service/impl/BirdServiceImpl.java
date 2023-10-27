@@ -2,6 +2,7 @@ package com.example.birdReproductionManagement.service.impl;
 
 import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
 import com.example.birdReproductionManagement.dto.BirdResponse.BirdDetailReponseDTO;
+import com.example.birdReproductionManagement.dto.BirdResponse.DescendantResponseDTO;
 import com.example.birdReproductionManagement.entity.*;
 import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
 import com.example.birdReproductionManagement.exceptions.CageNotFoundException;
@@ -18,6 +19,7 @@ import org.springframework.util.ReflectionUtils;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,25 +36,26 @@ public class BirdServiceImpl implements BirdService {
         List<BirdDetailReponseDTO> birdDTOs = birds.stream().map(BirdMapper::mapToBirdDetailReponseDTO)
                 .collect(Collectors.toList());
         for (BirdDetailReponseDTO birdWalker : birdDTOs){
-
+            //Tìm chim bố và chim mẹ
+            int gen = 0;
+            findPedigree(birdWalker, gen);
+//            BirdReproduction birdReproduction = birdReproductionRepository.findByBirdAndReproductionRole(bird, ReproductionRole.CHILD);
+//            if(birdReproduction != null){
+//                ReproductionProcess reproductionProcess = birdReproduction.getReproductionProcess();
+//                Bird father = birdReproductionRepository
+//                        .findByReproductionProcessIdAndReproductionRole(reproductionProcess.getId(), ReproductionRole.FATHER)
+//                        .getBird();
+//                BirdDetailReponseDTO fatherDTO = BirdMapper.mapToBirdDetailReponseDTO(father);
+//                birdWalker.setFather(fatherDTO);
+//                Bird mother = birdReproductionRepository
+//                        .findByReproductionProcessIdAndReproductionRole(reproductionProcess.getId(), ReproductionRole.MOTHER)
+//                        .getBird();
+//                BirdDetailReponseDTO motherDTO = BirdMapper.mapToBirdDetailReponseDTO(mother);
+//                birdWalker.setMother(motherDTO);
+//            }
+            //Tìm danh sách các chim con
             Bird bird = birdRepository.findById(Long.valueOf(birdWalker.getBirdId())).orElseThrow(
                     () -> new BirdNotFoundException("Bird could not be found."));
-            //Tìm chim bố và chim mẹ
-            BirdReproduction birdReproduction = birdReproductionRepository.findByBirdAndReproductionRole(bird, ReproductionRole.CHILD);
-            if(birdReproduction != null){
-                ReproductionProcess reproductionProcess = birdReproduction.getReproductionProcess();
-                Bird father = birdReproductionRepository
-                        .findByReproductionProcessIdAndReproductionRole(reproductionProcess.getId(), ReproductionRole.FATHER)
-                        .getBird();
-                BirdDTO fatherDTO = BirdMapper.mapToBirdDto(father);
-                birdWalker.setFather(fatherDTO);
-                Bird mother = birdReproductionRepository
-                        .findByReproductionProcessIdAndReproductionRole(reproductionProcess.getId(), ReproductionRole.MOTHER)
-                        .getBird();
-                BirdDTO motherDTO = BirdMapper.mapToBirdDto(mother);
-                birdWalker.setMother(motherDTO);
-            }
-            //Tìm danh sách các chim con
             List<BirdReproduction> birdReproductions = birdReproductionRepository
                     .findByBirdAndReproductionRoleNot(bird, ReproductionRole.CHILD);
             List<ReproductionProcess> reproductionProcesses = new ArrayList<>();
@@ -68,14 +71,12 @@ public class BirdServiceImpl implements BirdService {
                     descendantsList.add(descendantReproduction.getBird());
                 }
             }
-            List<BirdDTO> descendantsDTOs = descendantsList.stream().map(BirdMapper::mapToBirdDto)
+            List<DescendantResponseDTO> descendantsDTOs = descendantsList.stream().map(BirdMapper::mapToDescendantResponseDTO)
                     .collect(Collectors.toList());
+            birdWalker.setDescendants(descendantsDTOs);
         }
         return birdDTOs;
     }
-
-
-
 
     @Override
     public BirdDTO updateBird(Long id, BirdDTO birdDto) {
@@ -112,14 +113,16 @@ public class BirdServiceImpl implements BirdService {
 
     @Override
     public BirdDTO createBird(BirdDTO birdDto) {
-        BirdType birdType = birdTypeRepository.findByName(birdDto.getBirdTypeName());
-        Cage cage = cageRepository.findById(Long.valueOf(birdDto.getCageId())).orElseThrow(()
-            -> new CageNotFoundException("Bird could not be created."));
         Bird bird = BirdMapper.mapToBird(birdDto);
+        BirdType birdType = birdTypeRepository.findByName(birdDto.getBirdTypeName());
         bird.setBirdType(birdType);
-        bird.setCage(cage);
-        cage.setQuantity(cage.getQuantity() + 1);
-        cageRepository.save(cage);
+        if(birdDto.getCageId() != null){
+            Cage cage = cageRepository.findById(Long.valueOf(birdDto.getCageId())).orElseThrow(()
+                    -> new CageNotFoundException("Bird could not be created."));
+            cage.setQuantity(cage.getQuantity() + 1);
+            cageRepository.save(cage);
+            bird.setCage(cage);
+        }
         return BirdMapper.mapToBirdDto(birdRepository.save(bird));
     }
 
@@ -138,7 +141,6 @@ public class BirdServiceImpl implements BirdService {
             Object newValue = field.get(birdDto);
             if (newValue != null) { // lấy các giá trị ko null
                 String fieldName = field.getName();
-                // Kiểm tra nếu trường đang xem xét không phải là userPermission
                 if (!fieldName.equals("cageId") && !fieldName.equals("sex") && !fieldName.equals("birdTypeName")) {
                     Field existingField = ReflectionUtils.findField(finalBird.getClass(), fieldName);
                     if (existingField != null) {
@@ -181,5 +183,78 @@ public class BirdServiceImpl implements BirdService {
         return birdRepository.findBySexIs(Sex.valueOf(sex)).stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList());
     }
 
+    @Override
+    public List<BirdDTO> findOutcastBirds() {
+        List<Bird> birds = birdRepository.findAll();
+        List<Bird> outcastBirds = new ArrayList<>();
+        for (Bird bird : birds){
+            if(bird.getCage() == null){
+                outcastBirds.add(bird);
+            }
+        }
+        return outcastBirds.stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList());
+    }
+
+    private void findParents(BirdDetailReponseDTO birdDetailReponseDTO){
+            Long birdId = Long.valueOf(birdDetailReponseDTO.getBirdId());
+            Bird bird = birdRepository.findById(birdId).orElseThrow(
+                    () -> new BirdNotFoundException("Bird could not be found."));
+            BirdReproduction birdReproduction = birdReproductionRepository.findByBirdAndReproductionRole(bird, ReproductionRole.CHILD);
+            if(birdReproduction != null){
+                ReproductionProcess reproductionProcess = birdReproduction.getReproductionProcess();
+                Bird father = birdReproductionRepository
+                        .findByReproductionProcessIdAndReproductionRole(reproductionProcess.getId(), ReproductionRole.FATHER)
+                        .getBird();
+                BirdDetailReponseDTO fatherDTO = BirdMapper.mapToBirdDetailReponseDTO(father);
+                birdDetailReponseDTO.setFather(fatherDTO);
+                Bird mother = birdReproductionRepository
+                        .findByReproductionProcessIdAndReproductionRole(reproductionProcess.getId(), ReproductionRole.MOTHER)
+                        .getBird();
+                BirdDetailReponseDTO motherDTO = BirdMapper.mapToBirdDetailReponseDTO(mother);
+                birdDetailReponseDTO.setMother(motherDTO);
+            }
+    }
+
+    private void findPedigree(BirdDetailReponseDTO birdDetailReponseDTO, int gen){
+        if(gen < 2){
+            findParents(birdDetailReponseDTO);
+            if (birdDetailReponseDTO.getFather() != null){
+                findPedigree(birdDetailReponseDTO.getFather(), gen + 1);
+            }
+            if(birdDetailReponseDTO.getMother() != null){
+                findPedigree(birdDetailReponseDTO.getMother(), gen + 1);
+            }
+        }
+    }
+
+    public List<DescendantResponseDTO> findChildsList(BirdDetailReponseDTO birdDetailReponseDTO){
+        Long birdId = Long.valueOf(birdDetailReponseDTO.getBirdId());
+        Bird bird = birdRepository.findById(birdId).orElseThrow(
+                () -> new BirdNotFoundException("Bird could not be found."));
+        List<BirdReproduction> birdReproductions = birdReproductionRepository
+                .findByBirdAndReproductionRoleNot(bird, ReproductionRole.CHILD);
+        List<ReproductionProcess> reproductionProcesses = new ArrayList<>();
+        for (BirdReproduction birdReproductionWalker : birdReproductions){
+            reproductionProcesses.add(birdReproductionWalker.getReproductionProcess());
+        }
+        List<Bird> descendantsList = new ArrayList<>();
+        List<BirdReproduction> descendantsReproductions;
+        for (ReproductionProcess reproductionProcess : reproductionProcesses){
+            descendantsReproductions = birdReproductionRepository
+                    .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.CHILD);
+            for (BirdReproduction descendantReproduction : descendantsReproductions){
+                descendantsList.add(descendantReproduction.getBird());
+            }
+        }
+        List<DescendantResponseDTO> descendantsDTOs = descendantsList.stream().map(BirdMapper::mapToDescendantResponseDTO)
+                .collect(Collectors.toList());
+        birdDetailReponseDTO.setDescendants(descendantsDTOs);
+        return descendantsDTOs;
+    }
+
+//    public List<DescendantResponseDTO> findDescendantsList(BirdDetailReponseDTO birdDetailReponseDTO, int gen){
+//        List<DescendantResponseDTO> descendantResponseDTOS = findChildsList(birdDetailReponseDTO);
+//
+//    }
 
 }
