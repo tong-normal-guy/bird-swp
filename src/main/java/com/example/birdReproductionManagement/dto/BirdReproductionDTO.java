@@ -30,4 +30,5 @@ public class BirdReproductionDTO {
     private ReproductionProcessDTO reproductionProcess;
     private String reproductionProcessId;
     private String reproductionRole;
+    private Boolean isMoved;
 }

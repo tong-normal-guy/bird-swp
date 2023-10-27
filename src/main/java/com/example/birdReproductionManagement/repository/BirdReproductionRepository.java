@@ -20,6 +20,7 @@ public interface BirdReproductionRepository extends JpaRepository<BirdReproducti
     BirdReproduction findByReproductionProcessIdAndReproductionRole(Long id, ReproductionRole reproductionRole);
     Boolean existsByBirdAndReproductionRoleNotAndReproductionRoleNotAndReproductionProcessIsDone
             (Bird bird, ReproductionRole reproductionRole1, ReproductionRole reproductionRole2, Boolean isDone);
+    Boolean existsByReproductionRoleAndReproductionProcessAndEggStatusEquals(ReproductionRole reproductionRole, ReproductionProcess reproductionProcess, String eggStatus);
     List<BirdReproduction> findByBirdAndReproductionRoleNot(Bird bird, ReproductionRole reproductionRole);
     BirdReproduction findByBirdAndReproductionRole(Bird bird, ReproductionRole reproductionRole);
 //    List<BirdReproduction> findByReproductionProcessIdAndReproductionRoleEquals(Long id, ReproductionRole reproductionRole);

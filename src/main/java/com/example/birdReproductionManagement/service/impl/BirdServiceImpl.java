@@ -7,10 +7,7 @@ import com.example.birdReproductionManagement.entity.*;
 import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
 import com.example.birdReproductionManagement.exceptions.CageNotFoundException;
 import com.example.birdReproductionManagement.mapper.BirdMapper;
-import com.example.birdReproductionManagement.repository.BirdRepository;
-import com.example.birdReproductionManagement.repository.BirdReproductionRepository;
-import com.example.birdReproductionManagement.repository.BirdTypeRepository;
-import com.example.birdReproductionManagement.repository.CageRepository;
+import com.example.birdReproductionManagement.repository.*;
 import com.example.birdReproductionManagement.service.BirdService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +15,7 @@ import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,6 +27,7 @@ public class BirdServiceImpl implements BirdService {
     private final BirdTypeRepository birdTypeRepository;
     private final CageRepository cageRepository;
     private final BirdReproductionRepository birdReproductionRepository;
+    private final ReproductionProcessRepository reproductionProcessRepository;
 
     @Override
     public List<BirdDetailReponseDTO> findAllBirds() {
@@ -108,6 +107,12 @@ public class BirdServiceImpl implements BirdService {
     public void deleteBird(Long id) {
         Bird bird = birdRepository.findById(id).orElseThrow(()
                 -> new BirdNotFoundException("Bird could not be deleted."));
+        if(bird.getCage() != null){
+            Cage cage = bird.getCage();
+            cage.setQuantity(cage.getQuantity() - 1);
+            cageRepository.save(cage);
+        }
+
         birdRepository.delete(bird);
     }
 
@@ -150,7 +155,34 @@ public class BirdServiceImpl implements BirdService {
                 }
             }
         });
+        //Lưu ngày cập nhật lứa tuổi của chim
+        if(birdDto.getAgeRange() != null){
+            saveActDate(birdDto.getAgeRange(), finalBird);
+            if(birdDto.getAgeRange().equals("Trưởng thành")){
+                BirdReproduction birdReproduction = birdReproductionRepository.findByBirdAndReproductionRole(bird, ReproductionRole.CHILD);
+                ReproductionProcess reproductionProcess = birdReproduction.getReproductionProcess();
+                boolean eggExisted = birdReproductionRepository
+                        .existsByReproductionRoleAndReproductionProcessAndEggStatusEquals(ReproductionRole.EGG,
+                                reproductionProcess, "In development");
+                if (!eggExisted){
+                    List<BirdReproduction> birdReproductions = birdReproductionRepository
+                            .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.CHILD);
+                    boolean flag = false;
+                    for (BirdReproduction birdReproductionWalker : birdReproductions){
+                        if (!birdReproductionWalker.getBird().getAgeRange().equals("Trưởng thành")){
+                            flag = true;
+                        }
+                    }
+                    if (!flag){
+                        reproductionProcess.setIsDone(true);
+                        reproductionProcessRepository.save(reproductionProcess);
+                    }
+                }
+            }
+        }
 //        Cage cage = null;
+        //Kiểm tra chim non đã trưởng thành hết chưa để kết thúc process
+
         if(birdDto.getCageId() != null){
             Cage cage = cageRepository.findById(Long.valueOf(birdDto.getCageId())).orElseThrow(
                     () -> new CageNotFoundException("Cage could not be found in updateBirdByFields with" + birdDto.getCageId()));
@@ -229,7 +261,7 @@ public class BirdServiceImpl implements BirdService {
         }
     }
 
-    public List<DescendantResponseDTO> findChildsList(BirdDetailReponseDTO birdDetailReponseDTO){
+    private List<DescendantResponseDTO> findChildsList(BirdDetailReponseDTO birdDetailReponseDTO){
         Long birdId = Long.valueOf(birdDetailReponseDTO.getBirdId());
         Bird bird = birdRepository.findById(birdId).orElseThrow(
                 () -> new BirdNotFoundException("Bird could not be found."));
@@ -254,9 +286,19 @@ public class BirdServiceImpl implements BirdService {
         return descendantsDTOs;
     }
 
-//    public List<DescendantResponseDTO> findDescendantsList(BirdDetailReponseDTO birdDetailReponseDTO, int gen){
+//    private List<DescendantResponseDTO> findDescendantsList(BirdDetailReponseDTO birdDetailReponseDTO, int gen){
 //        List<DescendantResponseDTO> descendantResponseDTOS = findChildsList(birdDetailReponseDTO);
 //
 //    }
+
+    private void saveActDate(String ageRange, Bird bird){
+        BirdReproduction birdReproduction = birdReproductionRepository
+                .findByBirdAndReproductionRole(bird, ReproductionRole.CHILD);
+        if(ageRange.equals("Chim chuyền")){
+            birdReproduction.setActSwingBranch(new Date());
+        }else {
+            birdReproduction.setActAdultBirdDate(new Date());
+        }
+    }
 
 }
