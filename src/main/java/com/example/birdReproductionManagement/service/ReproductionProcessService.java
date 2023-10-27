@@ -15,4 +15,5 @@ public interface ReproductionProcessService {
 
     LoadData4InitProcessDTOResponse getInitProcess();
 //    BirdReproductionDto findFather(Long id);
+    void setIsDoneForProcess(Long id);
 }
