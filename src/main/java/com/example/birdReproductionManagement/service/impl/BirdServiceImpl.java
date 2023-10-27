@@ -154,11 +154,13 @@ public class BirdServiceImpl implements BirdService {
         if(birdDto.getCageId() != null){
             Cage cage = cageRepository.findById(Long.valueOf(birdDto.getCageId())).orElseThrow(
                     () -> new CageNotFoundException("Cage could not be found in updateBirdByFields with" + birdDto.getCageId()));
-            Cage oldCage = cageRepository.findById(bird.getCage().getId()).orElseThrow(
-                    () -> new CageNotFoundException("Cage could not be found in updateBirdByFields with" + birdDto.getCageId()));
-            oldCage.setQuantity(oldCage.getQuantity() - 1);
+            if(bird.getCage() != null){
+                Cage oldCage = cageRepository.findById(bird.getCage().getId()).orElseThrow(
+                        () -> new CageNotFoundException("Cage could not be found in updateBirdByFields with" + birdDto.getCageId()));
+                oldCage.setQuantity(oldCage.getQuantity() - 1);
+                cageRepository.save(oldCage);
+            }
             cage.setQuantity(cage.getQuantity() + 1);
-            cageRepository.save(oldCage);
             cageRepository.save(cage);
             finalBird.setCage(cage);
         }
