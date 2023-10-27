@@ -694,9 +694,6 @@ public class BirdReproductionManagementApplication{
 //////PROCESS, START
 //		process1 = new ReproductionProcess();
 //		process1.setPairingDate(new Date(2023 - 1900,8 - 1,18));
-//		process1.setExpEggHatchDate(new Date(2023 - 1900, 10 - 1,17));
-//		process1.setExpSwingBranch(new Date(2023 - 1900,11 - 1, 2));
-//		process1.setExpAdultBirdDate(new Date(2023 - 1900,11 - 1,9));
 //		process1.setTotalEgg(3);
 //		process1.setStage("Nuôi con");
 //		process1.setFailEgg(1);
@@ -706,9 +703,6 @@ public class BirdReproductionManagementApplication{
 //
 //		process12 = new ReproductionProcess();//
 //		process12.setPairingDate(new Date(2023 - 1900,7 - 1,7));
-//		process12.setExpEggHatchDate(new Date(2023 - 1900, 10 - 1,1));
-//		process12.setExpSwingBranch(new Date(2023 - 1900,10 - 1, 17));
-//		process12.setExpAdultBirdDate(new Date(2023 - 1900,10 - 1,24));
 //		process12.setTotalEgg(3);
 //		process12.setStage("Nuôi con");
 //		process12.setFailEgg(1);
