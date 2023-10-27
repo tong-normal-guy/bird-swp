@@ -215,6 +215,27 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
                 .birdType(birdType4ProcessInitDTOResponses)
                 .build();
     }
+
+    @Override
+    public void setIsDoneForProcess(Long id) {
+        ReproductionProcess reproductionProcess = reproductionProcessRepository.findById(id)
+                .orElseThrow(() -> new ReproductionProcessNotFoundException("Reproduction process could not be found."));
+        List<BirdReproduction> birdReproductions = birdReproductionRepository
+                .findAllByReproductionProcess_Id(reproductionProcess.getId());
+        for (BirdReproduction birdReproduction : birdReproductions){
+            if(birdReproduction.getBird() != null){
+                Bird bird = birdReproduction.getBird();
+                bird.setCage(null);
+                birdRepository.save(bird);
+            }
+        }
+        Cage processCage = reproductionProcess.getCage();
+        processCage.setQuantity(0);
+        cageRepository.save(processCage);
+        reproductionProcess.setIsDone(true);
+        reproductionProcessRepository.save(reproductionProcess);
+    }
+
     public List<BirdType4ProcessInitDTOResponse> getType4ProcessInit() {
         List<BirdType4ProcessInitDTOResponse> birdTypeDTOs = birdTypeRepository.findAll().stream().map(BirdTypeMapper::map2BirdType4ProcessInitDTO).collect(Collectors.toList());
         for (BirdType4ProcessInitDTOResponse birdTypeDTO:birdTypeDTOs) {
