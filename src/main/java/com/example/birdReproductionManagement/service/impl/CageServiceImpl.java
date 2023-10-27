@@ -107,7 +107,9 @@ public class CageServiceImpl implements CageService {
             }
             cageDetailDTOResponse.setCageId(String.valueOf(cage.getId()));
             cageDetailDTOResponse.setLocation(cage.getLocation());
+            if (cage.getAvailable() != null)
             cageDetailDTOResponse.setAvailable(cage.getAvailable());
+            else cageDetailDTOResponse.setAvailable(false);
             cageDetailDTOResponse.setQuantity(cage.getQuantity());
             cageDetailDTOResponses.add(cageDetailDTOResponse);
         }

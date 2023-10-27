@@ -11,8 +11,8 @@ import java.util.Date;
 
 @SpringBootApplication
 @RequiredArgsConstructor
-//public class BirdReproductionManagementApplication implements CommandLineRunner {
-public class BirdReproductionManagementApplication{
+public class BirdReproductionManagementApplication implements CommandLineRunner {
+//public class BirdReproductionManagementApplication{
 
 
 	private final UserRepository userRepository;
@@ -33,9 +33,9 @@ public class BirdReproductionManagementApplication{
 	}
 
 
-//	@Override
-//	public void run(String... args) throws Exception {
-//
+	@Override
+	public void run(String... args) throws Exception {
+
 //		User userAdmin = userRepository.findByUsername(ADMIN);
 //		User staff1 = userRepository.findByUsername(STAFF);
 //		User staff2 = userRepository.findByUsername(STAFF2);
@@ -75,56 +75,56 @@ public class BirdReproductionManagementApplication{
 //		BirdType birdType;
 //		BirdType birdType2;
 //
-//		Cage cage;
-//		Cage cage1;
-//		Cage cage13;
-//		Cage cage14;
-//		Cage cage15;
-//		Cage cage16;
-//		Cage cage17;//
-//		Cage cage18;//
-//		Cage cage19;//
-//		Cage cage1a;//
-//		Cage cage1a1;//
-//		Cage cage1a2;//
+//		Cage cage = new Cage();
+//		Cage cage1 = new Cage();
+//		Cage cage13 = new Cage();
+//		Cage cage14 = new Cage();
+//		Cage cage15 = new Cage();
+//		Cage cage16 = new Cage();
+//		Cage cage17 = new Cage();//
+//		Cage cage18 = new Cage();//
+//		Cage cage19 = new Cage();//
+//		Cage cage1a = new Cage();//
+//		Cage cage1a1 = new Cage();//
+//		Cage cage1a2 = new Cage();//
 //
-//		Cage cage2;
-//		Cage cage22;
-//		Cage cage23;
-//		Cage cage24;//
-//		Cage cage25;//
+//		Cage cage2 = new Cage();
+//		Cage cage22 = new Cage();
+//		Cage cage23 = new Cage();
+//		Cage cage24 = new Cage();//
+//		Cage cage25 = new Cage();//
 //
-//		Cage cage3;
-//		Cage cage31;
+//		Cage cage3 = new Cage();
+//		Cage cage31 = new Cage();
 //
-//		ReproductionProcess process1;
-//		BirdReproduction fatherRe;
-//		BirdReproduction motherRe;
-//		BirdReproduction child1Re;
-//		BirdReproduction child2Re;
-//		BirdReproduction cFailRe;
+//		ReproductionProcess process1 = new ReproductionProcess();
+//		BirdReproduction fatherRe = new BirdReproduction();
+//		BirdReproduction motherRe = new BirdReproduction();
+//		BirdReproduction child1Re = new BirdReproduction();
+//		BirdReproduction child2Re = new BirdReproduction();
+//		BirdReproduction cFailRe = new BirdReproduction();
 //
-//		ReproductionProcess process12;
-//		BirdReproduction father2Re;
-//		BirdReproduction mother2Re;
-//		BirdReproduction child12Re;
-//		BirdReproduction child22Re;
-//		BirdReproduction cFail2Re;
-//		BirdReproduction egg12;
+//		ReproductionProcess process12 = new ReproductionProcess();
+//		BirdReproduction father2Re = new BirdReproduction();
+//		BirdReproduction mother2Re = new BirdReproduction();
+//		BirdReproduction child12Re = new BirdReproduction();
+//		BirdReproduction child22Re = new BirdReproduction();
+//		BirdReproduction cFail2Re = new BirdReproduction();
+//		BirdReproduction egg12 = new BirdReproduction();
 //
-//		ReproductionProcess process13;
-//		BirdReproduction father3Re;
-//		BirdReproduction mother3Re;
-//		BirdReproduction egg13Re;
-//		BirdReproduction egg23Re;
-//		BirdReproduction cFail3Re;
+//		ReproductionProcess process13 = new ReproductionProcess();
+//		BirdReproduction father3Re = new BirdReproduction();
+//		BirdReproduction mother3Re = new BirdReproduction();
+//		BirdReproduction egg13Re = new BirdReproduction();
+//		BirdReproduction egg23Re = new BirdReproduction();
+//		BirdReproduction cFail3Re = new BirdReproduction();
 //
-//		ReproductionProcess process2;
-//		BirdReproduction father4Re;
-//		BirdReproduction mother4Re;
-//		BirdReproduction child14Re;
-//		BirdReproduction child24Re;
-//		BirdReproduction cFail4Re;
+//		ReproductionProcess process2 = new ReproductionProcess();
+//		BirdReproduction father4Re = new BirdReproduction();
+//		BirdReproduction mother4Re = new BirdReproduction();
+//		BirdReproduction child14Re = new BirdReproduction();
+//		BirdReproduction child24Re = new BirdReproduction();
+//		BirdReproduction cFail4Re = new BirdReproduction();
 ///////////////////////////////////////////////////////////////////////////////////////////
 //////USER, START
 //		if (userAdmin == null){
@@ -219,104 +219,104 @@ public class BirdReproductionManagementApplication{
 //////BIRD TYPE, END
 //
 //////CAGE A, CAGE 4 SINGLE, START
-//		cage = new Cage();
-//		cage.setQuantity(1);
+//		cage.setQuantity(0);
+//		cage.setAvailable(true);
 //		cageRepository.save(cage);
 //		cage.setLocation("A" + cage.getId());
 //		cageRepository.save(cage);
 //
-//		cage1 = new Cage();
-//		cage1.setQuantity(1);
+//		cage1.setQuantity(0);
+//		cage1.setAvailable(true);
 //		cageRepository.save(cage1);
 //		cage1.setLocation("A"+cage1.getId());
 //		cageRepository.save(cage1);
 //
-//		cage13 = new Cage();
-//		cage13.setQuantity(1);
+//		cage13.setQuantity(0);
+//		cage13.setAvailable(true);
 //		cageRepository.save(cage13);
 //		cage13.setLocation("A"+cage13.getId());
 //		cageRepository.save(cage13);
 //
-//		cage14 = new Cage();
-//		cage14.setQuantity(1);
+//		cage14.setQuantity(0);
+//		cage14.setAvailable(true);
 //		cageRepository.save(cage14);
 //		cage14.setLocation("A"+cage14.getId());
 //		cageRepository.save(cage14);
 //
-//		cage15 = new Cage();
-//		cage15.setQuantity(1);
+//		cage15.setQuantity(0);
+//		cage15.setAvailable(true);
 //		cageRepository.save(cage15);
 //		cage15.setLocation("A"+cage15.getId());
 //		cageRepository.save(cage15);
 //
-//		cage16 = new Cage();
-//		cage16.setQuantity(1);
+//		cage16.setQuantity(0);
+//		cage16.setAvailable(true);
 //		cageRepository.save(cage16);
 //		cage16.setLocation("A"+cage16.getId());
 //		cageRepository.save(cage16);
 //
-//		cage17 = new Cage();
-//		cage17.setQuantity(1);
+//		cage17.setQuantity(0);
+//		cage17.setAvailable(true);
 //		cageRepository.save(cage17);
 //		cage17.setLocation("A"+cage17.getId());
 //		cageRepository.save(cage17);
 //
-//		cage18 = new Cage();
-//		cage18.setQuantity(1);
+//		cage18.setQuantity(0);
+//		cage17.setAvailable(true);
 //		cageRepository.save(cage18);
 //		cage18.setLocation("A"+cage18.getId());
 //		cageRepository.save(cage18);
 //
-//		cage19 = new Cage();
-//		cage19.setQuantity(1);
+//		cage19.setQuantity(0);
+//		cage19.setAvailable(true);
 //		cageRepository.save(cage19);
 //		cage19.setLocation("A"+cage19.getId());
 //		cageRepository.save(cage19);
 //
-//		cage1a = new Cage();
-//		cage1a.setQuantity(1);
+//		cage1a.setQuantity(0);
+//		cage1a.setAvailable(true);
 //		cageRepository.save(cage1a);
 //		cage1a.setLocation("A"+cage1a.getId());
 //		cageRepository.save(cage1a);
 //
-//		cage1a1 = new Cage();
 //		cage1a1.setQuantity(0);
+//		cage1a1.setAvailable(true);
 //		cageRepository.save(cage1a1);
 //		cage1a1.setLocation("A"+cage1a1.getId());
 //		cageRepository.save(cage1a1);
 //////CAGE A, CAGE 4 SINGLE, END
 //
 //////CAGE B, CAGE 4 REPRODUCT, START
-//		cage2 = new Cage();
-//		cage2.setQuantity(4);
+//		cage2.setQuantity(0);
+//		cage2.setAvailable(true);
 //		cage2.setUser(staff1);
 //		cageRepository.save(cage2);
 //		cage2.setLocation("B" + cage2.getId());
 //		cageRepository.save(cage2);
 //
-//		cage22 = new Cage();
-//		cage22.setQuantity(4);
+//		cage22.setQuantity(0);
+//		cage22.setAvailable(true);
 //		cage22.setUser(staff2);
 //		cageRepository.save(cage22);
 //		cage22.setLocation("B" + cage22.getId());
 //		cageRepository.save(cage22);
 //
-//		cage23 = new Cage();
-//		cage23.setQuantity(4);
+//		cage23.setQuantity(0);
+//		cage23.setAvailable(true);
 //		cage23.setUser(staff2);
 //		cageRepository.save(cage23);
 //		cage23.setLocation("B" + cage23.getId());
 //		cageRepository.save(cage23);
 //
-//		cage24 =new Cage();
 //		cage24.setQuantity(0);
+//		cage24.setAvailable(true);
 //		cage24.setUser(staff3);
 //		cageRepository.save(cage24);
 //		cage24.setLocation("B" + cage24.getId());
 //		cageRepository.save(cage24);
 //
-//		cage25 =new Cage();
 //		cage25.setQuantity(0);
+//		cage25.setAvailable(true);
 //		cage25.setUser(staff3);
 //		cageRepository.save(cage25);
 //		cage25.setLocation("B" + cage25.getId());
@@ -324,15 +324,15 @@ public class BirdReproductionManagementApplication{
 //////CAGE B, CAGE 4 REPRODUCT, END
 //
 //////CAEG C, CAGE 4 OTHER, START
-//		cage3 =new Cage();
-//		cage3.setQuantity(1);
+//		cage3.setQuantity(0);
+//		cage3.setAvailable(true);
 //		cage3.setUser(staff5);
 //		cageRepository.save(cage3);
 //		cage3.setLocation("C" + cage3.getId());
 //		cageRepository.save(cage3);
 //
-//		cage31 =new Cage();
 //		cage31.setQuantity(0);
+//		cage31.setAvailable(true);
 //		cage31.setUser(staff5);
 //		cageRepository.save(cage31);
 //		cage31.setLocation("C" + cage31.getId());
@@ -354,6 +354,8 @@ public class BirdReproductionManagementApplication{
 //		bird.setBirdType(birdType);
 //		bird.setCage(cage);
 //		birdRepository.save(bird);
+//		cage.setQuantity(cage.getQuantity()+1);
+//		cageRepository.save(cage);
 //
 //		bird2 = new Bird();
 //		bird2.setSex(Sex.FEMALE);
@@ -369,6 +371,8 @@ public class BirdReproductionManagementApplication{
 //		bird2.setBirdType(birdType);
 //		bird2.setCage(cage1);
 //		birdRepository.save(bird2);
+//		cage1.setQuantity(cage1.getQuantity()+1);
+//		cageRepository.save(cage1);
 //
 //		bird3 = new Bird();
 //		bird3.setSex(Sex.MALE);
@@ -384,6 +388,8 @@ public class BirdReproductionManagementApplication{
 //		bird3.setBirdType(birdType);
 //		bird3.setCage(cage13);
 //		birdRepository.save(bird3);
+//		cage13.setQuantity(cage13.getQuantity()+1);
+//		cageRepository.save(cage13);
 //
 //		bird4 = new Bird();
 //		bird4.setSex(Sex.FEMALE);
@@ -399,6 +405,8 @@ public class BirdReproductionManagementApplication{
 //		bird4.setBirdType(birdType);
 //		bird4.setCage(cage14);
 //		birdRepository.save(bird4);
+//		cage14.setQuantity(cage14.getQuantity()+1);
+//		cageRepository.save(cage14);
 //
 //		bird5 = new Bird();
 //		bird5.setSex(Sex.MALE);
@@ -414,6 +422,8 @@ public class BirdReproductionManagementApplication{
 //		bird5.setBirdType(birdType);
 //		bird5.setCage(cage15);
 //		birdRepository.save(bird5);
+//		cage15.setQuantity(cage15.getQuantity()+1);
+//		cageRepository.save(cage15);
 //
 //		bird6 = new Bird();
 //		bird6.setSex(Sex.FEMALE);
@@ -429,6 +439,8 @@ public class BirdReproductionManagementApplication{
 //		bird6.setBirdType(birdType);
 //		bird6.setCage(cage16);
 //		birdRepository.save(bird6);
+//		cage16.setQuantity(cage16.getQuantity()+1);
+//		cageRepository.save(cage16);
 //////SINGLE BIRD, END
 //
 //////BIRDS WITH PROCESS, START
@@ -446,6 +458,8 @@ public class BirdReproductionManagementApplication{
 //		father.setBirdType(birdType);
 //		father.setCage(cage2);
 //		birdRepository.save(father);
+//		cage2.setQuantity(cage2.getQuantity()+1);
+//		cageRepository.save(cage2);
 //
 //		father2 = new Bird();//
 //		father2.setSex(Sex.MALE);
@@ -461,6 +475,8 @@ public class BirdReproductionManagementApplication{
 //		father2.setBirdType(birdType);
 //		father2.setCage(cage22);
 //		birdRepository.save(father2);
+//		cage22.setQuantity(cage22.getQuantity()+1);
+//		cageRepository.save(cage22);
 //
 //		father3 = new Bird();//
 //		father3.setSex(Sex.MALE);
@@ -470,12 +486,13 @@ public class BirdReproductionManagementApplication{
 //		father3.setMutationRate(Float.valueOf(5));
 //		father3.setIsAlive(true);
 //		father3.setImage("");
-////		father3.setImage("https://firebasestorage.googleapis.com/v0/b/birdreproductionswp.appspot.com/o/imgsrc%2FthanBong.png?alt=media&token=945eaa26-1640-4385-a52d-8fbb183504d4&_gl=1*czf4q3*_ga*NTA4MjM3NDgwLjE2OTQ5MzYyNjU.*_ga_CW55HF8NVT*MTY5NzQ3MzUwMC43LjEuMTY5NzQ3MzUxNS40NS4wLjA.");
 //		father3.setFeatherColor("đen trắng");
 //		father3.setWeight(Float.valueOf(700));
 //		father3.setBirdType(birdType);
 //		father3.setCage(cage23);
 //		birdRepository.save(father3);
+//		cage23.setQuantity(cage23.getQuantity()+1);
+//		cageRepository.save(cage23);
 //
 //		father4 = new Bird();//
 //		father4.setSex(Sex.MALE);
@@ -491,6 +508,8 @@ public class BirdReproductionManagementApplication{
 //		father4.setBirdType(birdType);
 //		father4.setCage(cage17);
 //		birdRepository.save(father4);
+//		cage17.setQuantity(cage17.getQuantity()+1);
+//		cageRepository.save(cage17);
 //
 //		mother = new Bird();
 //		mother.setSex(Sex.FEMALE);
@@ -506,6 +525,8 @@ public class BirdReproductionManagementApplication{
 //		mother.setBirdType(birdType);
 //		mother.setCage(cage2);
 //		birdRepository.save(mother);
+//		cage2.setQuantity(cage2.getQuantity()+1);
+//		cageRepository.save(cage2);
 //
 //		mother2 = new Bird();//
 //		mother2.setSex(Sex.FEMALE);
@@ -521,6 +542,8 @@ public class BirdReproductionManagementApplication{
 //		mother2.setBirdType(birdType);
 //		mother2.setCage(cage22);
 //		birdRepository.save(mother2);
+//		cage22.setQuantity(cage22.getQuantity()+1);
+//		cageRepository.save(cage22);
 //
 //		mother3 = new Bird();//
 //		mother3.setSex(Sex.FEMALE);
@@ -536,6 +559,8 @@ public class BirdReproductionManagementApplication{
 //		mother3.setBirdType(birdType);
 //		mother3.setCage(cage23);
 //		birdRepository.save(mother3);
+//		cage23.setQuantity(cage23.getQuantity()+1);
+//		cageRepository.save(cage23);
 //
 //		mother4 = new Bird();
 //		mother4.setSex(Sex.FEMALE);
@@ -551,6 +576,8 @@ public class BirdReproductionManagementApplication{
 //		mother4.setBirdType(birdType);
 //		mother4.setCage(cage18);
 //		birdRepository.save(mother4);
+//		cage18.setQuantity(cage18.getQuantity()+1);
+//		cageRepository.save(cage18);
 //	//CHILD, START
 //		child1 = new Bird();
 //		child1.setSex(Sex.MALE);
@@ -568,6 +595,9 @@ public class BirdReproductionManagementApplication{
 //		child1.setFatherId(father.getId());
 //		child1.setMotherId(mother.getId());
 //		birdRepository.save(child1);
+//		cage2.setQuantity(cage2.getQuantity()+1);
+//		cageRepository.save(cage2);
+//
 //
 //		child12 = new Bird();//
 //		child12.setSex(Sex.MALE);
@@ -585,6 +615,8 @@ public class BirdReproductionManagementApplication{
 //		child12.setFatherId(father2.getId());
 //		child12.setMotherId(mother2.getId());
 //		birdRepository.save(child12);
+//		cage22.setQuantity(cage22.getQuantity()+1);
+//		cageRepository.save(cage22);
 //
 ////		child13 = new Bird();//
 ////		child13.setSex(Sex.MALE);
@@ -619,6 +651,8 @@ public class BirdReproductionManagementApplication{
 //		child14.setFatherId(father4.getId());
 //		child14.setMotherId(mother4.getId());
 //		birdRepository.save(child14);
+//		cage19.setQuantity(cage19.getQuantity()+1);
+//		cageRepository.save(cage19);
 //
 //		child2 = new Bird();
 //		child2.setSex(Sex.FEMALE);
@@ -636,6 +670,8 @@ public class BirdReproductionManagementApplication{
 //		child2.setFatherId(father.getId());
 //		child2.setMotherId(mother.getId());
 //		birdRepository.save(child2);
+//		cage2.setQuantity(cage2.getQuantity()+1);
+//		cageRepository.save(cage2);
 //
 //		child22 = new Bird();//
 //		child22.setSex(Sex.FEMALE);
@@ -653,6 +689,8 @@ public class BirdReproductionManagementApplication{
 //		child22.setFatherId(father2.getId());
 //		child22.setMotherId(mother2.getId());
 //		birdRepository.save(child22);
+//		cage22.setQuantity(cage22.getQuantity()+1);
+//		cageRepository.save(cage22);
 //
 //		child24 = new Bird();
 //		child24.setSex(Sex.FEMALE);
@@ -670,6 +708,8 @@ public class BirdReproductionManagementApplication{
 //		child24.setFatherId(father4.getId());
 //		child24.setMotherId(mother4.getId());
 //		birdRepository.save(child24);
+//		cage1a.setQuantity(cage1a.getQuantity()+1);
+//		cageRepository.save(cage1a);
 //	//CHILD, END
 //////BIRDS WITH PROCESS, END
 //
@@ -682,115 +722,95 @@ public class BirdReproductionManagementApplication{
 //		bird4sale.setMutationRate(Float.valueOf(5));
 //		bird4sale.setIsAlive(true);
 //		bird4sale.setImage("");
-////		bird4sale.setImage("https://firebasestorage.googleapis.com/v0/b/birdreproductionswp.appspot.com/o/imgsrc%2FthanBong.png?alt=media&token=945eaa26-1640-4385-a52d-8fbb183504d4&_gl=1*czf4q3*_ga*NTA4MjM3NDgwLjE2OTQ5MzYyNjU.*_ga_CW55HF8NVT*MTY5NzQ3MzUwMC43LjEuMTY5NzQ3MzUxNS40NS4wLjA.");
 //		bird4sale.setFeatherColor("đen trắng");
 //		bird4sale.setWeight(Float.valueOf(700));
 //		bird4sale.setBirdType(birdType);
 //		bird4sale.setCage(cage3);
 //		birdRepository.save(bird4sale);
+//		cage3.setQuantity(cage3.getQuantity()+3);
+//		cageRepository.save(cage3);
 //
 //////BIRDS 4 SALE, END
 //
 //////PROCESS, START
-//		process1 = new ReproductionProcess();
+//
 //		process1.setPairingDate(new Date(2023 - 1900,8 - 1,18));
-//		process1.setExpEggHatchDate(new Date(2023 - 1900, 10 - 1,17));
-//		process1.setExpSwingBranch(new Date(2023 - 1900,11 - 1, 2));
-//		process1.setExpAdultBirdDate(new Date(2023 - 1900,11 - 1,9));
-//		process1.setTotalEgg(3);
+//		process1.setTotalEgg(0);
+//		process1.setFailEgg(0);
 //		process1.setStage("Nuôi con");
-//		process1.setFailEgg(1);
 //		process1.setIsDone(false);
 //		process1.setCage(cage2);
 //		reproductionProcessRepository.save(process1);
 //
-//		process12 = new ReproductionProcess();//
+//
 //		process12.setPairingDate(new Date(2023 - 1900,7 - 1,7));
-//		process12.setExpEggHatchDate(new Date(2023 - 1900, 10 - 1,1));
-//		process12.setExpSwingBranch(new Date(2023 - 1900,10 - 1, 17));
-//		process12.setExpAdultBirdDate(new Date(2023 - 1900,10 - 1,24));
-//		process12.setTotalEgg(3);
+//		process12.setTotalEgg(0);
+//		process12.setFailEgg(0);
 //		process12.setStage("Nuôi con");
-//		process12.setFailEgg(1);
 //		process12.setIsDone(false);
 //		process12.setCage(cage22);
 //		reproductionProcessRepository.save(process12);
 //
-//		process13 = new ReproductionProcess();//
+//
 //		process13.setPairingDate(new Date(2023 - 1900,7 - 1,7));
-////		process13.setExpEggHatchDate(new Date(2023 - 1900, 10 - 1,1));
-////		process13.setExpSwingBranch(new Date(2023 - 1900,10 - 1, 17));
-////		process13.setExpAdultBirdDate(new Date(2023 - 1900,10 - 1,24));
-//		process13.setTotalEgg(3);
+//		process13.setTotalEgg(0);
+//		process13.setFailEgg(0);
 //		process13.setStage("Ấp trứng");
-//		process13.setFailEgg(1);
 //		process13.setIsDone(false);
 //		process13.setCage(cage23);
 //		reproductionProcessRepository.save(process13);
 //
-//		process2 = new ReproductionProcess();//
+//
 //		process2.setPairingDate(new Date(2023 - 1900,7 - 1,7));
-////		process2.setExpEggHatchDate(new Date(2023 - 1900, 10 - 1,1));
-////		process2.setExpSwingBranch(new Date(2023 - 1900,10 - 1, 17));
-////		process2.setExpAdultBirdDate(new Date(2023 - 1900,10 - 1,24));
-//		process2.setTotalEgg(3);
+//		process2.setTotalEgg(0);
+//		process2.setFailEgg(0);
 //		process2.setStage("");
-//		process2.setFailEgg(1);
 //		process2.setIsDone(true);
 //		process2.setCage(cage24);
 //		reproductionProcessRepository.save(process2);
 //////PROCESS, END
 //
 //////REPRODUCTIONS, START
-//		fatherRe = new BirdReproduction();
 //		fatherRe.setBird(father);
 //		fatherRe.setReproductionProcess(process1);
 //		fatherRe.setReproductionRole(ReproductionRole.FATHER);
 //		birdReproductionRepository.save(fatherRe);
 //
-//		father2Re = new BirdReproduction();//
 //		father2Re.setBird(father2);
 //		father2Re.setReproductionProcess(process12);
 //		father2Re.setReproductionRole(ReproductionRole.FATHER);
 //		birdReproductionRepository.save(father2Re);
 //
-//		father3Re = new BirdReproduction();
 //		father3Re.setBird(father3);
 //		father3Re.setReproductionProcess(process13);
 //		father3Re.setReproductionRole(ReproductionRole.FATHER);
 //		birdReproductionRepository.save(father3Re);
 //
-//		father4Re = new BirdReproduction();
 //		father4Re.setBird(father4);
 //		father4Re.setReproductionProcess(process2);
 //		father4Re.setReproductionRole(ReproductionRole.FATHER);
 //		birdReproductionRepository.save(father4Re);
 //
-//		motherRe = new BirdReproduction();
 //		motherRe.setBird(mother);
 //		motherRe.setReproductionProcess(process1);
 //		motherRe.setReproductionRole(ReproductionRole.MOTHER);
 //		birdReproductionRepository.save(motherRe);
 //
-//		mother2Re = new BirdReproduction();//
 //		mother2Re.setBird(mother2);
 //		mother2Re.setReproductionProcess(process12);
 //		mother2Re.setReproductionRole(ReproductionRole.MOTHER);
 //		birdReproductionRepository.save(mother2Re);
 //
-//		mother3Re = new BirdReproduction();//
 //		mother3Re.setBird(mother3);
 //		mother3Re.setReproductionProcess(process13);
 //		mother3Re.setReproductionRole(ReproductionRole.MOTHER);
 //		birdReproductionRepository.save(mother3Re);
 //
-//		mother4Re = new BirdReproduction();//
 //		mother4Re.setBird(mother4);
 //		mother4Re.setReproductionProcess(process2);
 //		mother4Re.setReproductionRole(ReproductionRole.MOTHER);
 //		birdReproductionRepository.save(mother4Re);
 //
-//		child1Re = new BirdReproduction();
 //		child1Re.setBird(child1);
 //		child1Re.setEggLaidDate(new Date(2023 - 1900, 10 - 1, 1));
 //		child1Re.setActEggHatchDate(new Date(2023 - 1900, 10 - 1, 17));
@@ -801,8 +821,9 @@ public class BirdReproductionManagementApplication{
 //		child1Re.setReproductionRole(ReproductionRole.CHILD);
 //		child1Re.setReproductionProcess(process1);
 //		birdReproductionRepository.save(child1Re);
+//		process1.setTotalEgg(process1.getTotalEgg()+1);
+//		reproductionProcessRepository.save(process1);
 //
-//		child12Re = new BirdReproduction();//
 //		child12Re.setBird(child2);
 //		child12Re.setEggLaidDate(new Date(2023 - 1900, 10 - 1, 17));
 //		child12Re.setActEggHatchDate(new Date(2023 - 1900, 10 - 1, 1));
@@ -813,8 +834,9 @@ public class BirdReproductionManagementApplication{
 //		child12Re.setReproductionRole(ReproductionRole.CHILD);
 //		child12Re.setReproductionProcess(process12);
 //		birdReproductionRepository.save(child12Re);
+//		process12.setTotalEgg(process12.getTotalEgg()+1);
+//		reproductionProcessRepository.save(process12);
 //
-//		child14Re = new BirdReproduction();//
 //		child14Re.setBird(child2);
 //		child14Re.setEggLaidDate(new Date(2023 - 1900, 10 - 1, 17));
 //		child14Re.setActEggHatchDate(new Date(2023 - 1900, 10 - 1, 1));
@@ -825,8 +847,9 @@ public class BirdReproductionManagementApplication{
 //		child14Re.setReproductionRole(ReproductionRole.CHILD);
 //		child14Re.setReproductionProcess(process2);
 //		birdReproductionRepository.save(child14Re);
+//		process2.setTotalEgg(process2.getTotalEgg()+1);
+//		reproductionProcessRepository.save(process2);
 //
-//		child2Re = new BirdReproduction();
 //		child2Re.setBird(child2);
 //		child2Re.setEggLaidDate(new Date(2023 - 1900, 10 - 1, 2));
 //		child2Re.setActEggHatchDate(new Date(2023 - 1900, 10 - 1, 18));
@@ -837,8 +860,9 @@ public class BirdReproductionManagementApplication{
 //		child2Re.setReproductionRole(ReproductionRole.CHILD);
 //		child2Re.setReproductionProcess(process1);
 //		birdReproductionRepository.save(child2Re);
+//		process1.setTotalEgg(process1.getTotalEgg()+1);
+//		reproductionProcessRepository.save(process1);
 //
-//		child22Re = new BirdReproduction();//
 //		child22Re.setBird(child22);
 //		child22Re.setEggLaidDate(new Date(2023 - 1900, 10 - 1, 18));
 //		child22Re.setActEggHatchDate(new Date(2023 - 1900, 10 - 1, 2));
@@ -849,8 +873,9 @@ public class BirdReproductionManagementApplication{
 //		child22Re.setReproductionRole(ReproductionRole.CHILD);
 //		child22Re.setReproductionProcess(process12);
 //		birdReproductionRepository.save(child22Re);
+//		process12.setTotalEgg(process12.getTotalEgg()+1);
+//		reproductionProcessRepository.save(process12);
 //
-//		child24Re = new BirdReproduction();//
 //		child24Re.setBird(child24);
 //		child24Re.setEggLaidDate(new Date(2023 - 1900, 10 - 1, 18));
 //		child24Re.setActEggHatchDate(new Date(2023 - 1900, 10 - 1, 2));
@@ -861,8 +886,9 @@ public class BirdReproductionManagementApplication{
 //		child24Re.setReproductionRole(ReproductionRole.CHILD);
 //		child24Re.setReproductionProcess(process2);
 //		birdReproductionRepository.save(child24Re);
+//		process2.setTotalEgg(process2.getTotalEgg()+1);
+//		reproductionProcessRepository.save(process2);
 //	//EGG, START
-//		egg12 = new BirdReproduction();
 //		egg12.setEggLaidDate(new Date(2023 - 1900, 10 - 1, 18));
 //		egg12.setEggType("fer");
 //		egg12.setEggStatus("HATCHED");
@@ -870,8 +896,9 @@ public class BirdReproductionManagementApplication{
 //		egg12.setReproductionRole(ReproductionRole.EGG);
 //		egg12.setReproductionProcess(process12);
 //		birdReproductionRepository.save(egg12);
+//		process12.setTotalEgg(process12.getTotalEgg()+1);
+//		reproductionProcessRepository.save(process12);
 //
-//		egg13Re = new BirdReproduction();
 //		egg13Re.setEggLaidDate(new Date(2023 - 1900, 10 - 1, 18));
 //		egg13Re.setEggType("fer");
 //		egg13Re.setEggStatus("HATCHED");
@@ -879,8 +906,11 @@ public class BirdReproductionManagementApplication{
 //		egg13Re.setReproductionRole(ReproductionRole.EGG);
 //		egg13Re.setReproductionProcess(process13);
 //		birdReproductionRepository.save(egg13Re);
+//		process13.setTotalEgg(process13.getTotalEgg()+1);
+//		reproductionProcessRepository.save(process13);
+//		process13.setTotalEgg(process13.getTotalEgg()+1);
+//		reproductionProcessRepository.save(process13);
 //
-//		egg23Re = new BirdReproduction();
 //		egg23Re.setEggLaidDate(new Date(2023 - 1900, 10 - 1, 19));
 //		egg23Re.setEggType("fer");
 //		egg23Re.setEggStatus("HATCHED");
@@ -888,11 +918,14 @@ public class BirdReproductionManagementApplication{
 //		egg23Re.setReproductionRole(ReproductionRole.EGG);
 //		egg23Re.setReproductionProcess(process13);
 //		birdReproductionRepository.save(egg23Re);
+//		process13.setTotalEgg(process13.getTotalEgg()+1);
+//		reproductionProcessRepository.save(process13);
+//		process13.setTotalEgg(process13.getTotalEgg()+1);
+//		reproductionProcessRepository.save(process13);
 //	//EGG, END
 //////REPRODUCTION, END
 //
 //////FAIL REPRODUCT, START
-//		cFailRe = new BirdReproduction();
 //		cFailRe.setEggLaidDate(new Date(2023 - 1900, 10 - 1, 19));
 //		cFailRe.setEggType("fer");
 //		cFailRe.setEggStatus("BROKEN");
@@ -901,8 +934,10 @@ public class BirdReproductionManagementApplication{
 //		cFailRe.setReproductionRole(ReproductionRole.EGG);
 //		cFailRe.setReproductionProcess(process1);
 //		birdReproductionRepository.save(cFailRe);
+//		process1.setTotalEgg(process1.getTotalEgg()+1);
+//		process1.setFailEgg(process1.getFailEgg()+1);
+//		reproductionProcessRepository.save(process1);
 //
-//		cFail2Re = new BirdReproduction();//
 //		cFail2Re.setEggLaidDate(new Date(2023 - 1900, 10 - 1, 20));
 //		cFail2Re.setEggType("fer");
 //		cFail2Re.setEggStatus("BROKEN");
@@ -911,8 +946,10 @@ public class BirdReproductionManagementApplication{
 //		cFail2Re.setReproductionRole(ReproductionRole.EGG);
 //		cFail2Re.setReproductionProcess(process12);
 //		birdReproductionRepository.save(cFail2Re);
+//		process12.setTotalEgg(process12.getTotalEgg()+1);
+//		process12.setFailEgg(process12.getFailEgg()+1);
+//		reproductionProcessRepository.save(process12);
 //
-//		cFail3Re = new BirdReproduction();//
 //		cFail3Re.setEggLaidDate(new Date(2023 - 1900, 10 - 1, 18));
 //		cFail3Re.setEggType("fer");
 //		cFail3Re.setEggStatus("BROKEN");
@@ -921,8 +958,10 @@ public class BirdReproductionManagementApplication{
 //		cFail3Re.setReproductionRole(ReproductionRole.EGG);
 //		cFail3Re.setReproductionProcess(process13);
 //		birdReproductionRepository.save(cFail3Re);
+//		process13.setTotalEgg(process13.getTotalEgg()+1);
+//		process13.setFailEgg(process13.getFailEgg()+1);
+//		reproductionProcessRepository.save(process13);
 //
-//		cFail4Re = new BirdReproduction();//
 //		cFail4Re.setEggLaidDate(new Date(2023 - 1900, 10 - 1, 18));
 //		cFail4Re.setEggType("fer");
 //		cFail4Re.setEggStatus("BROKEN");
@@ -931,6 +970,11 @@ public class BirdReproductionManagementApplication{
 //		cFail4Re.setReproductionRole(ReproductionRole.EGG);
 //		cFail4Re.setReproductionProcess(process2);
 //		birdReproductionRepository.save(cFail4Re);
-//////FAIL REPRODUCT, END
-//	}
+//		process1.setTotalEgg(process1.getTotalEgg()+1);
+//		reproductionProcessRepository.save(process1);
+//		process2.setTotalEgg(process2.getTotalEgg()+1);
+//		process2.setFailEgg(process2.getFailEgg()+1);
+//		reproductionProcessRepository.save(process2);
+////FAIL REPRODUCT, END
+	}
 }

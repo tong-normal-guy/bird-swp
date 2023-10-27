@@ -29,6 +29,8 @@ public class Bird {
     private String mutation;
     @Column(name = "mutation_rate")
     private Float mutationRate;
+    @Column(name = "super_reproduct")
+    private Float superReproduct;
     @Column(name = "is_alive")
     private Boolean isAlive;
     @Column(name = "image")
@@ -41,23 +43,10 @@ public class Bird {
     private Long fatherId;
     @Column(name = "mother_Id")
     private Long motherId;
-    @Column(name = "super_reproduct")
-    private Float superReproduct;
 
     @ManyToOne
     @JoinColumn(name = "birdtype_id", nullable = false)
     private BirdType birdType;
-
-//    @OneToMany(mappedBy = "father", cascade = CascadeType.REMOVE)
-
-//    @ManyToOne
-//    @JoinColumn(name = "father_id", nullable = false)
-//    private Bird father;
-//    @OneToMany(mappedBy = "mother", cascade = CascadeType.REMOVE)
-//    private List<Bird> birdListOfMother = new ArrayList<>();
-//    @ManyToOne
-//    @JoinColumn(name = "mother_id", nullable = false)
-//    private Bird mother;
 
     @ManyToOne
     @JoinColumn(name = "cage_id")
