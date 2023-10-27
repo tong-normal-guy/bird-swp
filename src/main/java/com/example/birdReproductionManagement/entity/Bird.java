@@ -29,6 +29,8 @@ public class Bird {
     private String mutation;
     @Column(name = "mutation_rate")
     private Float mutationRate;
+    @Column(name = "super_reproduct")
+    private Float superReproduct;
     @Column(name = "is_alive")
     private Boolean isAlive;
     @Column(name = "image")
@@ -41,8 +43,6 @@ public class Bird {
     private Long fatherId;
     @Column(name = "mother_Id")
     private Long motherId;
-    @Column(name = "super_reproduct")
-    private Float superReproduct;
 
     @ManyToOne
     @JoinColumn(name = "birdtype_id", nullable = false)
@@ -60,7 +60,7 @@ public class Bird {
 //    private Bird mother;
 
     @ManyToOne
-    @JoinColumn(name = "cage_id", nullable = false)
+    @JoinColumn(name = "cage_id")
     private Cage cage;
 
     @OneToMany(mappedBy = "bird", cascade = CascadeType.REMOVE)
