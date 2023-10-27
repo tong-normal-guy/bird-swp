@@ -12,8 +12,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BirdDetailReponseDTO {
+public class DescendantResponseDTO {
     private String birdId;
+    private String generation;
     private String sex;
     private Date hatchDate;
     private String ageRange;
@@ -24,10 +25,5 @@ public class BirdDetailReponseDTO {
     private String featherColor;
     private Float weight;
     private String birdTypeName;
-    private BirdTypeDTO birdType;
-    private CageDTO cage;
     private String cageId;
-    private BirdDetailReponseDTO father;
-    private BirdDetailReponseDTO mother;
-    private List<DescendantResponseDTO> descendants;
 }

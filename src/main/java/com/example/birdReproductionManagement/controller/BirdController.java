@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/birds")
@@ -53,5 +54,9 @@ public class BirdController {
     @GetMapping("/sex/{sex}")
     public ResponseEntity<List<BirdDTO>> findBirdBySex(@PathVariable("sex")String sex){
         return new ResponseEntity<>(birdService.findBySex(sex), HttpStatus.OK);
+    }
+    @GetMapping("/outcast")
+    public ResponseEntity<List<BirdDTO>> findOutcastBirds(){
+        return new ResponseEntity<>(birdService.findOutcastBirds(), HttpStatus.OK);
     }
 }

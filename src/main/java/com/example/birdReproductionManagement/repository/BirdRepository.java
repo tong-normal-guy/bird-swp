@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BirdRepository extends JpaRepository<Bird, Long> {
 
@@ -51,6 +52,6 @@ public interface BirdRepository extends JpaRepository<Bird, Long> {
 
     List<Bird> findAllByFatherId(Long fatherId);
     List<Bird> findAllByMotherId(Long motherId);
-
+//    Optional<Bird> findByCageEmpty();
 
 }
