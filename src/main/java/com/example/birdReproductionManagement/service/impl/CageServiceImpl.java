@@ -143,7 +143,6 @@ public class CageServiceImpl implements CageService {
 
     @Override
     public CageDTO updateCage(Long id, CageDTO cageDto) {
-
         Cage cage = cageRepository.findById(id).orElseThrow(()
                 -> new CageNotFoundException("Cage could not be updated."));
         Cage updatedCage = CageMapper.mapToCage(cageDto);
@@ -161,13 +160,19 @@ public class CageServiceImpl implements CageService {
             Object newValue = field.get(cageDto);
             if(newValue != null){
                 String fieldName = field.getName();
-                Field existingField = ReflectionUtils.findField(finalCage.getClass(), fieldName);
-                if(existingField != null){
-                    existingField.setAccessible(true);
-                    ReflectionUtils.setField(existingField, finalCage, newValue);
+                if(!fieldName.equals("location")){
+                    Field existingField = ReflectionUtils.findField(finalCage.getClass(), fieldName);
+                    if(existingField != null){
+                        existingField.setAccessible(true);
+                        ReflectionUtils.setField(existingField, finalCage, newValue);
+                    }
                 }
             }
         });
+        if(cageDto.getLocation() != null){
+            String newLocation = cageDto.getLocation() + cage.getId();
+            finalCage.setLocation(newLocation);
+        }
         cage = finalCage;
         return CageMapper.mapToCageDto(cageRepository.save(cage));
     }
