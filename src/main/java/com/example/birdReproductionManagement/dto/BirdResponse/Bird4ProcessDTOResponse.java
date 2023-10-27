@@ -15,6 +15,7 @@ public class Bird4ProcessDTOResponse {
     private String ageRange;
     private String mutation;
     private Float mutationRate;
+    private Float superReproduct;
     private Boolean isAlive;
     private String image;
     private String featherColor;
