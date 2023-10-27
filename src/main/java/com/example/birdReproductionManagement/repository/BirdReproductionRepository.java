@@ -13,6 +13,7 @@ import java.util.Optional;
 
 public interface BirdReproductionRepository extends JpaRepository<BirdReproduction, Long> {
     List<BirdReproduction> findAllByReproductionProcess_Id(Long id);
+    List<BirdReproduction> findAllByBirdId(Long birdId);
     @Query("SELECT br FROM BirdReproduction br WHERE br.reproductionProcess.id = :id AND br.reproductionRole = 'EGG'")
     List<BirdReproduction> findAllEggsByReproductionProcessId(@Param("id") Long id);
     @Query("SELECT br FROM BirdReproduction br WHERE br.reproductionProcess.id = :id AND (br.reproductionRole = 'FATHER' OR br.reproductionRole = 'MOTHER')")
