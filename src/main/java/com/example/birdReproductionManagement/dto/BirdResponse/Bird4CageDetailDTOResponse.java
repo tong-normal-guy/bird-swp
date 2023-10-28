@@ -20,6 +20,7 @@ public class Bird4CageDetailDTOResponse {
     private BirdType4CageDetailDTOResponse birdType;//
     private String mutation;
     private Float mutationRate;//
+    private Float superReproduct;
     private String featherColor;
     private Float weight;//
     private String image;//

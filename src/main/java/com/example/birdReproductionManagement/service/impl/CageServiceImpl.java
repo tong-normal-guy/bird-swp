@@ -50,7 +50,6 @@ public class CageServiceImpl implements CageService {
     @Override
     public List<CageDetailDTOResponse> pickaCages(Boolean process) {
         List<Cage> cages = new ArrayList<>();
-
         //check condition, have check process or no. start
         if (!process){
             //no check process
@@ -66,17 +65,34 @@ public class CageServiceImpl implements CageService {
 
         // find all cages that:
         for (Cage cage : cages) {
+            int bSize = 0;
+            int eSize = 0;
+            int efSize = 0;
             CageDetailDTOResponse cageDetailDTOResponse = new CageDetailDTOResponse();
             // entity start
             ReproductionProcess reproductionProcess = reproductionProcessRepository.findByIsDoneFalseAndCage_Id(cage.getId()).orElse(null);
             if (reproductionProcess != null){
                 List<BirdReproduction> birdReproductions = reproductionProcess.getBirdReproductions();
+
+                //count egg
+                for (BirdReproduction birdReproduction: birdReproductions) {
+                    if (birdReproduction.getReproductionRole().equals(ReproductionRole.EGG)){
+                        if (!birdReproduction.getEggStatus().toLowerCase().equals("broken") || birdReproduction.isFail() == false){
+                            eSize++;
+                        } else {
+                            efSize++;
+                        }
+                    } else if (birdReproduction.getReproductionRole().equals(ReproductionRole.CHILD) ||
+                            birdReproduction.getReproductionRole().equals(ReproductionRole.MOTHER) ||
+                            birdReproduction.getReproductionRole().equals(ReproductionRole.FATHER)) {
+                        bSize++;
+                    }
+                }
+                reproductionProcess.setFailEgg(efSize);
+                reproductionProcess.setTotalEgg(eSize);
+                
 //                        birdReproductionRepository.findAllByReproductionProcess_Id(reproductionProcess.getId());
-
-//                List<BirdReproduction> eggReproductions = birdReproductionRepository.findAllEggsByReproductionProcessId(reproductionProcess.getId());
-//                List<BirdReproduction> parentReproductions = birdReproductionRepository.findAllParentsByReproductionProcessId(reproductionProcess.getId());
             // entity end
-
                 // dto
                 Reproduction4CageDetailDTOResponse reproduction4CageDetailDTOResponse = ReproductionProcessMapper.map2Reproduction4CageDetailDTO(reproductionProcess);
                 List<BirdRe4CageDetailDTOResponse> bird4CageDetailDTOResponses = new ArrayList<>();
@@ -89,7 +105,7 @@ public class CageServiceImpl implements CageService {
                     bird4CageDetailDTOResponses.add(bird4CageDetailDTOResponse);
                 }
                 //mapper start
-
+//                eSize = bird4CageDetailDTOResponses.size();
                 cageDetailDTOResponse.setBirdReproduction(bird4CageDetailDTOResponses);
                 cageDetailDTOResponse.setReproductionProcess(reproduction4CageDetailDTOResponse);
                 //mapper end
@@ -97,6 +113,7 @@ public class CageServiceImpl implements CageService {
                 if (!cage.getBirdList().isEmpty()){
                     cageDetailDTOResponse.setBird(cage.getBirdList()
                             .stream().map(BirdMapper::map2Birdd4CageDetailDTO).collect(Collectors.toList()));
+                    bSize = cage.getBirdList().size();
                 }
             }
 
@@ -110,11 +127,10 @@ public class CageServiceImpl implements CageService {
             if (cage.getAvailable() != null)
             cageDetailDTOResponse.setAvailable(cage.getAvailable());
             else cageDetailDTOResponse.setAvailable(false);
-            cageDetailDTOResponse.setQuantity(cage.getQuantity());
+            cageDetailDTOResponse.setQuantity(bSize);
             cageDetailDTOResponses.add(cageDetailDTOResponse);
         }
         return cageDetailDTOResponses;
-
     }
 
     @Override

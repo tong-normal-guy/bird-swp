@@ -96,6 +96,7 @@ public class BirdMapper {
                 .mutation(bird.getMutation())
                 .mutationRate(bird.getMutationRate())
                 .superReproduct(bird.getSuperReproduct())
+                .superReproduct(bird.getSuperReproduct())
                 .isAlive(bird.getIsAlive())
                 .image(bird.getImage())
                 .featherColor(bird.getFeatherColor())
