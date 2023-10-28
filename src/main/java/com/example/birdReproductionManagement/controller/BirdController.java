@@ -65,4 +65,9 @@ public class BirdController {
     public ResponseEntity<List<BirdDTO>> findOutcastBirds(){
         return new ResponseEntity<>(birdService.findOutcastBirds(), HttpStatus.OK);
     }
+
+    @GetMapping("/test")
+    public ResponseEntity<?> findBirds(){
+        return new ResponseEntity<>(birdService.findBirds(), HttpStatus.OK);
+    }
 }

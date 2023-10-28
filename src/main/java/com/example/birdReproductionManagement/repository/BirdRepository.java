@@ -1,6 +1,7 @@
 package com.example.birdReproductionManagement.repository;
 
 import com.example.birdReproductionManagement.entity.Bird;
+import com.example.birdReproductionManagement.entity.ReproductionProcess;
 import com.example.birdReproductionManagement.entity.ReproductionRole;
 import com.example.birdReproductionManagement.entity.Sex;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -61,5 +62,13 @@ public interface BirdRepository extends JpaRepository<Bird, Long> {
     List<Bird> findAllByFatherId(Long fatherId);
     List<Bird> findAllByMotherId(Long motherId);
 //    Optional<Bird> findByCageEmpty();
+    @Query("SELECT DISTINCT b FROM Bird b " +
+            "LEFT JOIN b.birdReproductions br " +
+            "LEFT JOIN br.reproductionProcess rp " +
+            "WHERE br.reproductionProcess = :reproductionProcess " +
+            "AND br.reproductionRole = :reproductionRole")
+    List<Bird> findByReproductionProcessAndReproductionRole(
+            @Param("reproductionProcess")ReproductionProcess reproductionProcess,
+            @Param("reproductionRole")ReproductionRole reproductionRole);
 
 }
