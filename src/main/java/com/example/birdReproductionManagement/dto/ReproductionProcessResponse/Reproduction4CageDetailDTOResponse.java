@@ -14,7 +14,5 @@ public class Reproduction4CageDetailDTOResponse {
     private String stage;
     private Integer failEgg;
     private Integer totalEgg;
-    private Date expEggHatchDate;
-    private Date expSwingBranch;
-    private Date expAdultBirdDate;
+    private boolean idDone;
 }
