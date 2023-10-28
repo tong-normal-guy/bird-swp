@@ -46,16 +46,21 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
             ReproductionProcess reproductionProcess = reproductionProcessRepository
                     .findById(Long.valueOf(process.getProcessId())).orElseThrow(
                             () -> new ReproductionProcessNotFoundException("Process could not be found in findAllReproductionProcess."));
+            //Tìm thông tin chim cha
             BirdReproductionDTO cock = BirdReproductionMapper.mapToBirdReproductionDto(birdReproductionRepository
                     .findByReproductionProcessIdAndReproductionRole(Long.valueOf(process.getProcessId()), ReproductionRole.FATHER));
             process.setCockId(cock.getBird().getBirdId());
+            //Tìm thông tin chim mẹ
             BirdReproductionDTO hen = BirdReproductionMapper.mapToBirdReproductionDto(birdReproductionRepository
                     .findByReproductionProcessIdAndReproductionRole(Long.valueOf(process.getProcessId()), ReproductionRole.MOTHER));
             process.setHenId(hen.getBird().getBirdId());
+            //Tìm danh sách trứng
             List<BirdReproduction> eggList = birdReproductionRepository
                     .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.EGG);
+            //Tìm danh sách chim con
             List<BirdReproduction> childList = birdReproductionRepository
                     .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.CHILD);
+            //Cho vào danh sách tổng
             List<BirdReproduction> reproductionList = new ArrayList<>();
             reproductionList.addAll(eggList);
             reproductionList.addAll(childList);
@@ -63,12 +68,23 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
                     .map(BirdReproductionMapper::mapToBirdReproductionDto).collect(Collectors.toList());
             process.setEggsList(reproductionListDTO);
             process.setBirdTypeName(cock.getBird().getBirdType().getName());
+            //Kiểm tra chim non sau khi trưởng thành đã được chuyển lồng hay chưa
+            Cage processCage = reproductionProcess.getCage();
+            for (BirdReproductionDTO birdReproductionDTO : reproductionListDTO){
+                if(birdReproductionDTO.getReproductionRole().equals("CHILD")){
+                    if(birdReproductionDTO.getBird().getCage() != null){
+                        String childCageId = birdReproductionDTO.getBird().getCage().getCageId();
+                        if (!childCageId.equals(String.valueOf(processCage.getId()))){
+                            birdReproductionDTO.setIsMoved(true);
+                        }
+                    }
+                }
+            }
         }
         return list;
     }
 
     @Override
-
     public ReproductionProcessDTO addReproductionProcess(PairDTO pairDTO) {
         Cage cage = cageRepository.findById(Long.valueOf(pairDTO.getCageId())).orElseThrow(()
                 -> new ReproductionProcessNotFoundException("Cage could not be found in addReproductionProcess."));
@@ -136,6 +152,11 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
     public void deleteReproductionProcess(Long id) {
         ReproductionProcess reproductionProcess = reproductionProcessRepository.findById(id).orElseThrow(()
                 -> new ReproductionProcessNotFoundException("Reproduction process could not be deleted."));
+        if(reproductionProcess.getCage() != null){
+            Cage cage = reproductionProcess.getCage();
+            cage.setQuantity(0);
+            cageRepository.save(cage);
+        }
         reproductionProcessRepository.delete(reproductionProcess);
     }
 
@@ -152,6 +173,7 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
                 if(!fieldName.equals("cageId")){
                     Field existingField = ReflectionUtils.findField(finalReproductionProcess.getClass(), fieldName);
                     if(existingField != null){
+                        existingField.setAccessible(true);
                         ReflectionUtils.setField(existingField, finalReproductionProcess, newValue);
                     }
                 }
@@ -162,18 +184,19 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
                     -> new ReproductionProcessNotFoundException("Reproduction process could not be updated."));
             finalReproductionProcess.setCage(newCage);
         }
-        if(finalReproductionProcess.getStage().equals("Nuôi con")){
+        if(finalReproductionProcess.getIsDone() != null && finalReproductionProcess.getIsDone()){
             List<BirdReproduction> birdReproductions = birdReproductionRepository
-                    .findByReproductionProcessAndReproductionRole(finalReproductionProcess, ReproductionRole.CHILD);
-            boolean flag = false;
-            for (BirdReproduction birdReproductionWalker : birdReproductions){
-                if (!birdReproductionWalker.getBird().getAgeRange().equals("Trưởng thành")){
-                    flag = true;
+                    .findAllByReproductionProcess_Id(finalReproductionProcess.getId());
+            for (BirdReproduction birdReproduction : birdReproductions){
+                if(birdReproduction.getBird() != null){
+                    Bird bird = birdReproduction.getBird();
+                    bird.setCage(null);
+                    birdRepository.save(bird);
                 }
             }
-            if (!flag){
-                finalReproductionProcess.setIsDone(true);
-            }
+            Cage processCage = finalReproductionProcess.getCage();
+            processCage.setQuantity(0);
+            cageRepository.save(processCage);
         }
         reproductionProcess = finalReproductionProcess;
         return ReproductionProcessMapper.mapToReproductionProcessDto(reproductionProcessRepository.save(reproductionProcess));
@@ -192,6 +215,27 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
                 .birdType(birdType4ProcessInitDTOResponses)
                 .build();
     }
+
+    @Override
+    public void setIsDoneForProcess(Long id) {
+        ReproductionProcess reproductionProcess = reproductionProcessRepository.findById(id)
+                .orElseThrow(() -> new ReproductionProcessNotFoundException("Reproduction process could not be found."));
+        List<BirdReproduction> birdReproductions = birdReproductionRepository
+                .findAllByReproductionProcess_Id(reproductionProcess.getId());
+        for (BirdReproduction birdReproduction : birdReproductions){
+            if(birdReproduction.getBird() != null){
+                Bird bird = birdReproduction.getBird();
+                bird.setCage(null);
+                birdRepository.save(bird);
+            }
+        }
+        Cage processCage = reproductionProcess.getCage();
+        processCage.setQuantity(0);
+        cageRepository.save(processCage);
+        reproductionProcess.setIsDone(true);
+        reproductionProcessRepository.save(reproductionProcess);
+    }
+
     public List<BirdType4ProcessInitDTOResponse> getType4ProcessInit() {
         List<BirdType4ProcessInitDTOResponse> birdTypeDTOs = birdTypeRepository.findAll().stream().map(BirdTypeMapper::map2BirdType4ProcessInitDTO).collect(Collectors.toList());
         for (BirdType4ProcessInitDTOResponse birdTypeDTO:birdTypeDTOs) {

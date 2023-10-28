@@ -50,6 +50,11 @@ public class ReproductionProcessController {
     public ResponseEntity<LoadData4InitProcessDTOResponse> getInitProcess(){
         return new  ResponseEntity<LoadData4InitProcessDTOResponse>(reproductionProcessService.getInitProcess(), HttpStatus.OK);
     }
+    @PatchMapping("/done/{id}")
+    public ResponseEntity<String> setIsDoneForProcess(@PathVariable("id")Long id){
+        reproductionProcessService.setIsDoneForProcess(id);
+        return new ResponseEntity<>("Reproduction process with id " + id + "is end.", HttpStatus.OK);
+    }
 
 //    @GetMapping("/findfather/{id}")
 //    public ResponseEntity<BirdReproductionDto> findFather(@PathVariable("id")Long id){
