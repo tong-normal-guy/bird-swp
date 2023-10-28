@@ -14,11 +14,8 @@ import com.example.birdReproductionManagement.exceptions.BirdTypeNotMatchedExcep
 import com.example.birdReproductionManagement.exceptions.ReproductionProcessNotFoundException;
 import com.example.birdReproductionManagement.mapper.*;
 import com.example.birdReproductionManagement.repository.*;
-import com.example.birdReproductionManagement.service.BirdTypeService;
-import com.example.birdReproductionManagement.service.CageService;
 import com.example.birdReproductionManagement.service.ReproductionProcessService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
@@ -47,13 +44,15 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
                     .findById(Long.valueOf(process.getProcessId())).orElseThrow(
                             () -> new ReproductionProcessNotFoundException("Process could not be found in findAllReproductionProcess."));
             //Tìm thông tin chim cha
-            BirdReproductionDTO cock = BirdReproductionMapper.mapToBirdReproductionDto(birdReproductionRepository
-                    .findByReproductionProcessIdAndReproductionRole(Long.valueOf(process.getProcessId()), ReproductionRole.FATHER));
-            process.setCockId(cock.getBird().getBirdId());
+            BirdReproduction cock = birdReproductionRepository
+                    .findByReproductionProcessIdAndReproductionRole(Long.valueOf(process.getProcessId()), ReproductionRole.FATHER);
+                BirdReproductionDTO cockDTO = BirdReproductionMapper.mapToBirdReproductionDto(cock);
+                process.setCockId(cockDTO.getBird().getBirdId());
             //Tìm thông tin chim mẹ
-            BirdReproductionDTO hen = BirdReproductionMapper.mapToBirdReproductionDto(birdReproductionRepository
-                    .findByReproductionProcessIdAndReproductionRole(Long.valueOf(process.getProcessId()), ReproductionRole.MOTHER));
-            process.setHenId(hen.getBird().getBirdId());
+            BirdReproduction hen = birdReproductionRepository
+                    .findByReproductionProcessIdAndReproductionRole(Long.valueOf(process.getProcessId()), ReproductionRole.MOTHER);
+                BirdReproductionDTO henDTO = BirdReproductionMapper.mapToBirdReproductionDto(hen);
+                process.setHenId(henDTO.getBird().getBirdId());
             //Tìm danh sách trứng
             List<BirdReproduction> eggList = birdReproductionRepository
                     .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.EGG);
