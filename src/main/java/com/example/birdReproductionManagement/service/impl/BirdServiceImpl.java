@@ -157,25 +157,29 @@ public class BirdServiceImpl implements BirdService {
         });
         //Lưu ngày cập nhật lứa tuổi của chim
         if(birdDto.getAgeRange() != null){
-            saveActDate(birdDto.getAgeRange(), finalBird);
-            if(birdDto.getAgeRange().equals("Trưởng thành")){
-                BirdReproduction birdReproduction = birdReproductionRepository.findByBirdAndReproductionRole(bird, ReproductionRole.CHILD);
-                ReproductionProcess reproductionProcess = birdReproduction.getReproductionProcess();
-                boolean eggExisted = birdReproductionRepository
-                        .existsByReproductionRoleAndReproductionProcessAndEggStatusEquals(ReproductionRole.EGG,
-                                reproductionProcess, "In development");
-                if (!eggExisted){
-                    List<BirdReproduction> birdReproductions = birdReproductionRepository
-                            .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.CHILD);
-                    boolean flag = false;
-                    for (BirdReproduction birdReproductionWalker : birdReproductions){
-                        if (!birdReproductionWalker.getBird().getAgeRange().equals("Trưởng thành")){
-                            flag = true;
+            if (!bird.getAgeRange().equals(birdDto.getAgeRange())){
+                saveActDate(birdDto.getAgeRange(), finalBird);
+            }
+            if(birdReproductionRepository.existsByBirdAndReproductionProcessIsDone(bird, false)){
+                if(birdDto.getAgeRange().equals("Trưởng thành")){
+                    BirdReproduction birdReproduction = birdReproductionRepository.findByBirdAndReproductionRole(bird, ReproductionRole.CHILD);
+                    ReproductionProcess reproductionProcess = birdReproduction.getReproductionProcess();
+                    boolean eggExisted = birdReproductionRepository
+                            .existsByReproductionRoleAndReproductionProcessAndEggStatusEquals(ReproductionRole.EGG,
+                                    reproductionProcess, "In development");
+                    if (!eggExisted){
+                        List<BirdReproduction> birdReproductions = birdReproductionRepository
+                                .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.CHILD);
+                        boolean flag = false;
+                        for (BirdReproduction birdReproductionWalker : birdReproductions){
+                            if (!birdReproductionWalker.getBird().getAgeRange().equals("Trưởng thành")){
+                                flag = true;
+                            }
                         }
-                    }
-                    if (!flag){
-                        reproductionProcess.setIsDone(true);
-                        reproductionProcessRepository.save(reproductionProcess);
+                        if (!flag){
+                            reproductionProcess.setIsDone(true);
+                            reproductionProcessRepository.save(reproductionProcess);
+                        }
                     }
                 }
             }
