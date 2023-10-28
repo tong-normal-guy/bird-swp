@@ -220,6 +220,9 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
     public void setIsDoneForProcess(Long id) {
         ReproductionProcess reproductionProcess = reproductionProcessRepository.findById(id)
                 .orElseThrow(() -> new ReproductionProcessNotFoundException("Reproduction process could not be found."));
+        //Kiểm tra quá trình có đủ điều kiện để kết thúc chưa
+
+        //Set lồng null cho tất chim có trong quá trình
         List<BirdReproduction> birdReproductions = birdReproductionRepository
                 .findAllByReproductionProcess_Id(reproductionProcess.getId());
         for (BirdReproduction birdReproduction : birdReproductions){
