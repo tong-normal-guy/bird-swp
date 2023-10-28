@@ -2,6 +2,7 @@ package com.example.birdReproductionManagement.controller;
 
 import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
 import com.example.birdReproductionManagement.dto.BirdResponse.BirdDetailReponseDTO;
+import com.example.birdReproductionManagement.dto.BirdResponse.BirdForListResponseDTO;
 import com.example.birdReproductionManagement.service.BirdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,8 +22,13 @@ public class BirdController {
     }
 
     @GetMapping("/view")
-    public ResponseEntity<List<BirdDetailReponseDTO>> getListBirds(){
+    public ResponseEntity<List<BirdForListResponseDTO>> getListBirds(){
         return new ResponseEntity<>(birdService.findAllBirds(), HttpStatus.OK);
+    }
+
+    @GetMapping("/view/{id}")
+    public ResponseEntity<BirdDetailReponseDTO> getBirdDetailById(@PathVariable("id")Long id){
+        return new ResponseEntity<>(birdService.getBirdDetailById(id), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
@@ -41,10 +47,10 @@ public class BirdController {
         return new ResponseEntity<>(birdService.createBird(birdDto), HttpStatus.CREATED);
     }
 
-    @GetMapping("/view/{id}")
-    public ResponseEntity<List<BirdDTO>> getListBirdsByCage(@PathVariable("id")Long id){
-        return new ResponseEntity<>(birdService.findByCage(id), HttpStatus.OK);
-    }
+//    @GetMapping("/view/{id}")
+//    public ResponseEntity<List<BirdDTO>> getListBirdsByCage(@PathVariable("id")Long id){
+//        return new ResponseEntity<>(birdService.findByCage(id), HttpStatus.OK);
+//    }
 
     @PatchMapping("/{id}")
     public ResponseEntity<BirdDTO> updateBirdByFields(@PathVariable("id")Long id, @RequestBody BirdDTO birdDto){

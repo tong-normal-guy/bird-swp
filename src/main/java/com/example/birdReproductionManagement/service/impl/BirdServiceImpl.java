@@ -1,8 +1,6 @@
 package com.example.birdReproductionManagement.service.impl;
 
-import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
-import com.example.birdReproductionManagement.dto.BirdResponse.BirdDetailReponseDTO;
-import com.example.birdReproductionManagement.dto.BirdResponse.DescendantResponseDTO;
+import com.example.birdReproductionManagement.dto.BirdResponse.*;
 import com.example.birdReproductionManagement.entity.*;
 import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
 import com.example.birdReproductionManagement.exceptions.CageNotFoundException;
@@ -30,51 +28,83 @@ public class BirdServiceImpl implements BirdService {
     private final ReproductionProcessRepository reproductionProcessRepository;
 
     @Override
-    public List<BirdDetailReponseDTO> findAllBirds() {
+    public List<BirdForListResponseDTO> findAllBirds() {
         List<Bird> birds = birdRepository.findAll();
-        List<BirdDetailReponseDTO> birdDTOs = birds.stream().map(BirdMapper::mapToBirdDetailReponseDTO)
+        List<BirdForListResponseDTO> birdDTOs = birds.stream().map(BirdMapper::mapToBirdForListResponseDTO)
                 .collect(Collectors.toList());
-        for (BirdDetailReponseDTO birdWalker : birdDTOs){
-            //Tìm chim bố và chim mẹ
-            int gen = 0;
-            findPedigree(birdWalker, gen);
-//            BirdReproduction birdReproduction = birdReproductionRepository.findByBirdAndReproductionRole(bird, ReproductionRole.CHILD);
-//            if(birdReproduction != null){
-//                ReproductionProcess reproductionProcess = birdReproduction.getReproductionProcess();
-//                Bird father = birdReproductionRepository
-//                        .findByReproductionProcessIdAndReproductionRole(reproductionProcess.getId(), ReproductionRole.FATHER)
-//                        .getBird();
-//                BirdDetailReponseDTO fatherDTO = BirdMapper.mapToBirdDetailReponseDTO(father);
-//                birdWalker.setFather(fatherDTO);
-//                Bird mother = birdReproductionRepository
-//                        .findByReproductionProcessIdAndReproductionRole(reproductionProcess.getId(), ReproductionRole.MOTHER)
-//                        .getBird();
-//                BirdDetailReponseDTO motherDTO = BirdMapper.mapToBirdDetailReponseDTO(mother);
-//                birdWalker.setMother(motherDTO);
+//        for (BirdDetailReponseDTO birdWalker : birdDTOs){
+//            //Tìm chim bố và chim mẹ
+//            int gen = 0;
+//            findPedigree(birdWalker, gen);
+////            BirdReproduction birdReproduction = birdReproductionRepository.findByBirdAndReproductionRole(bird, ReproductionRole.CHILD);
+////            if(birdReproduction != null){
+////                ReproductionProcess reproductionProcess = birdReproduction.getReproductionProcess();
+////                Bird father = birdReproductionRepository
+////                        .findByReproductionProcessIdAndReproductionRole(reproductionProcess.getId(), ReproductionRole.FATHER)
+////                        .getBird();
+////                BirdDetailReponseDTO fatherDTO = BirdMapper.mapToBirdDetailReponseDTO(father);
+////                birdWalker.setFather(fatherDTO);
+////                Bird mother = birdReproductionRepository
+////                        .findByReproductionProcessIdAndReproductionRole(reproductionProcess.getId(), ReproductionRole.MOTHER)
+////                        .getBird();
+////                BirdDetailReponseDTO motherDTO = BirdMapper.mapToBirdDetailReponseDTO(mother);
+////                birdWalker.setMother(motherDTO);
+////            }
+//            //Tìm danh sách các chim con
+//            Bird bird = birdRepository.findById(Long.valueOf(birdWalker.getBirdId())).orElseThrow(
+//                    () -> new BirdNotFoundException("Bird could not be found."));
+//            List<BirdReproduction> birdReproductions = birdReproductionRepository
+//                    .findByBirdAndReproductionRoleNot(bird, ReproductionRole.CHILD);
+//            List<ReproductionProcess> reproductionProcesses = new ArrayList<>();
+//            for (BirdReproduction birdReproductionWalker : birdReproductions){
+//                reproductionProcesses.add(birdReproductionWalker.getReproductionProcess());
 //            }
-            //Tìm danh sách các chim con
-            Bird bird = birdRepository.findById(Long.valueOf(birdWalker.getBirdId())).orElseThrow(
-                    () -> new BirdNotFoundException("Bird could not be found."));
-            List<BirdReproduction> birdReproductions = birdReproductionRepository
-                    .findByBirdAndReproductionRoleNot(bird, ReproductionRole.CHILD);
-            List<ReproductionProcess> reproductionProcesses = new ArrayList<>();
-            for (BirdReproduction birdReproductionWalker : birdReproductions){
-                reproductionProcesses.add(birdReproductionWalker.getReproductionProcess());
-            }
-            List<Bird> descendantsList = new ArrayList<>();
-            List<BirdReproduction> descendantsReproductions;
-            for (ReproductionProcess reproductionProcess : reproductionProcesses){
-                descendantsReproductions = birdReproductionRepository
-                        .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.CHILD);
-                for (BirdReproduction descendantReproduction : descendantsReproductions){
-                    descendantsList.add(descendantReproduction.getBird());
-                }
-            }
-            List<DescendantResponseDTO> descendantsDTOs = descendantsList.stream().map(BirdMapper::mapToDescendantResponseDTO)
-                    .collect(Collectors.toList());
-            birdWalker.setDescendants(descendantsDTOs);
-        }
+//            List<Bird> descendantsList = new ArrayList<>();
+//            List<BirdReproduction> descendantsReproductions;
+//            for (ReproductionProcess reproductionProcess : reproductionProcesses){
+//                descendantsReproductions = birdReproductionRepository
+//                        .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.CHILD);
+//                for (BirdReproduction descendantReproduction : descendantsReproductions){
+//                    descendantsList.add(descendantReproduction.getBird());
+//                }
+//            }
+//            List<DescendantResponseDTO> descendantsDTOs = descendantsList.stream().map(BirdMapper::mapToDescendantResponseDTO)
+//                    .collect(Collectors.toList());
+//            birdWalker.setDescendants(descendantsDTOs);
+//        }
         return birdDTOs;
+    }
+
+    @Override
+    public BirdDetailReponseDTO getBirdDetailById(Long id) {
+        Bird bird = birdRepository.findById(id).orElseThrow(
+                () -> new BirdNotFoundException("Bird could not be found."));
+        BirdDetailReponseDTO birdDetailReponseDTO = BirdMapper.mapToBirdDetailReponseDTO(bird);
+        BirdForPedigreeResponseDTO birdForPedigreeResponseDTO = BirdMapper.mapToBirdForPedigreeResponseDTO(bird);
+        int gen = 0;
+        findPedigree(birdForPedigreeResponseDTO, gen);
+        birdDetailReponseDTO.setFather(birdForPedigreeResponseDTO.getFather());
+        birdDetailReponseDTO.setMother(birdForPedigreeResponseDTO.getMother());
+
+        List<BirdReproduction> birdReproductions = birdReproductionRepository
+                .findByBirdAndReproductionRoleNot(bird, ReproductionRole.CHILD);
+        List<ReproductionProcess> reproductionProcesses = new ArrayList<>();
+        for (BirdReproduction birdReproductionWalker : birdReproductions){
+            reproductionProcesses.add(birdReproductionWalker.getReproductionProcess());
+        }
+        List<Bird> descendantsList = new ArrayList<>();
+        List<BirdReproduction> descendantsReproductions;
+        for (ReproductionProcess reproductionProcess : reproductionProcesses){
+            descendantsReproductions = birdReproductionRepository
+                    .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.CHILD);
+            for (BirdReproduction descendantReproduction : descendantsReproductions){
+                descendantsList.add(descendantReproduction.getBird());
+            }
+        }
+        List<DescendantResponseDTO> descendantsDTOs = descendantsList.stream().map(BirdMapper::mapToDescendantResponseDTO)
+                .collect(Collectors.toList());
+        birdDetailReponseDTO.setDescendants(descendantsDTOs);
+        return birdDetailReponseDTO;
     }
 
     @Override
@@ -186,7 +216,6 @@ public class BirdServiceImpl implements BirdService {
         }
 //        Cage cage = null;
         //Kiểm tra chim non đã trưởng thành hết chưa để kết thúc process
-
         if(birdDto.getCageId() != null){
             Cage cage = cageRepository.findById(Long.valueOf(birdDto.getCageId())).orElseThrow(
                     () -> new CageNotFoundException("Cage could not be found in updateBirdByFields with" + birdDto.getCageId()));
@@ -233,8 +262,9 @@ public class BirdServiceImpl implements BirdService {
         return outcastBirds.stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList());
     }
 
-    private void findParents(BirdDetailReponseDTO birdDetailReponseDTO){
-            Long birdId = Long.valueOf(birdDetailReponseDTO.getBirdId());
+    private void findParents(BirdForPedigreeResponseDTO birdForPedigreeResponseDTO, int gen){
+        if (gen < 2){
+            Long birdId = Long.valueOf(birdForPedigreeResponseDTO.getBirdId());
             Bird bird = birdRepository.findById(birdId).orElseThrow(
                     () -> new BirdNotFoundException("Bird could not be found."));
             BirdReproduction birdReproduction = birdReproductionRepository.findByBirdAndReproductionRole(bird, ReproductionRole.CHILD);
@@ -243,24 +273,26 @@ public class BirdServiceImpl implements BirdService {
                 Bird father = birdReproductionRepository
                         .findByReproductionProcessIdAndReproductionRole(reproductionProcess.getId(), ReproductionRole.FATHER)
                         .getBird();
-                BirdDetailReponseDTO fatherDTO = BirdMapper.mapToBirdDetailReponseDTO(father);
-                birdDetailReponseDTO.setFather(fatherDTO);
+                BirdForPedigreeResponseDTO fatherDTO = BirdMapper.mapToBirdForPedigreeResponseDTO(father);
+                birdForPedigreeResponseDTO.setFather(fatherDTO);
                 Bird mother = birdReproductionRepository
                         .findByReproductionProcessIdAndReproductionRole(reproductionProcess.getId(), ReproductionRole.MOTHER)
                         .getBird();
-                BirdDetailReponseDTO motherDTO = BirdMapper.mapToBirdDetailReponseDTO(mother);
-                birdDetailReponseDTO.setMother(motherDTO);
+                BirdForPedigreeResponseDTO motherDTO = BirdMapper.mapToBirdForPedigreeResponseDTO(mother);
+                birdForPedigreeResponseDTO.setMother(motherDTO);
             }
+
+        }
     }
 
-    private void findPedigree(BirdDetailReponseDTO birdDetailReponseDTO, int gen){
+    private void findPedigree(BirdForPedigreeResponseDTO birdForPedigreeResponseDTO, int gen){
         if(gen < 2){
-            findParents(birdDetailReponseDTO);
-            if (birdDetailReponseDTO.getFather() != null){
-                findPedigree(birdDetailReponseDTO.getFather(), gen + 1);
+            findParents(birdForPedigreeResponseDTO, gen);
+            if (birdForPedigreeResponseDTO.getFather() != null){
+                findPedigree(birdForPedigreeResponseDTO.getFather(), gen + 1);
             }
-            if(birdDetailReponseDTO.getMother() != null){
-                findPedigree(birdDetailReponseDTO.getMother(), gen + 1);
+            if(birdForPedigreeResponseDTO.getMother() != null){
+                findPedigree(birdForPedigreeResponseDTO.getMother(), gen + 1);
             }
         }
     }

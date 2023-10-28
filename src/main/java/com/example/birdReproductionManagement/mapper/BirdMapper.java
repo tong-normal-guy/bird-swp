@@ -128,8 +128,9 @@ public class BirdMapper {
                     .weight(bird.getWeight())
                     .birdTypeName(bird.getBirdType().getName())
                     .cageId(String.valueOf(bird.getCage().getId()))
-                    .cage(CageMapper.mapToCageDto(bird.getCage()))
-                    .birdType(BirdTypeMapper.mapToBirdTypeDto(bird.getBirdType()))
+                    .cage(bird.getCage().getLocation())
+//                    .cage(CageMapper.mapToCageDto(bird.getCage()))
+//                    .birdType(BirdTypeMapper.mapToBirdTypeDto(bird.getBirdType()))
                     .build();
         }
         return BirdDetailReponseDTO.builder()
@@ -144,7 +145,7 @@ public class BirdMapper {
                 .featherColor(bird.getFeatherColor())
                 .weight(bird.getWeight())
                 .birdTypeName(bird.getBirdType().getName())
-                .birdType(BirdTypeMapper.mapToBirdTypeDto(bird.getBirdType()))
+//                .birdType(BirdTypeMapper.mapToBirdTypeDto(bird.getBirdType()))
                 .build();
     }
 
@@ -177,6 +178,34 @@ public class BirdMapper {
                 .featherColor(bird.getFeatherColor())
                 .weight(bird.getWeight())
                 .birdTypeName(bird.getBirdType().getName())
+                .build();
+    }
+
+    public static BirdForListResponseDTO mapToBirdForListResponseDTO(Bird bird){
+        if(bird.getCage() != null){
+            return BirdForListResponseDTO.builder()
+                    .birdId(String.valueOf(bird.getId()))
+//                    .cageId(String.valueOf(bird.getCage().getId()))
+                    .cage(CageMapper.mapToCageDto(bird.getCage()))
+                    .sex(bird.getSex().name())
+                    .hatchDate(bird.getHatchDate())
+                    .birdTypeName(bird.getBirdType().getName())
+                    .build();
+        }
+        return BirdForListResponseDTO.builder()
+                .birdId(String.valueOf(bird.getId()))
+                .sex(bird.getSex().name())
+                .hatchDate(bird.getHatchDate())
+                .birdTypeName(bird.getBirdType().getName())
+                .build();
+
+    }
+
+    public static BirdForPedigreeResponseDTO mapToBirdForPedigreeResponseDTO(Bird bird){
+        return BirdForPedigreeResponseDTO.builder()
+                .birdId(String.valueOf(bird.getId()))
+                .sex(bird.getSex().name())
+                .hatchDate(bird.getHatchDate())
                 .build();
     }
 }

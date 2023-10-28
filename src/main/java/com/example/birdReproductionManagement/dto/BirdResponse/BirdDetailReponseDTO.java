@@ -24,10 +24,11 @@ public class BirdDetailReponseDTO {
     private String featherColor;
     private Float weight;
     private String birdTypeName;
-    private BirdTypeDTO birdType;
-    private CageDTO cage;
+//    private BirdTypeDTO birdType;
+//    private CageDTO cage;
     private String cageId;
-    private BirdDetailReponseDTO father;
-    private BirdDetailReponseDTO mother;
+    private String cage;
+    private BirdForPedigreeResponseDTO father;
+    private BirdForPedigreeResponseDTO mother;
     private List<DescendantResponseDTO> descendants;
 }
