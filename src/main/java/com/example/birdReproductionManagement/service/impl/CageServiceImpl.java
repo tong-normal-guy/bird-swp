@@ -77,9 +77,8 @@ public class CageServiceImpl implements CageService {
                 //count egg
                 for (BirdReproduction birdReproduction: birdReproductions) {
                     if (birdReproduction.getReproductionRole().equals(ReproductionRole.EGG)){
-                        if (!birdReproduction.getEggStatus().toLowerCase().equals("broken") || birdReproduction.isFail() == false){
-                            eSize++;
-                        } else {
+                        eSize++;
+                        if (birdReproduction.getEggStatus().toLowerCase().equals("broken") || birdReproduction.isFail() == true) {
                             efSize++;
                         }
                     } else if (birdReproduction.getReproductionRole().equals(ReproductionRole.CHILD) ||
