@@ -39,6 +39,7 @@ public class ReproductionProcessMapper {
                 .stage(reproductionProcess.getStage())
                 .failEgg(reproductionProcess.getFailEgg())
                 .totalEgg(reproductionProcess.getTotalEgg())
+                .idDone(reproductionProcess.getIsDone())
                 .build();
     }
 
