@@ -2,6 +2,7 @@ package com.example.birdReproductionManagement.mapper;
 
 import com.example.birdReproductionManagement.dto.BirdReproductionDTO;
 import com.example.birdReproductionManagement.dto.BirdReproductionResponse.BirdRe4CageDetailDTOResponse;
+import com.example.birdReproductionManagement.dto.BirdReproductionResponse.BirdReproductionForBirdDetailResponseDTO;
 import com.example.birdReproductionManagement.entity.BirdReproduction;
 import com.example.birdReproductionManagement.entity.ReproductionRole;
 
@@ -77,6 +78,15 @@ public class BirdReproductionMapper {
                 .isFail(birdReproduction.isFail())
                 .failDate(birdReproduction.getFailDate())
                 .actEggHatchDate(birdReproduction.getActEggHatchDate())
+                .expEggHatchDate(birdReproduction.getExpEggHatchDate())
+                .expSwingBranch(birdReproduction.getExpSwingBranch())
+                .expAdultBirdDate(birdReproduction.getExpAdultBirdDate())
+                .build();
+    }
+
+    public static BirdReproductionForBirdDetailResponseDTO mapToBirdReproductionForBirdDetailResponseDTO(BirdReproduction birdReproduction){
+        return BirdReproductionForBirdDetailResponseDTO.builder()
+                .reproductionId(String.valueOf(birdReproduction.getId()))
                 .expEggHatchDate(birdReproduction.getExpEggHatchDate())
                 .expSwingBranch(birdReproduction.getExpSwingBranch())
                 .expAdultBirdDate(birdReproduction.getExpAdultBirdDate())

@@ -6,6 +6,7 @@ import com.example.birdReproductionManagement.entity.*;
 import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
 import com.example.birdReproductionManagement.exceptions.CageNotFoundException;
 import com.example.birdReproductionManagement.mapper.BirdMapper;
+import com.example.birdReproductionManagement.mapper.BirdReproductionMapper;
 import com.example.birdReproductionManagement.mapper.ReproductionProcessMapper;
 import com.example.birdReproductionManagement.repository.*;
 import com.example.birdReproductionManagement.service.BirdService;
@@ -39,7 +40,7 @@ public class BirdServiceImpl implements BirdService {
         BirdDetailReponseDTO birdDetailReponseDTO = BirdMapper.mapToBirdDetailReponseDTO(bird);
         //Tìm cây phả hệ của chim
         BirdForPedigreeResponseDTO birdForPedigreeResponseDTO = BirdMapper.mapToBirdForPedigreeResponseDTO(bird);
-        int gen = 0;
+        int gen = 1;
         findPedigree(birdForPedigreeResponseDTO, gen);
         birdDetailReponseDTO.setFather(birdForPedigreeResponseDTO.getFather());
         birdDetailReponseDTO.setMother(birdForPedigreeResponseDTO.getMother());
@@ -47,6 +48,11 @@ public class BirdServiceImpl implements BirdService {
         List<DescendantResponseDTO> descendantResponseDTOS = new ArrayList<>();
         findDescendantsList(descendantResponseDTOS, bird, 1);
         birdDetailReponseDTO.setDescendants(descendantResponseDTOS);
+        //Tìm ngày dự kiến các giai đoạn dự kiến
+        BirdReproduction birdReproduction = birdReproductionRepository
+                .findByBirdAndReproductionRole(bird, ReproductionRole.CHILD);
+        birdDetailReponseDTO.setBirdReproduction(BirdReproductionMapper
+                .mapToBirdReproductionForBirdDetailResponseDTO(birdReproduction));
         return birdDetailReponseDTO;
     }
 
