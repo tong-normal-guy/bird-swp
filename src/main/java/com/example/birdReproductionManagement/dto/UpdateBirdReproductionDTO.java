@@ -1,7 +1,6 @@
 package com.example.birdReproductionManagement.dto;
 
 import lombok.*;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Date;
 
@@ -15,8 +14,8 @@ public class UpdateBirdReproductionDTO {
     private String eggStatus;
     private String eggType;
     private Date hatchDate;
-    private Date actSwingBranchDate;
-    private Date actAdultBirdDate;
+    private Date swingBranchDate;
+    private Date adultBirdDate;
     //Data of new bird
     private String sex;
     private String image;

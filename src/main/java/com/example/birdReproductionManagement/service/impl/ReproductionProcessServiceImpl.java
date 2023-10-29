@@ -127,18 +127,22 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
         cageRepository.save(cage);
         //Update new cage for cock and quantity of old cage
         Cage cockCage = cock.getCage();
-        number = cockCage.getQuantity() - 1;
-        cockCage.setQuantity(number);
-        cageRepository.save(cockCage);
+        if (cockCage != null){
+            number = cockCage.getQuantity() - 1;
+            cockCage.setQuantity(number);
+            cageRepository.save(cockCage);
+        }
         cockReproduction.setReproductionRole(ReproductionRole.FATHER);
         cockReproduction.setReproductionProcess(reproductionProcess);
         cock.setCage(cage);
         birdReproductionRepository.save(cockReproduction);
         //Update new cage for hen and quantity of old cage
         Cage henCage = hen.getCage();
-        number = henCage.getQuantity() - 1;
-        henCage.setQuantity(number);
-        cageRepository.save(henCage);
+        if(henCage != null){
+            number = henCage.getQuantity() - 1;
+            henCage.setQuantity(number);
+            cageRepository.save(henCage);
+        }
         henReproduction.setReproductionRole(ReproductionRole.MOTHER);
         henReproduction.setReproductionProcess(reproductionProcess);
         hen.setCage(cage);

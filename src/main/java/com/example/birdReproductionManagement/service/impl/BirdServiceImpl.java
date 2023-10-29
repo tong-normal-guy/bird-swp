@@ -49,10 +49,12 @@ public class BirdServiceImpl implements BirdService {
         findDescendantsList(descendantResponseDTOS, bird, 1);
         birdDetailReponseDTO.setDescendants(descendantResponseDTOS);
         //Tìm ngày dự kiến các giai đoạn dự kiến
-        BirdReproduction birdReproduction = birdReproductionRepository
-                .findByBirdAndReproductionRole(bird, ReproductionRole.CHILD);
-        birdDetailReponseDTO.setBirdReproduction(BirdReproductionMapper
-                .mapToBirdReproductionForBirdDetailResponseDTO(birdReproduction));
+//        BirdReproduction birdReproduction = birdReproductionRepository
+//                .findByBirdAndReproductionRole(bird, ReproductionRole.CHILD);
+//        if(birdReproduction != null){
+//            birdDetailReponseDTO.setBirdReproduction(BirdReproductionMapper
+//                    .mapToBirdReproductionForBirdDetailResponseDTO(birdReproduction));
+//        }
         return birdDetailReponseDTO;
     }
 
@@ -119,6 +121,7 @@ public class BirdServiceImpl implements BirdService {
     public BirdDTO updateBirdByFields(Long id, BirdDTO birdDto) {
         Bird bird = birdRepository.findById(id).orElseThrow(()
                 -> new BirdNotFoundException("Bird could not be updated."));
+        String ageRange = bird.getAgeRange();
         Bird finalBird = bird;
         ReflectionUtils.doWithFields(birdDto.getClass(), field -> {
             field.setAccessible(true); // Đảm bảo rằng chúng ta có thể truy cập các trường private
@@ -136,8 +139,12 @@ public class BirdServiceImpl implements BirdService {
         });
         //Lưu ngày cập nhật lứa tuổi của chim
         if(birdDto.getAgeRange() != null){
-            if (!bird.getAgeRange().equals(birdDto.getAgeRange())){
-                saveActDate(birdDto.getAgeRange(), finalBird);
+            if (!ageRange.equals(birdDto.getAgeRange())){
+                if(birdDto.getAgeRange().equals("Chim chuyền")){
+                    finalBird.setSwingBranchDate(new Date());
+                }else {
+                    finalBird.setAdultBirdDate(new Date());
+                }
             }
             if(birdReproductionRepository.existsByBirdAndReproductionProcessIsDone(bird, false)){
                 if(birdDto.getAgeRange().equals("Trưởng thành")){
@@ -292,16 +299,6 @@ public class BirdServiceImpl implements BirdService {
                     findDescendantsList(descendantResponseDTOS, child, gen + 1);
                 }
             }
-        }
-    }
-
-    private void saveActDate(String ageRange, Bird bird){
-        BirdReproduction birdReproduction = birdReproductionRepository
-                .findByBirdAndReproductionRole(bird, ReproductionRole.CHILD);
-        if(ageRange.equals("Chim chuyền")){
-            birdReproduction.setActSwingBranch(new Date());
-        }else {
-            birdReproduction.setActAdultBirdDate(new Date());
         }
     }
 

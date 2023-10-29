@@ -24,6 +24,7 @@ public class CageDTO {
 //    private CageTypeDto cageType;
 //    private Long cageTypeId;
     private UserDTO user;
+    private String userId;
     private List<BirdDTO> birdList;
 //    private List<BirdCageHistoryDto> birdCageHistories;
 //    private List<ReproductionProcessDto> reproductionProcesses;

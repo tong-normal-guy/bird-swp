@@ -25,4 +25,5 @@ public class BirdForListResponseDTO {
     private String featherColor;
     private String image;
     private Boolean isAlive;
+    private String status;
 }
