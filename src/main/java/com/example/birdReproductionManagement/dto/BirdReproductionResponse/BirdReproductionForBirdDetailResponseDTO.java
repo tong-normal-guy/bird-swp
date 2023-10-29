@@ -11,7 +11,7 @@ import java.util.Date;
 @Builder
 public class BirdReproductionForBirdDetailResponseDTO {
     private String reproductionId;
-    private Date expEggHatchDate;
-    private Date expSwingBranch;
-    private Date expAdultBirdDate;
+    private Date hatchDate;
+    private Date swingBranchDate;
+    private Date adultBirdDate;
 }

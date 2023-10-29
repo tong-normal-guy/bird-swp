@@ -3,13 +3,11 @@ import com.example.birdReproductionManagement.dto.BirdReproductionDTO;
 import com.example.birdReproductionManagement.dto.EggDTO;
 import com.example.birdReproductionManagement.dto.UpdateBirdReproductionDTO;
 import com.example.birdReproductionManagement.entity.*;
-import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
 import com.example.birdReproductionManagement.exceptions.BirdReproductionNotFoundException;
 import com.example.birdReproductionManagement.exceptions.CageNotFoundException;
 import com.example.birdReproductionManagement.exceptions.ReproductionProcessNotFoundException;
 import com.example.birdReproductionManagement.mapper.BirdMapper;
 import com.example.birdReproductionManagement.mapper.BirdReproductionMapper;
-import com.example.birdReproductionManagement.mapper.BirdTypeMapper;
 import com.example.birdReproductionManagement.repository.*;
 import com.example.birdReproductionManagement.service.BirdReproductionService;
 import com.example.birdReproductionManagement.utils.MyUtils;
@@ -56,9 +54,9 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
             newEgg.setReproductionRole(ReproductionRole.EGG);
             Date expEggHatchDate = MyUtils.calculateDate(newEgg.getEggLaidDate(), birdType.getIncubate());
             newEgg.setExpEggHatchDate(expEggHatchDate);
-            Date expSwingBranch = MyUtils.calculateDate(newEgg.getExpEggHatchDate(), birdType.getChick());
-            newEgg.setExpSwingBranch(expSwingBranch);
-            Date expAdultBirdDate = MyUtils.calculateDate(newEgg.getExpSwingBranch(), birdType.getSwingBranch());
+            Date expSwingBranchDate = MyUtils.calculateDate(newEgg.getExpEggHatchDate(), birdType.getChick());
+            newEgg.setExpSwingBranchDate(expSwingBranchDate);
+            Date expAdultBirdDate = MyUtils.calculateDate(newEgg.getExpSwingBranchDate(), birdType.getSwingBranch());
             newEgg.setExpAdultBirdDate(expAdultBirdDate);
             newEggs.add(birdReproductionRepository.save(newEgg));
         }
@@ -111,7 +109,7 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
                 cageRepository.save(cage);
                 Bird bird = birdRepository.save(newChick);
                 finalReproduction.setBird(bird);
-                finalReproduction.setActEggHatchDate(updateBirdReproductionDTO.getHatchDate());
+//                finalReproduction.setActEggHatchDate(updateBirdReproductionDTO.getHatchDate());
             }
             if(!updateBirdReproductionDTO.getEggStatus().equals("Hatched")
                     && !updateBirdReproductionDTO.getEggStatus().equals("In development")){

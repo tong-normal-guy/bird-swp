@@ -148,10 +148,11 @@ public class CageServiceImpl implements CageService {
         cageDto.setAvailable(true);
         Cage cage = cageRepository.save(CageMapper.mapToCage(cageDto));
         cage.setLocation(cage.getLocation() + cage.getId());
-//        long userId = 1;
-//        User user = userRepository.findById(userId).orElseThrow(
-//                () -> new UserNotFoundException("User could not be found."));
-//        cage.setUser(user);
+        if (cageDto.getUserId() != null){
+            User user = userRepository.findById(Long.valueOf(cageDto.getUserId())).orElseThrow(
+                    () -> new UserNotFoundException("User could not be found."));
+            cage.setUser(user);
+        }
         return CageMapper.mapToCageDto(cageRepository.save(cage));
     }
 
@@ -175,7 +176,7 @@ public class CageServiceImpl implements CageService {
             Object newValue = field.get(cageDto);
             if(newValue != null){
                 String fieldName = field.getName();
-                if(!fieldName.equals("location")){
+                if(!fieldName.equals("location") && !fieldName.equals("userId")){
                     Field existingField = ReflectionUtils.findField(finalCage.getClass(), fieldName);
                     if(existingField != null){
                         existingField.setAccessible(true);
@@ -187,6 +188,11 @@ public class CageServiceImpl implements CageService {
         if(cageDto.getLocation() != null){
             String newLocation = cageDto.getLocation() + cage.getId();
             finalCage.setLocation(newLocation);
+        }
+        if(cageDto.getUserId() != null){
+            User user = userRepository.findById(Long.valueOf(cageDto.getUserId())).orElseThrow(
+                    () -> new UserNotFoundException("User could not be found."));
+            finalCage.setUser(user);
         }
         cage = finalCage;
         return CageMapper.mapToCageDto(cageRepository.save(cage));

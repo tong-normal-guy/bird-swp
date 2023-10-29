@@ -2,14 +2,8 @@ package com.example.birdReproductionManagement.utils;
 import com.example.birdReproductionManagement.dto.BirdParentDTO;
 import com.example.birdReproductionManagement.dto.BirdReproductionDTO;
 import com.example.birdReproductionManagement.dto.BirdReproductionResponse.BirdRe4CageDetailDTOResponse;
-import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
-import com.example.birdReproductionManagement.dto.BirdResponse.BirdDetailReponseDTO;
 import com.example.birdReproductionManagement.entity.*;
-import com.example.birdReproductionManagement.mapper.BirdMapper;
 import com.example.birdReproductionManagement.repository.BirdRepository;
-import com.example.birdReproductionManagement.repository.BirdReproductionRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -108,7 +102,7 @@ public class MyUtils {
             calendar.add(Calendar.DAY_OF_MONTH, daysToAddAsInt);
 
             Date expChick = calendar.getTime();
-            birdReproductionDto.setExpSwingBranch(expChick);
+            birdReproductionDto.setExpSwingBranchDate(expChick);
 
             // Số ngày cần thêm vào (dưới dạng long)
             daysToAdd = birdType.getSwingBranch();
@@ -152,7 +146,7 @@ public class MyUtils {
             calendar.add(Calendar.DAY_OF_MONTH, daysToAddAsInt);
 
             Date expChick = calendar.getTime();
-            birdReproductionDto.setExpSwingBranch(expChick);
+            birdReproductionDto.setExpSwingBranchDate(expChick);
 
             // Số ngày cần thêm vào (dưới dạng long)
             daysToAdd = birdType.getSwingBranch();
