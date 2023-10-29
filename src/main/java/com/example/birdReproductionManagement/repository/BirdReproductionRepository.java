@@ -26,4 +26,6 @@ public interface BirdReproductionRepository extends JpaRepository<BirdReproducti
     BirdReproduction findByBirdAndReproductionRole(Bird bird, ReproductionRole reproductionRole);
 //    List<BirdReproduction> findByReproductionProcessIdAndReproductionRoleEquals(Long id, ReproductionRole reproductionRole);
     List<BirdReproduction> findByReproductionProcessAndReproductionRole(ReproductionProcess reproductionProcess, ReproductionRole reproductionRole);
+
+    Integer countAllByReproductionRoleAndIsFailIsFalse(ReproductionRole reproductionRole);
 }
