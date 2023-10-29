@@ -1,5 +1,6 @@
 package com.example.birdReproductionManagement.dto.BirdResponse;
 
+import com.example.birdReproductionManagement.dto.BirdReproductionResponse.BirdReproductionForBirdDetailResponseDTO;
 import com.example.birdReproductionManagement.dto.BirdTypeDTO;
 import com.example.birdReproductionManagement.dto.CageResponse.CageDTO;
 import lombok.*;
@@ -28,6 +29,7 @@ public class BirdDetailReponseDTO {
 //    private CageDTO cage;
     private String cageId;
     private String cage;
+    private BirdReproductionForBirdDetailResponseDTO birdReproduction;
     private BirdForPedigreeResponseDTO father;
     private BirdForPedigreeResponseDTO mother;
     private List<DescendantResponseDTO> descendants;
