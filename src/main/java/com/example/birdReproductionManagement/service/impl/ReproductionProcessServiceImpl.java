@@ -252,10 +252,4 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
         }
         return birdTypeDTOs;
     }
-
-//    @Override
-//    public BirdReproductionDto findFather(Long id) {
-//        return BirdReproductionMapper.mapToBirdReproductionDto(birdReproductionRepository
-//                .findByReproductionProcessIdAndReproductionRoleEquals(id, ReproductionRole.FATHER));
-//    }
 }

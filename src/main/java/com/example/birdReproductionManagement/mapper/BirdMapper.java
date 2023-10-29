@@ -189,6 +189,12 @@ public class BirdMapper {
                     .cage(CageMapper.mapToCageDto(bird.getCage()))
                     .sex(bird.getSex().name())
                     .hatchDate(bird.getHatchDate())
+                    .ageRange(bird.getAgeRange())
+                    .mutation(bird.getMutation())
+                    .mutationRate(bird.getMutationRate())
+                    .featherColor(bird.getFeatherColor())
+                    .weight(bird.getWeight())
+                    .image(bird.getImage())
                     .birdTypeName(bird.getBirdType().getName())
                     .build();
         }
@@ -196,6 +202,12 @@ public class BirdMapper {
                 .birdId(String.valueOf(bird.getId()))
                 .sex(bird.getSex().name())
                 .hatchDate(bird.getHatchDate())
+                .ageRange(bird.getAgeRange())
+                .mutation(bird.getMutation())
+                .mutationRate(bird.getMutationRate())
+                .featherColor(bird.getFeatherColor())
+                .weight(bird.getWeight())
+                .image(bird.getImage())
                 .birdTypeName(bird.getBirdType().getName())
                 .build();
 

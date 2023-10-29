@@ -18,4 +18,10 @@ public class BirdForListResponseDTO {
 //    private String cageId;
     private CageDTO cage;
     private Date hatchDate;
+    private String ageRange;
+    private String mutation;
+    private Float mutationRate;
+    private Float weight;
+    private String featherColor;
+    private String image;
 }
