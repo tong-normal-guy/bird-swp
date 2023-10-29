@@ -195,6 +195,7 @@ public class BirdMapper {
                     .featherColor(bird.getFeatherColor())
                     .weight(bird.getWeight())
                     .image(bird.getImage())
+                    .isAlive(bird.getIsAlive())
                     .birdTypeName(bird.getBirdType().getName())
                     .build();
         }
@@ -208,6 +209,7 @@ public class BirdMapper {
                 .featherColor(bird.getFeatherColor())
                 .weight(bird.getWeight())
                 .image(bird.getImage())
+                .isAlive(bird.getIsAlive())
                 .birdTypeName(bird.getBirdType().getName())
                 .build();
 

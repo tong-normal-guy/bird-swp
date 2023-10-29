@@ -24,4 +24,5 @@ public class BirdForListResponseDTO {
     private Float weight;
     private String featherColor;
     private String image;
+    private Boolean isAlive;
 }
