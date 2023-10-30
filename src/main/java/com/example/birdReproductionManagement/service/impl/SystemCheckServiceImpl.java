@@ -1,5 +1,6 @@
 package com.example.birdReproductionManagement.service.impl;
 
+import com.example.birdReproductionManagement.dto.Reproduct4DashboardDTOResponse;
 import com.example.birdReproductionManagement.entity.BirdReproduction;
 import com.example.birdReproductionManagement.entity.ReproductionProcess;
 import com.example.birdReproductionManagement.entity.ReproductionRole;
@@ -9,7 +10,6 @@ import com.example.birdReproductionManagement.service.SystemCheckService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,6 +21,7 @@ public class SystemCheckServiceImpl implements SystemCheckService {
     public void performSystemCheck() {
         List<ReproductionProcess> processes = processRepository.findAllByIsDoneFalse();
         List<BirdReproduction> reproductions;
+        List<Reproduct4DashboardDTOResponse> reproduct4DashboardDTOS;
         for ( ReproductionProcess process: processes ) {
             reproductions = process.getBirdReproductions();
             for ( BirdReproduction reproduction: reproductions ) {
