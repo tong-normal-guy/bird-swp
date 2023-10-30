@@ -4,11 +4,11 @@ import com.example.birdReproductionManagement.entity.Bird;
 import com.example.birdReproductionManagement.entity.BirdReproduction;
 import com.example.birdReproductionManagement.entity.ReproductionProcess;
 import com.example.birdReproductionManagement.entity.ReproductionRole;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,4 +30,16 @@ public interface BirdReproductionRepository extends JpaRepository<BirdReproducti
     BirdReproduction findByBirdAndReproductionRole(Bird bird, ReproductionRole reproductionRole);
 //    List<BirdReproduction> findByReproductionProcessIdAndReproductionRoleEquals(Long id, ReproductionRole reproductionRole);
     List<BirdReproduction> findByReproductionProcessAndReproductionRole(ReproductionProcess reproductionProcess, ReproductionRole reproductionRole);
+    Integer countAllByReproductionRoleAndIsFailIsFalse(ReproductionRole reproductionRole);
+    @Query("SELECT COUNT(br) FROM BirdReproduction br " +
+            "WHERE br.reproductionRole = 'EGG' " +
+            "AND (br.eggStatus = 'in development') " +
+            "AND DATE(br.eggLaidDate) = :targetDate")
+    Integer countByEggRoleAndInDevAndDate(@Param("targetDate") Date targetDate);
+
+    @Query("SELECT COUNT(br) FROM BirdReproduction br " +
+            "WHERE br.reproductionRole = 'EGG' " +
+            "AND ( br.eggStatus = 'broken') " +
+            "AND DATE(br.eggLaidDate) = :targetDate")
+    Integer countByEggRoleAndBrokenAndDate(@Param("targetDate") Date targetDate);
 }
