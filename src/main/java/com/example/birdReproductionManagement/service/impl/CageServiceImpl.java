@@ -54,15 +54,12 @@ public class CageServiceImpl implements CageService {
         if (!process){
             //no check process
             cages = cageRepository.findAll();
-
         }else {
             //check process
             cages = cageRepository.findCagesWithLocationStartingWithB();
         }
         //check condition hv process or not. end
-
         List<CageDetailDTOResponse> cageDetailDTOResponses = new ArrayList<>();
-
         // find all cages that:
         for (Cage cage : cages) {
             int bSize = 0;
@@ -89,7 +86,6 @@ public class CageServiceImpl implements CageService {
                 }
                 reproductionProcess.setFailEgg(efSize);
                 reproductionProcess.setTotalEgg(eSize);
-                
 //                        birdReproductionRepository.findAllByReproductionProcess_Id(reproductionProcess.getId());
             // entity end
                 // dto
@@ -148,10 +144,11 @@ public class CageServiceImpl implements CageService {
         cageDto.setAvailable(true);
         Cage cage = cageRepository.save(CageMapper.mapToCage(cageDto));
         cage.setLocation(cage.getLocation() + cage.getId());
-//        long userId = 1;
-//        User user = userRepository.findById(userId).orElseThrow(
-//                () -> new UserNotFoundException("User could not be found."));
-//        cage.setUser(user);
+        if (cageDto.getUserId() != null){
+            User user = userRepository.findById(Long.valueOf(cageDto.getUserId())).orElseThrow(
+                    () -> new UserNotFoundException("User could not be found."));
+            cage.setUser(user);
+        }
         return CageMapper.mapToCageDto(cageRepository.save(cage));
     }
 
@@ -175,7 +172,7 @@ public class CageServiceImpl implements CageService {
             Object newValue = field.get(cageDto);
             if(newValue != null){
                 String fieldName = field.getName();
-                if(!fieldName.equals("location")){
+                if(!fieldName.equals("location") && !fieldName.equals("userId")){
                     Field existingField = ReflectionUtils.findField(finalCage.getClass(), fieldName);
                     if(existingField != null){
                         existingField.setAccessible(true);
@@ -187,6 +184,11 @@ public class CageServiceImpl implements CageService {
         if(cageDto.getLocation() != null){
             String newLocation = cageDto.getLocation() + cage.getId();
             finalCage.setLocation(newLocation);
+        }
+        if(cageDto.getUserId() != null){
+            User user = userRepository.findById(Long.valueOf(cageDto.getUserId())).orElseThrow(
+                    () -> new UserNotFoundException("User could not be found."));
+            finalCage.setUser(user);
         }
         cage = finalCage;
         return CageMapper.mapToCageDto(cageRepository.save(cage));

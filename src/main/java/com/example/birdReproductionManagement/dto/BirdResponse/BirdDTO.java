@@ -17,10 +17,13 @@ public class BirdDTO {
     private String birdId;
     private String sex;
     private Date hatchDate;
+    private Date swingBranchDate;
+    private Date adultBirdDate;
     private String ageRange;
     private String mutation;
     private Float mutationRate;
     private Boolean isAlive;
+    private String status;
     private String image;
     private String featherColor;
     private Float weight;

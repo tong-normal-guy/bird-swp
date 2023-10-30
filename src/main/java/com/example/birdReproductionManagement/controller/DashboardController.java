@@ -1,6 +1,6 @@
 package com.example.birdReproductionManagement.controller;
 
-import com.example.birdReproductionManagement.dto.DashboardDTOResponse;
+import com.example.birdReproductionManagement.dto.DashboardResponse.DashboardDTOResponse;
 import com.example.birdReproductionManagement.service.DashboardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

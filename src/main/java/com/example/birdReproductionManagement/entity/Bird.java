@@ -21,8 +21,6 @@ public class Bird {
     @Column(columnDefinition = "nvarchar(255)", name = "sex")
     @Enumerated(EnumType.STRING)
     private Sex sex;
-    @Column(name = "hatch_date")
-    private Date hatchDate;
     @Column(name = "age_range", columnDefinition = "nvarchar(255)")
     private String ageRange;
     @Column(name = "mutation_note", columnDefinition = "nvarchar(255)")
@@ -33,12 +31,20 @@ public class Bird {
     private Float superReproduct;
     @Column(name = "is_alive")
     private Boolean isAlive;
+    @Column(name = "status")
+    private String status;
     @Column(name = "image")
     private String image;
     @Column(name = "feather_color", columnDefinition = "nvarchar(255)")
     private String featherColor;
     @Column(name = "weight")
     private Float weight;
+    @Column(name = "hatch_date")
+    private Date hatchDate;
+    @Column(name = "swing_branch_date")
+    private Date swingBranchDate;
+    @Column(name = "adult_bird_date")
+    private Date adultBirdDate;
     @Column(name = "father_Id")
     private Long fatherId;
     @Column(name = "mother_Id")

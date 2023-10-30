@@ -23,20 +23,20 @@ public class BirdReproduction {
     private Bird bird;
     @Column(name = "egglaid_date")
     private Date eggLaidDate;
-    @Column(name = "act_egg_hatch_date")
-    private Date actEggHatchDate;
-    @Column(name = "act_swing_branch_date")
-    private Date actSwingBranch;
-    @Column(name = "act_adult_bird_date")
-    private Date actAdultBirdDate;
+//    @Column(name = "act_egg_hatch_date")
+//    private Date actEggHatchDate;
+//    @Column(name = "act_swing_branch_date")
+//    private Date actSwingBranch;
+//    @Column(name = "act_adult_bird_date")
+//    private Date actAdultBirdDate;
     @Column(name = "egg_type")
     private String eggType;
     @Column(name = "egg_status")
     private String eggStatus;
     @Column(name = "exp_egg_hatch_date")
     private Date expEggHatchDate;
-    @Column(name = "exp_swing_branch")
-    private Date expSwingBranch;
+    @Column(name = "exp_swing_branch_date")
+    private Date expSwingBranchDate;
     @Column(name = "exp_adult_bird_date")
     private Date expAdultBirdDate;
     @Column(name = "is_fail")

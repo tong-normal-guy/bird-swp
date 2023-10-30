@@ -1,4 +1,4 @@
-package com.example.birdReproductionManagement.dto;
+package com.example.birdReproductionManagement.dto.DashboardResponse;
 
 import com.example.birdReproductionManagement.dto.BirdResponse.Bird4DashboardDTOResponse;
 import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
@@ -15,9 +15,11 @@ public class DashboardDTOResponse {
     private int totalBird;
     private int totalMutation;
     private int totalProcess;
+    private int totalEgg;
     private int totalUser;
     private int totalAdult;
     private int totalSwingbranch;
     private int totalBaby;
     private List<BirdDTO> top5Birds;
+    private EggInWeekDTOResponse totalEggIn7Day;
 }
