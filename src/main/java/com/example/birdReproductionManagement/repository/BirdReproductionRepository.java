@@ -15,20 +15,30 @@ import java.util.Optional;
 public interface BirdReproductionRepository extends JpaRepository<BirdReproduction, Long> {
     List<BirdReproduction> findAllByReproductionProcess_Id(Long id);
     List<BirdReproduction> findAllByBirdId(Long birdId);
-    @Query("SELECT br FROM BirdReproduction br WHERE br.reproductionProcess.id = :id AND br.reproductionRole = 'EGG'")
+    @Query("SELECT br FROM BirdReproduction br " +
+            "WHERE br.reproductionProcess.id = :id " +
+            "AND br.reproductionRole = 'EGG'")
     List<BirdReproduction> findAllEggsByReproductionProcessId(@Param("id") Long id);
-    @Query("SELECT br FROM BirdReproduction br WHERE br.reproductionProcess.id = :id AND (br.reproductionRole = 'FATHER' OR br.reproductionRole = 'MOTHER')")
+    @Query("SELECT br FROM BirdReproduction br " +
+            "WHERE br.reproductionProcess.id = :id " +
+            "AND (br.reproductionRole = 'FATHER' OR br.reproductionRole = 'MOTHER')")
     List<BirdReproduction> findAllParentsByReproductionProcessId(@Param("id") Long id);
     BirdReproduction findByReproductionProcessIdAndReproductionRole(Long id, ReproductionRole reproductionRole);
     Boolean existsByBirdAndReproductionRoleNotAndReproductionRoleNotAndReproductionProcessIsDone
             (Bird bird, ReproductionRole reproductionRole1, ReproductionRole reproductionRole2, Boolean isDone);
     Boolean existsByBirdAndReproductionRoleNotAndReproductionRoleNot
             (Bird bird, ReproductionRole reproductionRole1, ReproductionRole reproductionRole2);
-    Boolean existsByReproductionRoleAndReproductionProcessAndEggStatusEquals(ReproductionRole reproductionRole, ReproductionProcess reproductionProcess, String eggStatus);
+    Boolean existsByReproductionRoleAndReproductionProcessAndEggStatusEquals(ReproductionRole reproductionRole,
+                                                                             ReproductionProcess reproductionProcess,
+                                                                             String eggStatus);
     Boolean existsByBirdAndReproductionProcessIsDone(Bird bird, boolean isDone);
+    Boolean existsByReproductionProcessAndReproductionRoleAndBirdAgeRangeNot(ReproductionProcess reproductionProcess,
+                                                                          ReproductionRole reproductionRole,
+                                                                          String ageRange);
     List<BirdReproduction> findByBirdAndReproductionRoleNot(Bird bird, ReproductionRole reproductionRole);
     BirdReproduction findByBirdAndReproductionRole(Bird bird, ReproductionRole reproductionRole);
 //    List<BirdReproduction> findByReproductionProcessIdAndReproductionRoleEquals(Long id, ReproductionRole reproductionRole);
+
     List<BirdReproduction> findByReproductionProcessAndReproductionRole(ReproductionProcess reproductionProcess, ReproductionRole reproductionRole);
     Integer countAllByReproductionRoleAndIsFailIsFalse(ReproductionRole reproductionRole);
     @Query("SELECT COUNT(br) FROM BirdReproduction br " +
@@ -42,4 +52,5 @@ public interface BirdReproductionRepository extends JpaRepository<BirdReproducti
             "AND ( br.eggStatus like 'broken') " +
             "AND DATE(br.eggLaidDate) = :targetDate")
     Integer countByEggRoleAndBrokenAndDate(@Param("targetDate") Date targetDate);
+
 }
