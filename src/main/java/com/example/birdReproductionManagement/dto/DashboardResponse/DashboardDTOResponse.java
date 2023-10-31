@@ -20,6 +20,8 @@ public class DashboardDTOResponse {
     private int totalAdult;
     private int totalSwingbranch;
     private int totalBaby;
+    private int totalCock;
+    private int totalHen;
     private List<BirdDTO> top5Birds;
     private EggInWeekDTOResponse totalEggIn7Day;
 }
