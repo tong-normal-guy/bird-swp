@@ -4,10 +4,7 @@ import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
 import com.example.birdReproductionManagement.dto.DashboardResponse.DashboardDTOResponse;
 import com.example.birdReproductionManagement.dto.DashboardResponse.EggInWeekDTOResponse;
 import com.example.birdReproductionManagement.dto.DashboardResponse.EggPerDayDTOResponse;
-import com.example.birdReproductionManagement.entity.Bird;
-import com.example.birdReproductionManagement.entity.BirdReproduction;
-import com.example.birdReproductionManagement.entity.ReproductionRole;
-import com.example.birdReproductionManagement.entity.Role;
+import com.example.birdReproductionManagement.entity.*;
 import com.example.birdReproductionManagement.mapper.BirdMapper;
 import com.example.birdReproductionManagement.repository.BirdRepository;
 import com.example.birdReproductionManagement.repository.BirdReproductionRepository;
@@ -40,6 +37,8 @@ public class DashboardServiceImpl implements DashboardService {
         List<Bird> nonBirds = null;
         List<Bird> top5Birds = null;
         List<BirdDTO> top5BirdDTOs = null;
+        int totalCock = 0;
+        int totalHen = 0;
         if (!birdList.isEmpty()){
             // Phân loại danh sách chim theo ageRange
             truongThanhBirds = birdList.stream()
@@ -54,10 +53,13 @@ public class DashboardServiceImpl implements DashboardService {
                     .filter(bird -> bird.getAgeRange().equals("Non"))
                     .collect(Collectors.toList());
 
+            totalCock = birdList.stream().filter(bird -> bird.getSex().equals(Sex.MALE)).collect(Collectors.toList()).size();
+            totalHen = birdList.stream().filter(bird -> bird.getSex().equals(Sex.FEMALE)).collect(Collectors.toList()).size();
+
             totalMutationN = birdList.stream().filter(bird -> bird.getMutation()!=null).collect(Collectors.toList()).size();
 
             top5Birds = birdList.stream()
-                    .sorted(Comparator.comparing(Bird::getHatchDate))
+                    .sorted(Comparator.comparing(Bird::getId).reversed())
                     .limit(5)
                     .collect(Collectors.toList());
 
@@ -70,6 +72,8 @@ public class DashboardServiceImpl implements DashboardService {
                 .totalUser(totalUser)
                 .totalMutation(totalMutationN)
                 .totalEgg(totalEgg)
+                .totalCock(totalCock)
+                .totalHen(totalHen)
                 .top5Birds(top5BirdDTOs)
                 .totalAdult(truongThanhBirds.size())
                 .totalSwingbranch(chuyenBirds.size())
@@ -94,7 +98,6 @@ public class DashboardServiceImpl implements DashboardService {
         Calendar calendar = Calendar.getInstance();
         for (int i = 0; i > -7; i--){
 // nếu trừ mà ra số âm thì sao?
-
             calendar.setTime(current);
             calendar.add(Calendar.DAY_OF_MONTH, i);
             eggaDays.add(eggaDayCaculate(calendar.getTime()));
