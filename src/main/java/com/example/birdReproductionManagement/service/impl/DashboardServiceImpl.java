@@ -17,10 +17,7 @@ import com.example.birdReproductionManagement.service.DashboardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -64,7 +61,7 @@ public class DashboardServiceImpl implements DashboardService {
                     .limit(5)
                     .collect(Collectors.toList());
 
-            top5BirdDTOs =top5Birds.stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList());
+            top5BirdDTOs = top5Birds.stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList());
         }
 
         return DashboardDTOResponse.builder()
@@ -77,10 +74,11 @@ public class DashboardServiceImpl implements DashboardService {
                 .totalAdult(truongThanhBirds.size())
                 .totalSwingbranch(chuyenBirds.size())
                 .totalBaby(nonBirds.size())
+                .totalEggIn7Day(eggaWeekDTO())
                 .build();
     }
 
-    public EggPerDayDTOResponse eggaDayDTO(Date date){
+    public EggPerDayDTOResponse eggaDayCaculate(Date date){
         Integer inDev = reproductionRepository.countByEggRoleAndInDevAndDate(date);
         Integer broken = reproductionRepository.countByEggRoleAndBrokenAndDate(date);
 
@@ -92,9 +90,17 @@ public class DashboardServiceImpl implements DashboardService {
     }
     public EggInWeekDTOResponse eggaWeekDTO(){
         List<EggPerDayDTOResponse> eggaDays = new ArrayList<>();
-        for (int i = 0; i < 7; i--){
+        Date current = new Date();
+        Calendar calendar = Calendar.getInstance();
+        for (int i = 0; i > -7; i--){
+// nếu trừ mà ra số âm thì sao?
 
+            calendar.setTime(current);
+            calendar.add(Calendar.DAY_OF_MONTH, i);
+            eggaDays.add(eggaDayCaculate(calendar.getTime()));
         }
-        return EggInWeekDTOResponse.builder().build();
+        return EggInWeekDTOResponse.builder()
+                .perDay(eggaDays)
+                .build();
     }
 }

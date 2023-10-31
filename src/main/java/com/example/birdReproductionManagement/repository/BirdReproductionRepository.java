@@ -33,13 +33,13 @@ public interface BirdReproductionRepository extends JpaRepository<BirdReproducti
     Integer countAllByReproductionRoleAndIsFailIsFalse(ReproductionRole reproductionRole);
     @Query("SELECT COUNT(br) FROM BirdReproduction br " +
             "WHERE br.reproductionRole = 'EGG' " +
-            "AND (br.eggStatus = 'in development') " +
+            "AND (br.eggStatus like 'In development') " +
             "AND DATE(br.eggLaidDate) = :targetDate")
     Integer countByEggRoleAndInDevAndDate(@Param("targetDate") Date targetDate);
 
     @Query("SELECT COUNT(br) FROM BirdReproduction br " +
             "WHERE br.reproductionRole = 'EGG' " +
-            "AND ( br.eggStatus = 'broken') " +
+            "AND ( br.eggStatus like 'broken') " +
             "AND DATE(br.eggLaidDate) = :targetDate")
     Integer countByEggRoleAndBrokenAndDate(@Param("targetDate") Date targetDate);
 }
