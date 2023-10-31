@@ -182,7 +182,7 @@ public class BirdServiceImpl implements BirdService {
         }
 //        Cage cage = null;
         //Kiểm tra chim non đã trưởng thành hết chưa để kết thúc process
-        if(birdDto.getCageId() != null){
+        if(birdDto.getCageId() != null && !birdDto.getCageId().isEmpty()){
             Cage cage = cageRepository.findById(Long.valueOf(birdDto.getCageId())).orElseThrow(
                     () -> new CageNotFoundException("Cage could not be found in updateBirdByFields with" + birdDto.getCageId()));
             if(bird.getCage() != null){
