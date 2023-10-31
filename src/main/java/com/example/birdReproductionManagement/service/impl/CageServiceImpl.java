@@ -54,15 +54,12 @@ public class CageServiceImpl implements CageService {
         if (!process){
             //no check process
             cages = cageRepository.findAll();
-
         }else {
             //check process
             cages = cageRepository.findCagesWithLocationStartingWithB();
         }
         //check condition hv process or not. end
-
         List<CageDetailDTOResponse> cageDetailDTOResponses = new ArrayList<>();
-
         // find all cages that:
         for (Cage cage : cages) {
             int bSize = 0;
@@ -89,7 +86,6 @@ public class CageServiceImpl implements CageService {
                 }
                 reproductionProcess.setFailEgg(efSize);
                 reproductionProcess.setTotalEgg(eSize);
-                
 //                        birdReproductionRepository.findAllByReproductionProcess_Id(reproductionProcess.getId());
             // entity end
                 // dto

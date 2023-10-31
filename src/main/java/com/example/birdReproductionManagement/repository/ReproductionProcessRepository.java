@@ -14,10 +14,13 @@ import java.util.Optional;
 public interface ReproductionProcessRepository extends JpaRepository<ReproductionProcess, Long> {
     Optional<ReproductionProcess> findByIsDoneFalseAndCage_Id(Long cage_id);
     ReproductionProcess findByIsDoneFalseAndCage(Cage cage);
+    List<ReproductionProcess> findAllByIsDoneFalse();
+    Integer countAllByIsDoneFalse();
     @Query("SELECT DISTINCT p FROM ReproductionProcess p " +
             "LEFT JOIN p.birdReproductions br " +
             "LEFT JOIN br.reproductionProcess rp " +
             "WHERE br.bird = :bird " +
             "AND br.reproductionRole != :reproductionRole")
     List<ReproductionProcess> findByBirdAndReproductionRoleNot(@Param("bird")Bird bird, @Param("reproductionRole")ReproductionRole reproductionRole);
+
 }
