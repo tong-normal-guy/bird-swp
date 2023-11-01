@@ -1,5 +1,6 @@
 package com.example.birdReproductionManagement.controller;
 
+import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
 import com.example.birdReproductionManagement.dto.CageResponse.CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.CageResponse.CageDTO;
 import com.example.birdReproductionManagement.service.CageService;
@@ -63,4 +64,8 @@ public class CageController {
         return new ResponseEntity<>(cageService.viewCageByLocation(location), HttpStatus.OK);
     }
 
+    @PostMapping("/addbird/{cageId}")
+    public ResponseEntity<BirdDTO> addBirdToCage(@PathVariable("cageId")Long cageId, @RequestBody  BirdDTO birdDTO){
+        return new ResponseEntity<>(cageService.addBirdToCage(cageId, birdDTO), HttpStatus.OK);
+    }
 }

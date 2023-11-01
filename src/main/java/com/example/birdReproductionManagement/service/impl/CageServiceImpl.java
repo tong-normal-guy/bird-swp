@@ -10,6 +10,7 @@ import com.example.birdReproductionManagement.dto.CageResponse.CageDTO;
 import com.example.birdReproductionManagement.dto.ReproductionProcessResponse.Reproduction4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.UserResponse.User4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.entity.*;
+import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
 import com.example.birdReproductionManagement.exceptions.CageNotFoundException;
 import com.example.birdReproductionManagement.exceptions.UserNotFoundException;
 import com.example.birdReproductionManagement.mapper.*;
@@ -228,5 +229,18 @@ public class CageServiceImpl implements CageService {
             cageDetailDTOResponses.add(cageDetailDTOResponse);
         }
         return cageDetailDTOResponses;
+    }
+
+    @Override
+    public BirdDTO addBirdToCage(Long cageId, BirdDTO birdDTO) {
+        Cage cage = cageRepository.findById(cageId).orElseThrow(
+                () -> new CageNotFoundException("Cage could not be found in addBirdToCage."));
+        Long id = Long.valueOf(birdDTO.getBirdId());
+        Bird bird = birdRepository.findById(id).orElseThrow(
+                () -> new BirdNotFoundException("Bird could not be found in addBirdToCage."));
+        cage.setQuantity(cage.getQuantity() + 1);
+        cageRepository.save(cage);
+        bird.setCage(cage);
+        return BirdMapper.mapToBirdDto(birdRepository.save(bird));
     }
 }
