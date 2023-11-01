@@ -121,6 +121,7 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
         reproductionProcess.setCage(cage);
         reproductionProcess.setPairingDate(new Date());
         reproductionProcess.setTotalEgg(0);
+        reproductionProcess.setFailEgg(0);
         ReproductionProcess newProcess = reproductionProcessRepository.save(reproductionProcess);
         int number = cage.getQuantity() + 2;
         cage.setQuantity(number);

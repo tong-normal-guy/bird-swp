@@ -1,6 +1,10 @@
 package com.example.birdReproductionManagement.controller;
 
 import com.example.birdReproductionManagement.dto.LoginDTO;
+import com.example.birdReproductionManagement.dto.UserDTO;
+import com.example.birdReproductionManagement.dto.UserResponse.UserProfileResponseDTO;
+import com.example.birdReproductionManagement.entity.User;
+import com.example.birdReproductionManagement.mapper.UserMapper;
 import com.example.birdReproductionManagement.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +27,7 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDTO loginDto){
+    public ResponseEntity<UserProfileResponseDTO> login(@RequestBody LoginDTO loginDto){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginDto.getUsername(),
@@ -31,7 +35,9 @@ public class AuthController {
                 )
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return new ResponseEntity<>("User login success.", HttpStatus.OK);
+        User user = userRepository.findByUsername(loginDto.getUsername());
+        UserProfileResponseDTO userDTO = UserMapper.mapToUserProfileResponseDTO(user);
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
 //    @PostMapping("/register")
