@@ -4,6 +4,7 @@ import com.example.birdReproductionManagement.dto.BirdResponse.*;
 import com.example.birdReproductionManagement.dto.ReproductionProcessDTO;
 import com.example.birdReproductionManagement.entity.*;
 import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
+import com.example.birdReproductionManagement.exceptions.BirdReproductionNotFoundException;
 import com.example.birdReproductionManagement.exceptions.CageNotFoundException;
 import com.example.birdReproductionManagement.exceptions.ReproductionProcessNotFoundException;
 import com.example.birdReproductionManagement.mapper.BirdMapper;
@@ -11,6 +12,7 @@ import com.example.birdReproductionManagement.mapper.BirdReproductionMapper;
 import com.example.birdReproductionManagement.mapper.ReproductionProcessMapper;
 import com.example.birdReproductionManagement.repository.*;
 import com.example.birdReproductionManagement.service.BirdService;
+import com.example.birdReproductionManagement.utils.MyUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
@@ -122,6 +124,8 @@ public class BirdServiceImpl implements BirdService {
     public BirdDTO updateBirdByFields(Long id, BirdDTO birdDto) {
         Bird bird = birdRepository.findById(id).orElseThrow(()
                 -> new BirdNotFoundException("Bird could not be updated."));
+        BirdReproduction birdReproduct = birdReproductionRepository.findById(bird.getId()).orElseThrow(
+                () -> new BirdReproductionNotFoundException("Reproduction could not be found."));
         String ageRange = bird.getAgeRange();
         Bird finalBird = bird;
         ReflectionUtils.doWithFields(birdDto.getClass(), field -> {
@@ -139,10 +143,13 @@ public class BirdServiceImpl implements BirdService {
             }
         });
         //Lưu ngày cập nhật lứa tuổi của chim
-        if(birdDto.getAgeRange() != null){
+        if(birdDto.getAgeRange() != null && !birdDto.getAgeRange().isEmpty()){
             if (!ageRange.equals(birdDto.getAgeRange())){
                 if(birdDto.getAgeRange().equals("Chuyền")){
-                    finalBird.setSwingBranchDate(new Date());
+                    Date swingBranchDate = new Date();
+                    finalBird.setSwingBranchDate(swingBranchDate);
+                    birdReproduct.setExpAdultBirdDate(MyUtils
+                            .calculateDate(swingBranchDate, finalBird.getBirdType().getSwingBranch()));
                 }else if (birdDto.getAgeRange().equals("Trưởng thành")){
                     finalBird.setAdultBirdDate(new Date());
                     if(birdReproductionRepository.existsByBirdAndReproductionProcessIsDone(bird, false)){
@@ -150,7 +157,7 @@ public class BirdServiceImpl implements BirdService {
                             ReproductionProcess reproductionProcess = birdReproduction.getReproductionProcess();
                             boolean eggExisted = birdReproductionRepository
                                     .existsByReproductionRoleAndReproductionProcessAndEggStatusEquals(ReproductionRole.EGG,
-                                            reproductionProcess, "In development");
+                                            reproductionProcess, "Đang phát triển");
                             if (!eggExisted){
                                 List<BirdReproduction> birdReproductions = birdReproductionRepository
                                         .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.CHILD);
@@ -195,11 +202,11 @@ public class BirdServiceImpl implements BirdService {
             cageRepository.save(cage);
             finalBird.setCage(cage);
         }
-        if(birdDto.getBirdTypeName() != null){
+        if(birdDto.getBirdTypeName() != null && !birdDto.getBirdTypeName().isEmpty()){
             BirdType birdType = birdTypeRepository.findByName(birdDto.getBirdTypeName());
             finalBird.setBirdType(birdType);
         }
-        if(birdDto.getSex() != null){
+        if(birdDto.getSex() != null && !birdDto.getSex().isEmpty()){
             finalBird.setSex(Sex.valueOf(birdDto.getSex()));
         }
 //        else{

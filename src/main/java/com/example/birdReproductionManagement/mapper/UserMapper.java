@@ -2,6 +2,7 @@ package com.example.birdReproductionManagement.mapper;
 
 import com.example.birdReproductionManagement.dto.UserDTO;
 import com.example.birdReproductionManagement.dto.UserResponse.User4CageDetailDTOResponse;
+import com.example.birdReproductionManagement.dto.UserResponse.UserProfileResponseDTO;
 import com.example.birdReproductionManagement.entity.Role;
 import com.example.birdReproductionManagement.entity.User;
 
@@ -43,5 +44,16 @@ public class UserMapper {
                     .userImage(user.getUserImage())
                     .build();
 //        else throw new RuntimeException("error at user is null");
+    }
+
+    public static UserProfileResponseDTO mapToUserProfileResponseDTO(User user){
+        return UserProfileResponseDTO.builder()
+                .userId(String.valueOf(user.getId()))
+                .username(user.getUsername())
+                .fullName(user.getFullName())
+                .email(user.getEmail())
+                .userImage(user.getUserImage())
+                .role(user.getRole().name())
+                .build();
     }
 }
