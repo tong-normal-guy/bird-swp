@@ -43,14 +43,14 @@ public class BirdServiceImpl implements BirdService {
         BirdDetailReponseDTO birdDetailReponseDTO = BirdMapper.mapToBirdDetailReponseDTO(bird);
         //Tìm cây phả hệ của chim
         BirdForPedigreeResponseDTO birdForPedigreeResponseDTO = BirdMapper.mapToBirdForPedigreeResponseDTO(bird);
-        int gen = 1;
+        int gen = 0;
         findPedigree(birdForPedigreeResponseDTO, gen);
         birdDetailReponseDTO.setFather(birdForPedigreeResponseDTO.getFather());
         birdDetailReponseDTO.setMother(birdForPedigreeResponseDTO.getMother());
         //Tìm danh sách các thế hệ sau của chim
-        List<DescendantResponseDTO> descendantResponseDTOS = new ArrayList<>();
-        findDescendantsList(descendantResponseDTOS, bird, 1);
-        birdDetailReponseDTO.setDescendants(descendantResponseDTOS);
+//        List<DescendantResponseDTO> descendantResponseDTOS = new ArrayList<>();
+//        findDescendantsList(descendantResponseDTOS, bird, 1);
+//        birdDetailReponseDTO.setDescendants(descendantResponseDTOS);
         //Tìm ngày dự kiến các giai đoạn dự kiến
 //        BirdReproduction birdReproduction = birdReproductionRepository
 //                .findByBirdAndReproductionRole(bird, ReproductionRole.CHILD);
