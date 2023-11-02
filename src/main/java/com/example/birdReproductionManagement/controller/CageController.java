@@ -24,7 +24,7 @@ public class CageController {
         return new ResponseEntity<>(cageService.findAllCages(), HttpStatus.OK);
     }
     @GetMapping("/view/{id}")
-    public ResponseEntity<CageDTO> getCageDetailById(@PathVariable("id")Long id){
+    public ResponseEntity<CageDetailDTOResponse> getCageDetailById(@PathVariable("id")Long id){
         return new ResponseEntity<>(cageService.getDetailById(id), HttpStatus.OK);
     }
     @GetMapping("/view")

@@ -122,6 +122,7 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
                 finalReproduction.setFail(true);
                 finalReproduction.setFailDate(new Date());
                 process.setFailEgg(process.getFailEgg() + 1);
+                reproductionProcessRepository.save(process);
             }
             birdReproduction = finalReproduction;
             birdReproductionRepository.save(birdReproduction);
@@ -208,8 +209,10 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
         if(reproductionProcess.getCage() != null){
             if(!birdReproduction.getReproductionRole().name().equals("EGG")){
                 Cage cage = reproductionProcess.getCage();
-                cage.setQuantity(cage.getQuantity() - 1);
-                cageRepository.save(cage);
+                if(cage.getQuantity() != 0){
+                    cage.setQuantity(cage.getQuantity() - 1);
+                    cageRepository.save(cage);
+                }
             }
         }
         birdReproductionRepository.delete(birdReproduction);

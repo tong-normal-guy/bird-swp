@@ -189,20 +189,20 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
                     -> new ReproductionProcessNotFoundException("Reproduction process could not be updated."));
             finalReproductionProcess.setCage(newCage);
         }
-        if(finalReproductionProcess.getIsDone() != null && finalReproductionProcess.getIsDone()){
-            List<BirdReproduction> birdReproductions = birdReproductionRepository
-                    .findAllByReproductionProcess_Id(finalReproductionProcess.getId());
-            for (BirdReproduction birdReproduction : birdReproductions){
-                if(birdReproduction.getBird() != null){
-                    Bird bird = birdReproduction.getBird();
-                    bird.setCage(null);
-                    birdRepository.save(bird);
-                }
-            }
-            Cage processCage = finalReproductionProcess.getCage();
-            processCage.setQuantity(0);
-            cageRepository.save(processCage);
-        }
+//        if(finalReproductionProcess.getIsDone() != null && finalReproductionProcess.getIsDone()){
+//            List<BirdReproduction> birdReproductions = birdReproductionRepository
+//                    .findAllByReproductionProcess_Id(finalReproductionProcess.getId());
+//            for (BirdReproduction birdReproduction : birdReproductions){
+//                if(birdReproduction.getBird() != null){
+//                    Bird bird = birdReproduction.getBird();
+//                    bird.setCage(null);
+//                    birdRepository.save(bird);
+//                }
+//            }
+//            Cage processCage = finalReproductionProcess.getCage();
+//            processCage.setQuantity(0);
+//            cageRepository.save(processCage);
+//        }
         reproductionProcess = finalReproductionProcess;
         return ReproductionProcessMapper.mapToReproductionProcessDto(reproductionProcessRepository.save(reproductionProcess));
     }
@@ -245,10 +245,12 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
     }
 
     @Override
-    public void separateBirdInProcess(Long processId, String cageId) {
-        ReproductionProcess reproductionProcess = reproductionProcessRepository.findById(processId).orElseThrow(
-                () -> new ReproductionProcessNotFoundException("Process could not be found in separateBirdInProcess."));
-        Cage newCage = cageRepository.findById(Long.valueOf(cageId)).orElseThrow(
+    public void separateBirdInProcess(Long cageId, String birdCageId) {
+        Cage cage = cageRepository.findById(cageId).orElseThrow(
+                () -> new CageNotFoundException("Cage could not be found in separateBirdInProcess."));
+        ReproductionProcess reproductionProcess = reproductionProcessRepository.findByIsDoneFalseAndCage(cage);
+        Long processId = reproductionProcess.getId();
+        Cage newCage = cageRepository.findById(Long.valueOf(birdCageId)).orElseThrow(
                 () -> new CageNotFoundException("Cage could not be found in separateBirdInProcess."));
         Cage processCage = reproductionProcess.getCage();
         BirdReproduction birdReproduction = birdReproductionRepository

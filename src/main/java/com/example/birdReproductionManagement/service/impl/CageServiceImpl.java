@@ -130,12 +130,32 @@ public class CageServiceImpl implements CageService {
     }
 
     @Override
-    public CageDTO getDetailById(Long id) {
+    public CageDetailDTOResponse getDetailById(Long id) {
         Cage cage = cageRepository.findById(id).orElseThrow(()
                 -> new CageNotFoundException("Cage could not be found."));
-        CageDTO cageDto = CageMapper.mapToCageDto(cage);
-        cageDto.setBirdList(birdRepository.findByCage_Id(cage.getId()).stream()
-                .map(BirdMapper::mapToBirdDto).collect(Collectors.toList()));
+        CageDetailDTOResponse cageDto = CageMapper.mapToCageDetailDTOResponse(cage);
+        if (cage.getLocation().contains("B")){
+            ReproductionProcess reproductionProcess = reproductionProcessRepository.findByIsDoneFalseAndCage(cage);
+            if (reproductionProcess != null){
+                Reproduction4CageDetailDTOResponse reproductionProcessDTO = ReproductionProcessMapper
+                        .map2Reproduction4CageDetailDTO(reproductionProcess);
+                cageDto.setReproductionProcess(reproductionProcessDTO);
+                List<BirdReproduction> birdReproductions = reproductionProcess.getBirdReproductions();
+                if (birdReproductions != null){
+                    cageDto.setBirdReproduction(birdReproductions.stream()
+                            .map(BirdReproductionMapper::map2Bird4CageDetailDTO).collect(Collectors.toList()));
+                }
+            }
+        }else if (cage.getLocation().contains("A")){
+            List<Bird> birds = cage.getBirdList();
+            if(birds != null){
+                cageDto.setBird(birds.stream().map(BirdMapper::map2Birdd4CageDetailDTO).collect(Collectors.toList()));
+            }
+        }
+        if (cage.getUser() != null){
+            User user = cage.getUser();
+            cageDto.setUser(UserMapper.map2User4CageDetailDTO(user));
+        }
         return cageDto;
     }
 
