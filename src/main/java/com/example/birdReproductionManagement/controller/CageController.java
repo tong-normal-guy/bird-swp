@@ -1,6 +1,5 @@
 package com.example.birdReproductionManagement.controller;
-
-import com.example.birdReproductionManagement.dto.CageResponse.Cage4ListDTO;
+import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
 import com.example.birdReproductionManagement.dto.CageResponse.CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.CageResponse.CageDTO;
 import com.example.birdReproductionManagement.service.CageService;
@@ -27,15 +26,11 @@ public class CageController {
     public ResponseEntity<CageDTO> getCageDetailById(@PathVariable("id")Long id){
         return new ResponseEntity<>(cageService.getDetailById(id), HttpStatus.OK);
     }
-    @GetMapping("/view") // hay chỗ này ghi là /view?process=true
+    @GetMapping("/view")
     public ResponseEntity<?> pickaCages(@RequestParam(name = "process",defaultValue = "false")
                                                                       Boolean process){
         return new ResponseEntity<>(cageService.pickaCages(process), HttpStatus.OK);
     }
-//    @GetMapping("/view")
-//    public ResponseEntity<List<Cage4ListDTO>> pickaCages() {
-//        return new ResponseEntity<List<Cage4ListDTO>>(cageService.pickAll(), HttpStatus.OK);
-//    }
     @GetMapping("/useable")
     public ResponseEntity<List<CageDTO>> viewCagesUseable(){
         return new ResponseEntity<List<CageDTO>>(cageService.viewCageUsable(), HttpStatus.OK);
@@ -68,4 +63,8 @@ public class CageController {
         return new ResponseEntity<>(cageService.viewCageByLocation(location), HttpStatus.OK);
     }
 
+    @PostMapping("/addbird/{cageId}")
+    public ResponseEntity<BirdDTO> addBirdToCage(@PathVariable("cageId")Long cageId, @RequestBody  BirdDTO birdDTO){
+        return new ResponseEntity<>(cageService.addBirdToCage(cageId, birdDTO), HttpStatus.OK);
+    }
 }

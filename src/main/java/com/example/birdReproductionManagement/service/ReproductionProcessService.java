@@ -16,4 +16,7 @@ public interface ReproductionProcessService {
     LoadData4InitProcessDTOResponse getInitProcess();
 //    BirdReproductionDto findFather(Long id);
     void setIsDoneForProcess(Long id);
+    void separateBirdInProcess(Long processId, String cageId);
+    void birdNotTolerateInProcess(Long processId);
+
 }

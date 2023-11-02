@@ -50,7 +50,7 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
             BirdReproduction newEgg = new BirdReproduction();
             newEgg.setEggLaidDate(eggDto.getLaidDate());
             newEgg.setReproductionProcess(reproductionProcess);
-            newEgg.setEggStatus("In development");
+            newEgg.setEggStatus("Đang phát triển");
             newEgg.setReproductionRole(ReproductionRole.EGG);
             Date expEggHatchDate = MyUtils.calculateDate(newEgg.getEggLaidDate(), birdType.getIncubate());
             newEgg.setExpEggHatchDate(expEggHatchDate);
@@ -72,6 +72,8 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
                 () -> new BirdReproductionNotFoundException("Bird reproduction could not be found."));
         Cage cage = birdReproduction.getReproductionProcess().getCage();
         Long processId = birdReproduction.getReproductionProcess().getId();
+        ReproductionProcess process = reproductionProcessRepository.findById(processId).orElseThrow(
+                () -> new ReproductionProcessNotFoundException("Process could not be found."));
         BirdReproduction finalReproduction = birdReproduction;
         ReflectionUtils.doWithFields(updateBirdReproductionDTO.getClass(), field -> {
             field.setAccessible(true);
@@ -94,7 +96,7 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
 //            finalReproduction.setBird(bird);
 //        }
         if(updateBirdReproductionDTO.getEggStatus() != null){
-            if(updateBirdReproductionDTO.getEggStatus().equals("Hatched")){
+            if(updateBirdReproductionDTO.getEggStatus().equals("Đã nở")){
                 finalReproduction.setReproductionRole(ReproductionRole.CHILD);
                 Bird newChick = BirdMapper.mapToBird(updateBirdReproductionDTO);
                 newChick.setAgeRange("Non");
@@ -103,6 +105,10 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
                         .findByReproductionProcessIdAndReproductionRole(processId, ReproductionRole.FATHER)
                         .getBird().getBirdType();
                 newChick.setBirdType(chickType);
+                finalReproduction.setExpSwingBranchDate(MyUtils
+                        .calculateDate(newChick.getHatchDate(), newChick.getBirdType().getChick()));
+                finalReproduction.setExpAdultBirdDate(MyUtils
+                        .calculateDate(finalReproduction.getExpSwingBranchDate(), newChick.getBirdType().getSwingBranch()));
                 Cage chickCage = birdReproduction.getReproductionProcess().getCage();
                 newChick.setCage(chickCage);
                 cage.setQuantity(cage.getQuantity() + 1);
@@ -111,14 +117,15 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
                 finalReproduction.setBird(bird);
 //                finalReproduction.setActEggHatchDate(updateBirdReproductionDTO.getHatchDate());
             }
-            if(!updateBirdReproductionDTO.getEggStatus().equals("Hatched")
-                    && !updateBirdReproductionDTO.getEggStatus().equals("In development")){
+            if(!updateBirdReproductionDTO.getEggStatus().equals("Đã nở")
+                    && !updateBirdReproductionDTO.getEggStatus().equals("Đang phát triển")){
                 finalReproduction.setFail(true);
                 finalReproduction.setFailDate(new Date());
+                process.setFailEgg(process.getFailEgg() + 1);
             }
             birdReproduction = finalReproduction;
             birdReproductionRepository.save(birdReproduction);
-            if(updateBirdReproductionDTO.getEggStatus().equals("Hatched")){
+            if(updateBirdReproductionDTO.getEggStatus().equals("Đã nở")){
 //      Tìm list các child của cock, đếm tổng số lượng (T) và số child có đột biến (M) -> mutationRate = M/T
                 BirdReproduction cockReproduction = birdReproductionRepository
                         .findByReproductionProcessIdAndReproductionRole(processId, ReproductionRole.FATHER);

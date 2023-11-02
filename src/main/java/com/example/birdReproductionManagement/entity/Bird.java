@@ -31,7 +31,7 @@ public class Bird {
     private Float superReproduct;
     @Column(name = "is_alive")
     private Boolean isAlive;
-    @Column(name = "status")
+    @Column(name = "status", columnDefinition = "nvarchar(255)")
     private String status;
     @Column(name = "image")
     private String image;

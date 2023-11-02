@@ -1,5 +1,6 @@
 package com.example.birdReproductionManagement.service;
 
+import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
 import com.example.birdReproductionManagement.dto.CageResponse.CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.CageResponse.CageDTO;
 
@@ -16,4 +17,5 @@ public interface CageService {
     void deleteCage(Long id);
     List<CageDTO> findByLocation(String location, boolean available);
     List<CageDetailDTOResponse> viewCageByLocation(String location);
+    BirdDTO addBirdToCage(Long cageId, BirdDTO birdDTO);
 }
