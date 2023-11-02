@@ -3,10 +3,7 @@ package com.example.birdReproductionManagement.service.impl;
 import com.example.birdReproductionManagement.dto.BirdResponse.*;
 import com.example.birdReproductionManagement.dto.ReproductionProcessDTO;
 import com.example.birdReproductionManagement.entity.*;
-import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
-import com.example.birdReproductionManagement.exceptions.BirdReproductionNotFoundException;
-import com.example.birdReproductionManagement.exceptions.CageNotFoundException;
-import com.example.birdReproductionManagement.exceptions.ReproductionProcessNotFoundException;
+import com.example.birdReproductionManagement.exceptions.*;
 import com.example.birdReproductionManagement.mapper.BirdMapper;
 import com.example.birdReproductionManagement.mapper.BirdReproductionMapper;
 import com.example.birdReproductionManagement.mapper.ReproductionProcessMapper;
@@ -93,10 +90,11 @@ public class BirdServiceImpl implements BirdService {
                 -> new BirdNotFoundException("Bird could not be deleted."));
         if(bird.getCage() != null){
             Cage cage = bird.getCage();
-            cage.setQuantity(cage.getQuantity() - 1);
-            cageRepository.save(cage);
+            if(cage.getQuantity() != 0){
+                cage.setQuantity(cage.getQuantity() - 1);
+                cageRepository.save(cage);
+            }
         }
-
         birdRepository.delete(bird);
     }
 
@@ -238,15 +236,22 @@ public class BirdServiceImpl implements BirdService {
     }
 
     @Override
-    public String findBirds() {
-        long id = 6;
-        ReproductionProcess reproductionProcess = reproductionProcessRepository.findById(id).orElseThrow(() -> new ReproductionProcessNotFoundException("ahsdgasgd"));
-        boolean flag;
-        flag = birdReproductionRepository.existsByReproductionProcessAndReproductionRoleAndBirdAgeRangeNot(reproductionProcess, ReproductionRole.CHILD, "Trưởng thành");
-        if (flag){
-            return "có tồn tại";
+    public List<BirdDTO> findBirds() {
+//        long id = 6;
+//        ReproductionProcess reproductionProcess = reproductionProcessRepository.findById(id).orElseThrow(() -> new ReproductionProcessNotFoundException("ahsdgasgd"));
+//        boolean flag;
+//        flag = birdReproductionRepository.existsByReproductionProcessAndReproductionRoleAndBirdAgeRangeNot(reproductionProcess, ReproductionRole.CHILD, "Trưởng thành");
+//        if (flag){
+//            return "có tồn tại";
+//        }
+//        return "không tồn tại";
+        BirdType birdType = birdTypeRepository.findById((long) 2).orElseThrow(() -> new BirdTypeNotFoundException("jdnfaldfd"));
+        List<Bird> birds = birdType.getBirdList();
+        List<BirdDTO> birdDTOS = new ArrayList<>();
+        if (birds != null){
+            birdDTOS = birds.stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList());
         }
-        return "không tồn tại";
+        return birdDTOS;
     }
 
     private void findParents(BirdForPedigreeResponseDTO birdForPedigreeResponseDTO, int gen){

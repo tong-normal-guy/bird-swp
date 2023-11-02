@@ -71,6 +71,22 @@ public class BirdReproductionMapper {
     }
 
     public static BirdRe4CageDetailDTOResponse map2Bird4CageDetailDTO(BirdReproduction birdReproduction){
+        if (birdReproduction.getBird() != null){
+            return BirdRe4CageDetailDTOResponse.builder()
+                    .reproductionId(String.valueOf(birdReproduction.getId()))
+                    .eggLaidDate(birdReproduction.getEggLaidDate())
+                    .reproductionRole(String.valueOf(birdReproduction.getReproductionRole()))
+                    .eggType(birdReproduction.getEggType())
+                    .eggStatus(String.valueOf(birdReproduction.getEggStatus()))
+                    .isFail(birdReproduction.isFail())
+                    .failDate(birdReproduction.getFailDate())
+//                .actEggHatchDate(birdReproduction.getActEggHatchDate())
+                    .expEggHatchDate(birdReproduction.getExpEggHatchDate())
+                    .expSwingBranchDate(birdReproduction.getExpSwingBranchDate())
+                    .expAdultBirdDate(birdReproduction.getExpAdultBirdDate())
+                    .bird(BirdMapper.map2Birdd4CageDetailDTO(birdReproduction.getBird()))
+                    .build();
+        }
         return BirdRe4CageDetailDTOResponse.builder()
                 .reproductionId(String.valueOf(birdReproduction.getId()))
                 .eggLaidDate(birdReproduction.getEggLaidDate())
