@@ -9,8 +9,10 @@ import java.util.List;
 public interface CageService {
     List<CageDTO> viewCageUsable();
     List<CageDTO> findAllCages();
+
     List<CageDetailDTOResponse> pickaCages(Boolean process); // 4 list cages hv id, location, quantity.
     CageDetailDTOResponse getDetailById(Long id);
+
     CageDTO addCage(CageDTO cageDto);
     CageDTO updateCage(Long id, CageDTO cageDto);
     CageDTO updateCageByFields(Long id, CageDTO cageDto);

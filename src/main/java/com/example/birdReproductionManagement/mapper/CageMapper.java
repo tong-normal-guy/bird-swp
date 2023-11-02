@@ -52,7 +52,16 @@ public class CageMapper {
         return Cage4ListDTO.builder()
                 .cageId(String.valueOf(cage.getId()))
                 .location(cage.getLocation())
-                .quantity(cage.getQuantity())
+                .quantity(cage.getBirdList().size())
+                .available(cage.getAvailable())
+                .build();
+    }
+    public static CageDetailDTOResponse map2CageDetailDTO(Cage cage){
+        return CageDetailDTOResponse.builder()
+                .cageId(cage.getId()+"")
+                .location(cage.getLocation())
+                .quantity(cage.getBirdList().size())
+                .available(cage.getAvailable())
                 .build();
     }
 
