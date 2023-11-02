@@ -14,9 +14,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Cage4ListDTO { // bo this
+public class Cage4ListDTO {
     private String cageId;
     private String location;
+    private boolean available;
     private int quantity;
 //    private Process4CageDetailDTOResponse reproductionProces;
 //    private List<Bird4CageDetailDTOResponse> bird;

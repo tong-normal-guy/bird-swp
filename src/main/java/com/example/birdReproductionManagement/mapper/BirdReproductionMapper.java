@@ -3,7 +3,9 @@ package com.example.birdReproductionManagement.mapper;
 import com.example.birdReproductionManagement.dto.BirdReproductionDTO;
 import com.example.birdReproductionManagement.dto.BirdReproductionResponse.BirdRe4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.BirdReproductionResponse.BirdReproductionForBirdDetailResponseDTO;
+import com.example.birdReproductionManagement.dto.DashboardResponse.CloseDateReproductionDTOResponse;
 import com.example.birdReproductionManagement.entity.BirdReproduction;
+import com.example.birdReproductionManagement.entity.ReproductionProcess;
 import com.example.birdReproductionManagement.entity.ReproductionRole;
 
 public class BirdReproductionMapper {
@@ -90,6 +92,12 @@ public class BirdReproductionMapper {
 //                .actEggHatchDate(birdReproduction.getActEggHatchDate())
 //                .actSwingBranch(birdReproduction.getActSwingBranch())
 //                .actAdultBirdDate(birdReproduction.getActAdultBirdDate())
+                .build();
+    }
+    public static CloseDateReproductionDTOResponse map2CloseDateReproductionDTO(BirdReproduction birdReproduction){
+        return CloseDateReproductionDTOResponse.builder()
+                .cageId(birdReproduction.getReproductionProcess().getCage().getId()+"")
+                .pairingDate(birdReproduction.getReproductionProcess().getPairingDate())
                 .build();
     }
 }
