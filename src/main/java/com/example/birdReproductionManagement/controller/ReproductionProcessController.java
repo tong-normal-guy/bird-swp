@@ -2,6 +2,7 @@ package com.example.birdReproductionManagement.controller;
 
 import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4ProcessDTOResponse;
 import com.example.birdReproductionManagement.dto.BirdTypeResponse.BirdType4ProcessInitDTOResponse;
+import com.example.birdReproductionManagement.dto.CageResponse.CageDTO;
 import com.example.birdReproductionManagement.dto.PairDTO;
 import com.example.birdReproductionManagement.dto.ReproductionProcessDTO;
 import com.example.birdReproductionManagement.dto.ReproductionProcessResponse.LoadData4InitProcessDTOResponse;
@@ -54,6 +55,13 @@ public class ReproductionProcessController {
     public ResponseEntity<String> setIsDoneForProcess(@PathVariable("id")Long id){
         reproductionProcessService.setIsDoneForProcess(id);
         return new ResponseEntity<>("Reproduction process with id " + id + "is end.", HttpStatus.OK);
+    }
+
+    @PostMapping("/separate/{processId}")
+    public ResponseEntity<String> separateBirdInProcess(@PathVariable("processId")Long processId,
+                                                        @RequestBody CageDTO cageDTO){
+        reproductionProcessService.separateBirdInProcess(processId, cageDTO.getCageId());
+        return new ResponseEntity<>("Separate success.", HttpStatus.OK);
     }
 
 //    @GetMapping("/findfather/{id}")

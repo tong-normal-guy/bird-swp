@@ -11,6 +11,7 @@ import com.example.birdReproductionManagement.dto.ReproductionProcessResponse.Pr
 import com.example.birdReproductionManagement.entity.*;
 import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
 import com.example.birdReproductionManagement.exceptions.BirdTypeNotMatchedException;
+import com.example.birdReproductionManagement.exceptions.CageNotFoundException;
 import com.example.birdReproductionManagement.exceptions.ReproductionProcessNotFoundException;
 import com.example.birdReproductionManagement.mapper.*;
 import com.example.birdReproductionManagement.repository.*;
@@ -240,6 +241,44 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
         processCage.setQuantity(0);
         cageRepository.save(processCage);
         reproductionProcess.setIsDone(true);
+        reproductionProcessRepository.save(reproductionProcess);
+    }
+
+    @Override
+    public void separateBirdInProcess(Long processId, String cageId) {
+        ReproductionProcess reproductionProcess = reproductionProcessRepository.findById(processId).orElseThrow(
+                () -> new ReproductionProcessNotFoundException("Process could not be found in separateBirdInProcess."));
+        Cage newCage = cageRepository.findById(Long.valueOf(cageId)).orElseThrow(
+                () -> new CageNotFoundException("Cage could not be found in separateBirdInProcess."));
+        Cage processCage = reproductionProcess.getCage();
+        BirdReproduction birdReproduction = birdReproductionRepository
+                .findByReproductionProcessIdAndReproductionRole(processId, ReproductionRole.FATHER);
+        Bird bird = birdReproduction.getBird();
+        bird.setCage(newCage);
+        birdRepository.save(bird);
+        processCage.setQuantity(processCage.getQuantity() - 1);
+        newCage.setQuantity(newCage.getQuantity() + 1);
+        cageRepository.save(processCage);
+        cageRepository.save(newCage);
+        reproductionProcess.setSeparateDate(new Date());
+        reproductionProcessRepository.save(reproductionProcess);
+    }
+
+    @Override
+    public void birdNotTolerateInProcess(Long processId) {
+        ReproductionProcess reproductionProcess = reproductionProcessRepository.findById(processId).orElseThrow(
+                () -> new ReproductionProcessNotFoundException("Process could not be found in birdNotTolerateInProcess."));
+        reproductionProcess.setIsDone(true);
+        BirdReproduction cockReproduction = birdReproductionRepository
+                .findByReproductionProcessIdAndReproductionRole(processId, ReproductionRole.FATHER);
+        Bird cock = cockReproduction.getBird();
+        cock.setCage(null);
+        birdRepository.save(cock);
+        BirdReproduction henReproduction = birdReproductionRepository
+                .findByReproductionProcessIdAndReproductionRole(processId, ReproductionRole.MOTHER);
+        Bird hen = henReproduction.getBird();
+        hen.setCage(null);
+        birdRepository.save(hen);
         reproductionProcessRepository.save(reproductionProcess);
     }
 
