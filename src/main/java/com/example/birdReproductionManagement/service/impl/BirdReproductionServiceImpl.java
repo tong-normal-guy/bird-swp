@@ -50,7 +50,7 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
             BirdReproduction newEgg = new BirdReproduction();
             newEgg.setEggLaidDate(eggDto.getLaidDate());
             newEgg.setReproductionProcess(reproductionProcess);
-            newEgg.setEggStatus("In development");
+            newEgg.setEggStatus("Đang phát triển");
             newEgg.setReproductionRole(ReproductionRole.EGG);
             Date expEggHatchDate = MyUtils.calculateDate(newEgg.getEggLaidDate(), birdType.getIncubate());
             newEgg.setExpEggHatchDate(expEggHatchDate);
