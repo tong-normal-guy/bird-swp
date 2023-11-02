@@ -24,4 +24,5 @@ public class DashboardDTOResponse {
     private int totalHen;
     private List<BirdDTO> top5Birds;
     private EggInWeekDTOResponse totalEggIn7Day;
+    private List<CloseDateReproductionDTOResponse> bird_reproduction;
 }

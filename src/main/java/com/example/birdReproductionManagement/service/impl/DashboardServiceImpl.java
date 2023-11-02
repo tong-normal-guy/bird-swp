@@ -1,11 +1,14 @@
 package com.example.birdReproductionManagement.service.impl;
 
 import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
+import com.example.birdReproductionManagement.dto.DashboardResponse.CloseDateReproductionDTOResponse;
 import com.example.birdReproductionManagement.dto.DashboardResponse.DashboardDTOResponse;
 import com.example.birdReproductionManagement.dto.DashboardResponse.EggInWeekDTOResponse;
 import com.example.birdReproductionManagement.dto.DashboardResponse.EggPerDayDTOResponse;
 import com.example.birdReproductionManagement.entity.*;
 import com.example.birdReproductionManagement.mapper.BirdMapper;
+import com.example.birdReproductionManagement.mapper.BirdReproductionMapper;
+import com.example.birdReproductionManagement.mapper.ReproductionProcessMapper;
 import com.example.birdReproductionManagement.repository.BirdRepository;
 import com.example.birdReproductionManagement.repository.BirdReproductionRepository;
 import com.example.birdReproductionManagement.repository.ReproductionProcessRepository;
@@ -42,7 +45,7 @@ public class DashboardServiceImpl implements DashboardService {
         if (!birdList.isEmpty()){
             // Phân loại danh sách chim theo ageRange
             truongThanhBirds = birdList.stream()
-                    .filter(bird -> bird.getAgeRange().contains("Trưởng thành"))
+                    .filter(bird -> bird.getAgeRange().equals("Trưởng thành"))
                     .collect(Collectors.toList());
 
             chuyenBirds = birdList.stream()
@@ -79,6 +82,7 @@ public class DashboardServiceImpl implements DashboardService {
                 .totalSwingbranch(chuyenBirds.size())
                 .totalBaby(nonBirds.size())
                 .totalEggIn7Day(eggaWeekDTO())
+                .bird_reproduction(closeDateProcessDTO())
                 .build();
     }
 
@@ -105,5 +109,66 @@ public class DashboardServiceImpl implements DashboardService {
         return EggInWeekDTOResponse.builder()
                 .perDay(eggaDays)
                 .build();
+    }
+    public List<CloseDateReproductionDTOResponse> closeDateProcessDTO(){
+            Date current = new Date();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(current);
+//            List<CloseDateReproductionDTOResponse> closePress = processRepository.findReproductionProcessesWithMatchingDates(current)
+//                    .stream().map(ReproductionProcessMapper::map2CloseDateProcessDTO).collect(Collectors.toList());
+            List<CloseDateReproductionDTOResponse> closePin = reproductionRepository.findBirdReproductionsByConditions(calendar.getTime())
+                    .stream().map(BirdReproductionMapper::map2CloseDateReproductionDTO).collect(Collectors.toList());
+            return closePin;
+//            List<ReproductionProcess> processes = processRepository.findAllByIsDoneFalse();
+//        // Sắp xếp danh sách processes theo expEggHatchDate của BirdReproduction đầu tiên
+//        Collections.sort(processes, (p1, p2) -> {
+//            Date expDate1 = getFirstExpDate(p1);
+//            Date expDate2 = getFirstExpDate(p2);
+//            if(expDate1 == null && expDate2 == null) {
+//                return 0;
+//            }
+//            if(expDate1 == null) {
+//                return 1;
+//            }
+//            if(expDate2 == null) {
+//                return -1;
+//            }
+//            return expDate2.compareTo(expDate1);
+//        });
+//        Date currentDate = new Date();
+//        List<ReproductionProcess> filteredProcesses = processes.stream()
+//                .filter(process -> {
+//                    if (!process.getBirdReproductions().isEmpty()) {
+//                        // Lọc và sắp xếp các BirdReproduction
+//                        List<BirdReproduction> filteredBirdReproductions = process.getBirdReproductions().stream()
+//                                .filter(birdReproduction -> birdReproduction.getReproductionRole() == ReproductionRole.EGG || birdReproduction.getReproductionRole() == ReproductionRole.CHILD)
+//                                .filter(birdReproduction -> birdReproduction.getExpEggHatchDate() != null) // Đảm bảo expEggHatchDate không null
+//                                .sorted((br1, br2) -> br1.getExpEggHatchDate().compareTo(br2.getExpEggHatchDate()))
+//                                .collect(Collectors.toList());
+//                        Date expEggHatchDate = filteredBirdReproductions.get(0).getExpEggHatchDate();
+//                        // Lấy ngày trước 1 ngày của expEggHatchDate đầu tiên
+//                        if(expEggHatchDate != null) {
+//                            expEggHatchDate.setDate(expEggHatchDate.getDate() - 1);
+//                        }
+//                        return expEggHatchDate != null && currentDate.after(expEggHatchDate);
+//                    }
+//                    return false;
+//                })
+//                .collect(Collectors.toList());
+//        return filteredProcesses.stream().map(ReproductionProcessMapper::map2CloseDateProcessDTO).collect(Collectors.toList());
+    }
+
+    private Date getFirstExpDate(ReproductionProcess process) {
+        if(process.getBirdReproductions().isEmpty()) {
+            return null;
+        }
+
+        Date date = process.getBirdReproductions().get(0).getExpEggHatchDate();
+
+        if(date == null) {
+            return date;
+        }
+
+        return date;
     }
 }

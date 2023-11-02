@@ -1,5 +1,4 @@
 package com.example.birdReproductionManagement.controller;
-
 import com.example.birdReproductionManagement.dto.BirdResponse.BirdDTO;
 import com.example.birdReproductionManagement.dto.CageResponse.CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.CageResponse.CageDTO;
@@ -28,9 +27,9 @@ public class CageController {
         return new ResponseEntity<>(cageService.getDetailById(id), HttpStatus.OK);
     }
     @GetMapping("/view")
-    public ResponseEntity<List<CageDetailDTOResponse>> pickaCages(@RequestParam(name = "process",defaultValue = "false")
+    public ResponseEntity<?> pickaCages(@RequestParam(name = "process",defaultValue = "false")
                                                                       Boolean process){
-        return new ResponseEntity<List<CageDetailDTOResponse>>(cageService.pickaCages(process), HttpStatus.OK);
+        return new ResponseEntity<>(cageService.pickaCages(process), HttpStatus.OK);
     }
     @GetMapping("/useable")
     public ResponseEntity<List<CageDTO>> viewCagesUseable(){

@@ -53,6 +53,7 @@ public class CageMapper {
                 .cageId(String.valueOf(cage.getId()))
                 .location(cage.getLocation())
                 .quantity(cage.getQuantity())
+                .available(cage.getAvailable())
                 .build();
     }
 

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,5 +23,9 @@ public interface ReproductionProcessRepository extends JpaRepository<Reproductio
             "WHERE br.bird = :bird " +
             "AND br.reproductionRole != :reproductionRole")
     List<ReproductionProcess> findByBirdAndReproductionRoleNot(@Param("bird")Bird bird, @Param("reproductionRole")ReproductionRole reproductionRole);
-
+    @Query("SELECT rp FROM ReproductionProcess rp " +
+            "JOIN rp.birdReproductions br " +
+            "WHERE br.expEggHatchDate = :currentDate " +
+            "AND br.eggLaidDate = (SELECT MAX(br2.eggLaidDate) FROM BirdReproduction br2 WHERE br2.reproductionProcess = rp)")
+    List<ReproductionProcess> findReproductionProcessesWithMatchingDates(@Param("currentDate") Date currentDate);
 }
