@@ -124,8 +124,8 @@ public class BirdServiceImpl implements BirdService {
     public BirdDTO updateBirdByFields(Long id, BirdDTO birdDto) {
         Bird bird = birdRepository.findById(id).orElseThrow(()
                 -> new BirdNotFoundException("Bird could not be updated."));
-        BirdReproduction birdReproduct = birdReproductionRepository.findById(bird.getId()).orElseThrow(
-                () -> new BirdReproductionNotFoundException("Reproduction could not be found."));
+        BirdReproduction birdReproduct = birdReproductionRepository
+                .findByBirdAndReproductionRole(bird, ReproductionRole.CHILD);
         String ageRange = bird.getAgeRange();
         Bird finalBird = bird;
         ReflectionUtils.doWithFields(birdDto.getClass(), field -> {
@@ -148,8 +148,10 @@ public class BirdServiceImpl implements BirdService {
                 if(birdDto.getAgeRange().equals("Chuyền")){
                     Date swingBranchDate = new Date();
                     finalBird.setSwingBranchDate(swingBranchDate);
-                    birdReproduct.setExpAdultBirdDate(MyUtils
-                            .calculateDate(swingBranchDate, finalBird.getBirdType().getSwingBranch()));
+                    if(birdReproduct != null){
+                        birdReproduct.setExpAdultBirdDate(MyUtils
+                                .calculateDate(swingBranchDate, finalBird.getBirdType().getSwingBranch()));
+                    }
                 }else if (birdDto.getAgeRange().equals("Trưởng thành")){
                     finalBird.setAdultBirdDate(new Date());
                     if(birdReproductionRepository.existsByBirdAndReproductionProcessIsDone(bird, false)){
