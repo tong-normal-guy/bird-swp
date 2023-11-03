@@ -96,5 +96,6 @@ public interface BirdRepository extends JpaRepository<Bird, Long> {
     Integer countByCageAndReproductionProcess(@Param("reproductionProcess")ReproductionProcess reproductionProcess,
                                               @Param("cage")Cage cage);
 
+
     Integer countBirdByCage(Cage cage);
 }
