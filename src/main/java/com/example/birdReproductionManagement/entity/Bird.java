@@ -63,4 +63,11 @@ public class Bird {
 
     @OneToMany(mappedBy = "bird", cascade = CascadeType.REMOVE)
     private List<BirdReproduction> birdReproductions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "cock", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BirdEmotion> cocks;
+    @OneToMany(mappedBy = "hen", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BirdEmotion> hens;
+
+
 }

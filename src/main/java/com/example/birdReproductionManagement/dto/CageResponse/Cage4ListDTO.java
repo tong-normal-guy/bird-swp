@@ -4,7 +4,9 @@ import com.example.birdReproductionManagement.dto.BirdReproductionResponse.BirdR
 import com.example.birdReproductionManagement.dto.BirdResponse.Bird4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.ReproductionProcessResponse.Process4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.dto.ReproductionProcessResponse.Reproduction4CageDetailDTOResponse;
+import com.example.birdReproductionManagement.dto.UserDTO;
 import com.example.birdReproductionManagement.dto.UserResponse.User4CageDetailDTOResponse;
+import com.example.birdReproductionManagement.entity.User;
 import lombok.*;
 
 import java.util.List;
@@ -19,6 +21,7 @@ public class Cage4ListDTO {
     private String location;
     private boolean available;
     private int quantity;
+    private UserDTO user;
 //    private Process4CageDetailDTOResponse reproductionProces;
 //    private List<Bird4CageDetailDTOResponse> bird;
 //    private List<BirdRe4CageDetailDTOResponse> birdReproduction;

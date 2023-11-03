@@ -31,6 +31,10 @@ public class CageController {
                                                                       Boolean process){
         return new ResponseEntity<>(cageService.pickaCages(process), HttpStatus.OK);
     }
+//    @GetMapping("/list")
+//    public ResponseEntity<?> listCages(){
+//        return new ResponseEntity<>(cageService.listCage(), HttpStatus.OK);
+//    }
     @GetMapping("/useable")
     public ResponseEntity<List<CageDTO>> viewCagesUseable(){
         return new ResponseEntity<List<CageDTO>>(cageService.viewCageUsable(), HttpStatus.OK);
