@@ -23,6 +23,13 @@ public interface ReproductionProcessRepository extends JpaRepository<Reproductio
             "WHERE br.bird = :bird " +
             "AND br.reproductionRole != :reproductionRole")
     List<ReproductionProcess> findByBirdAndReproductionRoleNot(@Param("bird")Bird bird, @Param("reproductionRole")ReproductionRole reproductionRole);
+
+    @Query("SELECT DISTINCT p FROM ReproductionProcess p " +
+            "LEFT JOIN p.birdReproductions br " +
+            "LEFT JOIN br.reproductionProcess rp " +
+            "WHERE br.bird = :bird " +
+            "AND (br.reproductionRole = 'FATHER' OR br.reproductionRole = 'MOTHER') ")
+    List<ReproductionProcess> findParentReproductionProcessByBird(@Param("bird")Bird bird);
     @Query("SELECT rp FROM ReproductionProcess rp " +
             "JOIN rp.birdReproductions br " +
             "WHERE br.expEggHatchDate = :currentDate " +

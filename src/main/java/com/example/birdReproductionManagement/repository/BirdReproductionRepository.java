@@ -63,4 +63,27 @@ public interface BirdReproductionRepository extends JpaRepository<BirdReproducti
             "WHERE (br.reproductionRole = 'EGG' OR br.reproductionRole = 'CHILD') " +
             "AND br.eggLaidDate >= :startDateTime " +
             "AND rp.isDone = false")
-    List<BirdReproduction> findBirdReproductionsByConditions(@Param("startDateTime") Date startDateTime);}
+    List<BirdReproduction> findBirdReproductionsByConditions(@Param("startDateTime") Date startDateTime);
+    @Query("SELECT COUNT(br) FROM BirdReproduction br " +
+            "LEFT JOIN br.reproductionProcess rp " +
+            "WHERE br.reproductionProcess = :reproductionProcess " +
+            "AND br.reproductionRole = 'EGG' " +
+            "AND br.eggStatus like :eggStatus ")
+    Integer countByReproductionProcessAndReproductionRoleEGGAndEggStatus(
+            @Param("reproductionProcess")ReproductionProcess reproductionProcess,
+            @Param("eggStatus")String eggStatus);
+
+    @Query("SELECT COUNT(br) FROM BirdReproduction br " +
+            "LEFT JOIN br.reproductionProcess rp " +
+            "WHERE br.reproductionProcess = :reproductionProcess " +
+            "AND (br.reproductionRole = 'EGG' or br.reproductionRole = 'CHILD') ")
+    Integer countByReproductionProcessAndReproductionRoleEGG(
+            @Param("reproductionProcess")ReproductionProcess reproductionProcess);
+    @Query("SELECT COUNT(br) FROM BirdReproduction br " +
+            "LEFT JOIN br.reproductionProcess rp " +
+            "LEFT JOIN br.bird b " +
+            "WHERE br.reproductionRole = 'CHILD' " +
+            "AND br.reproductionProcess = :reproductionProcess ")
+    Integer countByReproductionProcessAndReproductionRoleCHILD(
+            @Param("reproductionProcess")ReproductionProcess reproductionProcess);
+}

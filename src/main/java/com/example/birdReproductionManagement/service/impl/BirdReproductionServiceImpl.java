@@ -90,14 +90,11 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
                 }
             }
         });
-//        if(updateBirdReproductionDTO.getBirdId() != null){
-//            Bird bird = birdRepository.findById(Long.valueOf(updateBirdReproductionDTO.getBirdId())).orElseThrow(
-//                    () -> new BirdNotFoundException("Bird could not be found in updateBirdReproduction"));
-//            finalReproduction.setBird(bird);
-//        }
         if(updateBirdReproductionDTO.getEggStatus() != null){
             if(updateBirdReproductionDTO.getEggStatus().equals("Đã nở")){
                 finalReproduction.setReproductionRole(ReproductionRole.CHILD);
+                finalReproduction.setFail(false);
+                finalReproduction.setFailDate(null);
                 Bird newChick = BirdMapper.mapToBird(updateBirdReproductionDTO);
                 newChick.setAgeRange("Non");
                 newChick.setIsAlive(true);
@@ -109,86 +106,33 @@ public class BirdReproductionServiceImpl implements BirdReproductionService {
                         .calculateDate(newChick.getHatchDate(), newChick.getBirdType().getChick()));
                 finalReproduction.setExpAdultBirdDate(MyUtils
                         .calculateDate(finalReproduction.getExpSwingBranchDate(), newChick.getBirdType().getSwingBranch()));
-                Cage chickCage = birdReproduction.getReproductionProcess().getCage();
-                newChick.setCage(chickCage);
-                cage.setQuantity(cage.getQuantity() + 1);
-                cageRepository.save(cage);
+                newChick.setCage(cage);
                 Bird bird = birdRepository.save(newChick);
                 finalReproduction.setBird(bird);
 //                finalReproduction.setActEggHatchDate(updateBirdReproductionDTO.getHatchDate());
             }
             if(!updateBirdReproductionDTO.getEggStatus().equals("Đã nở")
                     && !updateBirdReproductionDTO.getEggStatus().equals("Đang phát triển")){
+                if(finalReproduction.getBird() != null){
+                    Bird deletedBird = finalReproduction.getBird();
+                    finalReproduction.setReproductionRole(ReproductionRole.valueOf("EGG"));
+                    finalReproduction.setBird(null);
+                    birdReproductionRepository.save(finalReproduction);
+                    birdRepository.delete(deletedBird);
+                }
                 finalReproduction.setFail(true);
                 finalReproduction.setFailDate(new Date());
-                process.setFailEgg(process.getFailEgg() + 1);
                 reproductionProcessRepository.save(process);
             }
             birdReproduction = finalReproduction;
             birdReproductionRepository.save(birdReproduction);
-            if(updateBirdReproductionDTO.getEggStatus().equals("Đã nở")){
-//      Tìm list các child của cock, đếm tổng số lượng (T) và số child có đột biến (M) -> mutationRate = M/T
-                BirdReproduction cockReproduction = birdReproductionRepository
-                        .findByReproductionProcessIdAndReproductionRole(processId, ReproductionRole.FATHER);
-                Bird cock = cockReproduction.getBird();
-                List<BirdReproduction> cockReproductionList = birdReproductionRepository
-                        .findByBirdAndReproductionRoleNot(cock, ReproductionRole.CHILD);
-                List<ReproductionProcess> cockProcessList = new ArrayList<>();
-//            int cockProcessNumber = 0;
-                for(BirdReproduction cockWalker : cockReproductionList){
-                    cockProcessList.add(cockWalker.getReproductionProcess());
-//                cockProcessNumber++;
-                }
-                List<BirdReproduction> superCockChildList = new ArrayList<>();
-                for (ReproductionProcess reproductionProcess : cockProcessList){
-                    List<BirdReproduction>  cockChildList = birdReproductionRepository
-                            .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.CHILD);
-                    superCockChildList.addAll(cockChildList);
-                }
-                int cockChildNumber = superCockChildList.size();
-                int cockChildMutationNumber = 0;
-                for (BirdReproduction cockWalker : superCockChildList){
-                    if(cockWalker.getBird().getMutation() != null){
-                        cockChildMutationNumber++;
-                    }
-                }
-                if(cockChildNumber != 0){
-                    float cockMutationRate = (float) cockChildMutationNumber/cockChildNumber;
-                    cock.setMutationRate(cockMutationRate);
-                    birdRepository.save(cock);
-                }
-
-//      Tìm list các child của hen, đếm tổng số lượng (T) và số child có đột biến (M) -> mutationRate = M/T
-                BirdReproduction henReproduction = birdReproductionRepository
-                        .findByReproductionProcessIdAndReproductionRole(processId, ReproductionRole.MOTHER);
-                Bird hen = henReproduction.getBird();
-                List<BirdReproduction> henReproductionList = birdReproductionRepository
-                        .findByBirdAndReproductionRoleNot(hen, ReproductionRole.CHILD);
-                List<ReproductionProcess> henProcessList = new ArrayList<>();
-//            int henProcessNumber = 0;
-                for (BirdReproduction henWalker : henReproductionList){
-                    henProcessList.add(henWalker.getReproductionProcess());
-//                henProcessNumber++;
-                }
-                List<BirdReproduction> superHenChildList = new ArrayList<>();
-                for (ReproductionProcess reproductionProcess : henProcessList){
-                    List<BirdReproduction>  henChildList = birdReproductionRepository
-                            .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.CHILD);
-                    superHenChildList.addAll(henChildList);
-                }
-                int henChildNumber = superHenChildList.size();
-                int henChildMutationNumber = 0;
-                for (BirdReproduction henWalker : superHenChildList){
-                    if(henWalker.getBird().getMutation() != null){
-                        henChildMutationNumber++;
-                    }
-                }
-                if(henChildNumber != 0){
-                    float henMutationRate = (float) henChildMutationNumber/henChildNumber;
-                    hen.setMutationRate(henMutationRate);
-                    birdRepository.save(hen);
-                }
-            }
+            cage.setQuantity(birdRepository.countByCageAndReproductionProcess(process,cage));
+            cageRepository.save(cage);
+            process.setFailEgg(birdReproductionRepository
+                    .countByReproductionProcessAndReproductionRoleEGGAndEggStatus(process, "Hỏng"));
+            process.setTotalEgg(birdReproductionRepository
+                    .countByReproductionProcessAndReproductionRoleEGG(process));
+            reproductionProcessRepository.save(process);
         }
         return BirdReproductionMapper.mapToBirdReproductionDto(birdReproduction);
     }

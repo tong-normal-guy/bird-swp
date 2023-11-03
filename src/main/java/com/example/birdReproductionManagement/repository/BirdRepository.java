@@ -1,17 +1,11 @@
 package com.example.birdReproductionManagement.repository;
 
-import com.example.birdReproductionManagement.entity.Bird;
-import com.example.birdReproductionManagement.entity.ReproductionProcess;
-import com.example.birdReproductionManagement.entity.ReproductionRole;
-import com.example.birdReproductionManagement.entity.Sex;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import com.example.birdReproductionManagement.entity.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface BirdRepository extends JpaRepository<Bird, Long> {
 
@@ -75,4 +69,32 @@ public interface BirdRepository extends JpaRepository<Bird, Long> {
             @Param("reproductionProcess")ReproductionProcess reproductionProcess,
             @Param("reproductionRole")ReproductionRole reproductionRole);
 
+    @Query("SELECT COUNT(b) FROM Bird b " +
+            "LEFT JOIN b.birdReproductions br " +
+            "LEFT JOIN br.reproductionProcess rp " +
+            "WHERE br.reproductionProcess = :reproductionProcess " +
+            "AND br.reproductionRole = :reproductionRole ")
+    Integer countBirdByReproductionProcessAndReproductionRole(@Param("reproductionProcess")ReproductionProcess reproductionProcess,
+                                                                         @Param("reproductionRole")ReproductionRole reproductionRole);
+
+    @Query("SELECT COUNT(b) FROM Bird b " +
+            "LEFT JOIN b.birdReproductions br " +
+            "LEFT JOIN br.reproductionProcess rp " +
+            "WHERE br.reproductionProcess = :reproductionProcess " +
+            "AND br.reproductionRole = :reproductionRole " +
+            "AND b.mutation IS NOT NULL ")
+    Integer countBirdByMutationAndReproductionProcessAndReproductionRole(@Param("reproductionProcess")ReproductionProcess reproductionProcess,
+                                                                         @Param("reproductionRole")ReproductionRole reproductionRole);
+
+    @Query("SELECT COUNT(b) FROM Bird b " +
+            "LEFT JOIN b.cage c " +
+            "LEFT JOIN b.birdReproductions br " +
+            "LEFT JOIN br.reproductionProcess rp " +
+            "WHERE br.reproductionProcess = :reproductionProcess " +
+            "AND b.cage = :cage " +
+            "AND br.reproductionRole != 'EGG' ")
+    Integer countByCageAndReproductionProcess(@Param("reproductionProcess")ReproductionProcess reproductionProcess,
+                                              @Param("cage")Cage cage);
+
+    Integer countBirdByCage(Cage cage);
 }
