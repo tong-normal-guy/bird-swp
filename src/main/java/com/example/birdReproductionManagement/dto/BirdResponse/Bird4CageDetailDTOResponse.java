@@ -14,7 +14,10 @@ public class Bird4CageDetailDTOResponse {
     private String birdId;
     private String sex;//
 //    private String birdType;//
-    private Date hatchDate;
+//    private Date hatchDate;
+    private Date actEggHatchDate;
+    private Date actSwingBranchDate;
+    private Date actAdultBirdDate;
     private String ageRange;
     private Boolean isAlive;
     private BirdType4CageDetailDTOResponse birdType;//

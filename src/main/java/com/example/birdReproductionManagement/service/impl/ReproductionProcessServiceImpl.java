@@ -189,20 +189,20 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
                     -> new ReproductionProcessNotFoundException("Reproduction process could not be updated."));
             finalReproductionProcess.setCage(newCage);
         }
-        if(finalReproductionProcess.getIsDone() != null && finalReproductionProcess.getIsDone()){
-            List<BirdReproduction> birdReproductions = birdReproductionRepository
-                    .findAllByReproductionProcess_Id(finalReproductionProcess.getId());
-            for (BirdReproduction birdReproduction : birdReproductions){
-                if(birdReproduction.getBird() != null){
-                    Bird bird = birdReproduction.getBird();
-                    bird.setCage(null);
-                    birdRepository.save(bird);
-                }
-            }
-            Cage processCage = finalReproductionProcess.getCage();
-            processCage.setQuantity(0);
-            cageRepository.save(processCage);
-        }
+//        if(finalReproductionProcess.getIsDone() != null && finalReproductionProcess.getIsDone()){
+//            List<BirdReproduction> birdReproductions = birdReproductionRepository
+//                    .findAllByReproductionProcess_Id(finalReproductionProcess.getId());
+//            for (BirdReproduction birdReproduction : birdReproductions){
+//                if(birdReproduction.getBird() != null){
+//                    Bird bird = birdReproduction.getBird();
+//                    bird.setCage(null);
+//                    birdRepository.save(bird);
+//                }
+//            }
+//            Cage processCage = finalReproductionProcess.getCage();
+//            processCage.setQuantity(0);
+//            cageRepository.save(processCage);
+//        }
         reproductionProcess = finalReproductionProcess;
         return ReproductionProcessMapper.mapToReproductionProcessDto(reproductionProcessRepository.save(reproductionProcess));
     }
@@ -242,13 +242,16 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
         cageRepository.save(processCage);
         reproductionProcess.setIsDone(true);
         reproductionProcessRepository.save(reproductionProcess);
+
     }
 
     @Override
-    public void separateBirdInProcess(Long processId, String cageId) {
-        ReproductionProcess reproductionProcess = reproductionProcessRepository.findById(processId).orElseThrow(
-                () -> new ReproductionProcessNotFoundException("Process could not be found in separateBirdInProcess."));
-        Cage newCage = cageRepository.findById(Long.valueOf(cageId)).orElseThrow(
+    public void separateBirdInProcess(Long cageId, String birdCageId) {
+        Cage cage = cageRepository.findById(cageId).orElseThrow(
+                () -> new CageNotFoundException("Cage could not be found in separateBirdInProcess."));
+        ReproductionProcess reproductionProcess = reproductionProcessRepository.findByIsDoneFalseAndCage(cage);
+        Long processId = reproductionProcess.getId();
+        Cage newCage = cageRepository.findById(Long.valueOf(birdCageId)).orElseThrow(
                 () -> new CageNotFoundException("Cage could not be found in separateBirdInProcess."));
         Cage processCage = reproductionProcess.getCage();
         BirdReproduction birdReproduction = birdReproductionRepository
@@ -262,6 +265,7 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
         cageRepository.save(newCage);
         reproductionProcess.setSeparateDate(new Date());
         reproductionProcessRepository.save(reproductionProcess);
+        calculateRateProcess(reproductionProcess);
     }
 
     @Override
@@ -295,5 +299,64 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
             birdTypeDTO.setCock(cocks);
         }
         return birdTypeDTOs;
+    }
+
+    private void calculateRateProcess(ReproductionProcess reproductionProcess){
+        long processId = reproductionProcess.getId();
+        //Tìm chim trống tham gia vào process đã cho
+        BirdReproduction cockReproduction = birdReproductionRepository
+                .findByReproductionProcessIdAndReproductionRole(processId, ReproductionRole.FATHER);
+        Bird cock = cockReproduction.getBird();
+        //Tính tỉ lệ đột biến của chim trống
+        calculateMutationRate(cock);
+        //Tính tỉ lệ sinh sản của chim trống
+        calculateReproductionRate(cock);
+        //Tìm chim mái tham gia vào process đã cho
+        BirdReproduction henReproduction = birdReproductionRepository
+                .findByReproductionProcessIdAndReproductionRole(processId, ReproductionRole.MOTHER);
+        Bird hen = henReproduction.getBird();
+        //Tính tỉ lệ đột biến của chim mái
+        calculateMutationRate(hen);
+        //Tính tỉ lệ sinh sản của chim mái
+        calculateReproductionRate(hen);
+    }
+
+    private void calculateReproductionRate(Bird bird){
+        List<ReproductionProcess> reproductionProcesses = reproductionProcessRepository
+                .findParentReproductionProcessByBird(bird);
+        int eggNumber = 0;
+        int childNumber = 0;
+        if (reproductionProcesses != null){
+            for (ReproductionProcess process : reproductionProcesses){
+                childNumber = childNumber + birdReproductionRepository.countByReproductionProcessAndReproductionRoleCHILD(process);
+                eggNumber = eggNumber + process.getTotalEgg();
+            }
+            if (eggNumber != 0){
+                float reproductionRate = childNumber / eggNumber;
+                bird.setSuperReproduct(reproductionRate);
+                birdRepository.save(bird);
+            }
+        }
+    }
+
+    private void calculateMutationRate(Bird bird){
+        int childNumber = 0;
+        int mutationChildNumber = 0;
+        List<ReproductionProcess> reproductionProcesses = reproductionProcessRepository
+                .findParentReproductionProcessByBird(bird);
+        if (reproductionProcesses != null){
+            for (ReproductionProcess process : reproductionProcesses){
+                //Đếm số chim con và số chim con đột biến trong mỗi process, sau đó cộng thêm vào tổng
+                childNumber = childNumber + birdRepository
+                        .countBirdByReproductionProcessAndReproductionRole(process, ReproductionRole.CHILD);
+                mutationChildNumber = mutationChildNumber + birdRepository
+                        .countBirdByMutationAndReproductionProcessAndReproductionRole(process, ReproductionRole.CHILD);
+            }
+            if(childNumber != 0) {
+                float mutationRate = mutationChildNumber / childNumber;
+                bird.setMutationRate(mutationRate);
+                birdRepository.save(bird);
+            }
+        }
     }
 }

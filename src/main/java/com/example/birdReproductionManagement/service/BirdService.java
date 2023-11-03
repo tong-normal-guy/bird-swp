@@ -20,5 +20,5 @@ public interface BirdService {
     List<BirdDTO> findBySex(String sex);
     List<BirdDTO> findOutcastBirds();
 
-    String findBirds();
+    List<BirdDTO> findBirds();
 }

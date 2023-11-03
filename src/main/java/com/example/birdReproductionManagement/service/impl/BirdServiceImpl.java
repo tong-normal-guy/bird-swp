@@ -3,10 +3,7 @@ package com.example.birdReproductionManagement.service.impl;
 import com.example.birdReproductionManagement.dto.BirdResponse.*;
 import com.example.birdReproductionManagement.dto.ReproductionProcessDTO;
 import com.example.birdReproductionManagement.entity.*;
-import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
-import com.example.birdReproductionManagement.exceptions.BirdReproductionNotFoundException;
-import com.example.birdReproductionManagement.exceptions.CageNotFoundException;
-import com.example.birdReproductionManagement.exceptions.ReproductionProcessNotFoundException;
+import com.example.birdReproductionManagement.exceptions.*;
 import com.example.birdReproductionManagement.mapper.BirdMapper;
 import com.example.birdReproductionManagement.mapper.BirdReproductionMapper;
 import com.example.birdReproductionManagement.mapper.ReproductionProcessMapper;
@@ -52,12 +49,12 @@ public class BirdServiceImpl implements BirdService {
 //        findDescendantsList(descendantResponseDTOS, bird, 1);
 //        birdDetailReponseDTO.setDescendants(descendantResponseDTOS);
         //Tìm ngày dự kiến các giai đoạn dự kiến
-//        BirdReproduction birdReproduction = birdReproductionRepository
-//                .findByBirdAndReproductionRole(bird, ReproductionRole.CHILD);
-//        if(birdReproduction != null){
-//            birdDetailReponseDTO.setBirdReproduction(BirdReproductionMapper
-//                    .mapToBirdReproductionForBirdDetailResponseDTO(birdReproduction));
-//        }
+        BirdReproduction birdReproduction = birdReproductionRepository
+                .findByBirdAndReproductionRole(bird, ReproductionRole.CHILD);
+        if(birdReproduction != null){
+            birdDetailReponseDTO.setBirdReproduction(BirdReproductionMapper
+                    .mapToBirdReproductionForBirdDetailResponseDTO(birdReproduction));
+        }
         return birdDetailReponseDTO;
     }
 
@@ -93,10 +90,11 @@ public class BirdServiceImpl implements BirdService {
                 -> new BirdNotFoundException("Bird could not be deleted."));
         if(bird.getCage() != null){
             Cage cage = bird.getCage();
-            cage.setQuantity(cage.getQuantity() - 1);
-            cageRepository.save(cage);
+            if(cage.getQuantity() != 0){
+                cage.setQuantity(cage.getQuantity() - 1);
+                cageRepository.save(cage);
+            }
         }
-
         birdRepository.delete(bird);
     }
 
@@ -238,15 +236,26 @@ public class BirdServiceImpl implements BirdService {
     }
 
     @Override
-    public String findBirds() {
-        long id = 6;
-        ReproductionProcess reproductionProcess = reproductionProcessRepository.findById(id).orElseThrow(() -> new ReproductionProcessNotFoundException("ahsdgasgd"));
-        boolean flag;
-        flag = birdReproductionRepository.existsByReproductionProcessAndReproductionRoleAndBirdAgeRangeNot(reproductionProcess, ReproductionRole.CHILD, "Trưởng thành");
-        if (flag){
-            return "có tồn tại";
+    public List<BirdDTO> findBirds() {
+//        long id = 6;
+//        ReproductionProcess reproductionProcess = reproductionProcessRepository.findById(id).orElseThrow(() -> new ReproductionProcessNotFoundException("ahsdgasgd"));
+//        boolean flag;
+//        flag = birdReproductionRepository.existsByReproductionProcessAndReproductionRoleAndBirdAgeRangeNot(reproductionProcess, ReproductionRole.CHILD, "Trưởng thành");
+//        if (flag){
+//            return "có tồn tại";
+//        }
+//        return "không tồn tại";
+        Cage cage = cageRepository.findById((long)20).orElseThrow(() -> new CageNotFoundException("dhafgksdf"));
+        List<Bird> birds = cage.getBirdList();
+        List<BirdDTO> birdDTOS = new ArrayList<>();
+        if (birds != null){
+            birdDTOS = birds.stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList());
         }
-        return "không tồn tại";
+//        for (Bird bird : birds){
+//            bird.setCage(null);
+//            birdRepository.save(bird);
+//        }
+        return birdDTOS;
     }
 
     private void findParents(BirdForPedigreeResponseDTO birdForPedigreeResponseDTO, int gen){
