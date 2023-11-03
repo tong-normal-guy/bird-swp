@@ -47,7 +47,12 @@ public class CageServiceImpl implements CageService {
 
     @Override
     public List<CageDTO> findAllCages() {
-        return cageRepository.findAll().stream().map(CageMapper::mapToCageDto).collect(Collectors.toList());
+        List<Cage> cages = cageRepository.findAll();
+//        for (Cage cage : cages){
+//            cage.setQuantity(birdRepository.countBirdByCage(cage));
+//            cageRepository.save(cage);
+//        }
+        return cages.stream().map(CageMapper::mapToCageDto).collect(Collectors.toList());
     }
 //    @Override
 //    public List<?> pickaCages(Boolean process) {
