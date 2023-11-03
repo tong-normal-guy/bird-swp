@@ -24,6 +24,7 @@ public interface BirdReproductionRepository extends JpaRepository<BirdReproducti
             "AND (br.reproductionRole = 'FATHER' OR br.reproductionRole = 'MOTHER')")
     List<BirdReproduction> findAllParentsByReproductionProcessId(@Param("id") Long id);
     BirdReproduction findByReproductionProcessIdAndReproductionRole(Long id, ReproductionRole reproductionRole);
+    List<BirdReproduction> findAllByReproductionProcessIdAndReproductionRoleAndIsFailFalse(Long id, ReproductionRole reproductionRole);
     Boolean existsByBirdAndReproductionRoleNotAndReproductionRoleNotAndReproductionProcessIsDone
             (Bird bird, ReproductionRole reproductionRole1, ReproductionRole reproductionRole2, Boolean isDone);
     Boolean existsByBirdAndReproductionRoleNotAndReproductionRoleNot
