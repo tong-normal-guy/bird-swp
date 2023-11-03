@@ -105,9 +105,9 @@ public class BirdReproductionMapper {
     public static BirdReproductionForBirdDetailResponseDTO mapToBirdReproductionForBirdDetailResponseDTO(BirdReproduction birdReproduction){
         return BirdReproductionForBirdDetailResponseDTO.builder()
                 .reproductionId(String.valueOf(birdReproduction.getId()))
-//                .actEggHatchDate(birdReproduction.getActEggHatchDate())
-//                .actSwingBranch(birdReproduction.getActSwingBranch())
-//                .actAdultBirdDate(birdReproduction.getActAdultBirdDate())
+                .expEggHatchDate(birdReproduction.getExpEggHatchDate())
+                .expSwingBranchDate(birdReproduction.getExpSwingBranchDate())
+                .expAdultBirdDate(birdReproduction.getExpAdultBirdDate())
                 .build();
     }
     public static CloseDateReproductionDTOResponse map2CloseDateReproductionDTO(BirdReproduction birdReproduction){

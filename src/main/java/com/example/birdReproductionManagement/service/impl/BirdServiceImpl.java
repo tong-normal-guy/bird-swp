@@ -49,12 +49,12 @@ public class BirdServiceImpl implements BirdService {
 //        findDescendantsList(descendantResponseDTOS, bird, 1);
 //        birdDetailReponseDTO.setDescendants(descendantResponseDTOS);
         //Tìm ngày dự kiến các giai đoạn dự kiến
-//        BirdReproduction birdReproduction = birdReproductionRepository
-//                .findByBirdAndReproductionRole(bird, ReproductionRole.CHILD);
-//        if(birdReproduction != null){
-//            birdDetailReponseDTO.setBirdReproduction(BirdReproductionMapper
-//                    .mapToBirdReproductionForBirdDetailResponseDTO(birdReproduction));
-//        }
+        BirdReproduction birdReproduction = birdReproductionRepository
+                .findByBirdAndReproductionRole(bird, ReproductionRole.CHILD);
+        if(birdReproduction != null){
+            birdDetailReponseDTO.setBirdReproduction(BirdReproductionMapper
+                    .mapToBirdReproductionForBirdDetailResponseDTO(birdReproduction));
+        }
         return birdDetailReponseDTO;
     }
 
@@ -245,12 +245,16 @@ public class BirdServiceImpl implements BirdService {
 //            return "có tồn tại";
 //        }
 //        return "không tồn tại";
-        BirdType birdType = birdTypeRepository.findById((long) 2).orElseThrow(() -> new BirdTypeNotFoundException("jdnfaldfd"));
-        List<Bird> birds = birdType.getBirdList();
+        Cage cage = cageRepository.findById((long)20).orElseThrow(() -> new CageNotFoundException("dhafgksdf"));
+        List<Bird> birds = cage.getBirdList();
         List<BirdDTO> birdDTOS = new ArrayList<>();
         if (birds != null){
             birdDTOS = birds.stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList());
         }
+//        for (Bird bird : birds){
+//            bird.setCage(null);
+//            birdRepository.save(bird);
+//        }
         return birdDTOS;
     }
 
