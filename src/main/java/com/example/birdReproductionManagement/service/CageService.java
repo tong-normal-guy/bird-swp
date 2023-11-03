@@ -21,5 +21,5 @@ public interface CageService {
     List<CageDTO> findByLocation(String location, boolean available);
     List<CageDetailDTOResponse> viewCageByLocation(String location);
     BirdDTO addBirdToCage(Long cageId, BirdDTO birdDTO);
-    List<Cage4ListDTO> listCage();
+//    List<Cage4ListDTO> listCage();
 }

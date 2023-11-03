@@ -359,16 +359,16 @@ public class CageServiceImpl implements CageService {
         bird.setCage(cage);
         return BirdMapper.mapToBirdDto(birdRepository.save(bird));
     }
-    @Override
-    public List<Cage4ListDTO> listCage() {
-        List<Cage4ListDTO> cages = cageRepository.findAll().stream().map(CageMapper::map2Cage4ListDTO).collect(Collectors.toList());
-        for (Cage4ListDTO cageDTO: cages) {
-            User user = userRepository.findUserByCageId(Long.valueOf(cageDTO.getCageId()));
-            if (user != null){
-                UserDTO userDTO = UserMapper.mapToUserDto(user);
-                cageDTO.setUser(userDTO);
-            }
-        }
-        return cages;
-    }
+//    @Override
+//    public List<Cage4ListDTO> listCage() {
+//        List<Cage4ListDTO> cages = cageRepository.findAll().stream().map(CageMapper::map2Cage4ListDTO).collect(Collectors.toList());
+//        for (Cage4ListDTO cageDTO: cages) {
+//            User user = userRepository.findUserByCageId(Long.valueOf(cageDTO.getCageId()));
+//            if (user != null){
+//                UserDTO userDTO = UserMapper.mapToUserDto(user);
+//                cageDTO.setUser(userDTO);
+//            }
+//        }
+//        return cages;
+//    }
 }
