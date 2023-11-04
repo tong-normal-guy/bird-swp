@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ReproductionProcessService {
     List<ProcessForViewAllResponseDTO> findAllReproductionProcess();
-    ReproductionProcessDTO addReproductionProcess(PairDTO pairDTO);
+    ReproductionProcessDTO addReproductionProcess(PairDTO pairDTO, boolean confirm);
     void deleteReproductionProcess(Long id);
     ReproductionProcessDTO updateReproductionProcess(Long id, ReproductionProcessDTO reproductionProcessDto);
 

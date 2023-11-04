@@ -29,8 +29,10 @@ public class ReproductionProcessController {
         return new ResponseEntity<>(reproductionProcessService.findAllReproductionProcess(), HttpStatus.OK);
     }
     @PostMapping("/create")
-    public ResponseEntity<ReproductionProcessDTO> addReproductionProcess(@RequestBody PairDTO pairDTO){
-        return new ResponseEntity<>(reproductionProcessService.addReproductionProcess(pairDTO), HttpStatus.CREATED);
+    public ResponseEntity<ReproductionProcessDTO> addReproductionProcess(@RequestBody PairDTO pairDTO,
+                                                                         @RequestParam(name = "confirm", defaultValue = "false")
+                                                                         boolean confirm){
+        return new ResponseEntity<>(reproductionProcessService.addReproductionProcess(pairDTO, confirm), HttpStatus.CREATED);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteReproductionProcess(@PathVariable("id")Long id){
