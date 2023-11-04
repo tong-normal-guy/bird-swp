@@ -359,4 +359,8 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
             }
         }
     }
+
+    private void checkBirdPairEmotion(PairDTO pairDTO){
+
+    }
 }

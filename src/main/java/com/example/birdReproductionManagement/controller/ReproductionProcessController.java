@@ -57,8 +57,8 @@ public class ReproductionProcessController {
         return new ResponseEntity<>("Reproduction process with id " + id + "is end.", HttpStatus.OK);
     }
 
-    @PostMapping("/separate/{processId}")
-    public ResponseEntity<String> separateBirdInProcess(@PathVariable("processId")Long cageId,
+    @PostMapping("/separate/{cageId}")
+    public ResponseEntity<String> separateBirdInProcess(@PathVariable("cageId")Long cageId,
                                                         @RequestBody CageDTO cageDTO){
         reproductionProcessService.separateBirdInProcess(cageId, cageDTO.getCageId());
         return new ResponseEntity<>("Separate success.", HttpStatus.OK);
