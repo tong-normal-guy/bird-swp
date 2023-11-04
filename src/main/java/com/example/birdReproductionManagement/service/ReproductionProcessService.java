@@ -18,5 +18,5 @@ public interface ReproductionProcessService {
     void setIsDoneForProcess(Long id);
     void separateBirdInProcess(Long cageId, String birdCageId);
     void birdNotTolerateInProcess(Long processId);
-
+    Boolean setIdDoneWhenEmotion(Long id, String emotion);
 }

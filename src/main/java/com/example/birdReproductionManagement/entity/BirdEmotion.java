@@ -14,6 +14,8 @@ import javax.persistence.*;
 public class BirdEmotion {
     @EmbeddedId
     private BirdEmotionId id;
+    @Column(name = "emotion")
+    @Enumerated(EnumType.STRING)
     private Emotion emotion;
 //  relation
     @ManyToOne

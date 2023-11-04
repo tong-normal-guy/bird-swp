@@ -52,9 +52,13 @@ public class ReproductionProcessController {
         return new  ResponseEntity<LoadData4InitProcessDTOResponse>(reproductionProcessService.getInitProcess(), HttpStatus.OK);
     }
     @PatchMapping("/done/{id}")
-    public ResponseEntity<String> setIsDoneForProcess(@PathVariable("id")Long id){
-        reproductionProcessService.setIsDoneForProcess(id);
-        return new ResponseEntity<>("Reproduction process with id " + id + "is end.", HttpStatus.OK);
+    public ResponseEntity<String> setIsDoneForProcess(@PathVariable("id")Long id, @RequestParam(name = "emotion", required = false) String emotion){
+//        if (emotion != null)
+        if (reproductionProcessService.setIdDoneWhenEmotion(id, emotion)){
+            return new ResponseEntity<>("Reproduction process with id " + id + "is end.", HttpStatus.OK);
+        } else
+            return new ResponseEntity<>("Reproduction process with id " + id + "is fail as eggs exit in process.", HttpStatus.BAD_REQUEST);
+//        else reproductionProcessService.setIsDoneForProcess(id);
     }
 
     @PostMapping("/separate/{cageId}")

@@ -34,7 +34,7 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
     private final BirdRepository birdRepository;
     private final CageRepository cageRepository;
     private final BirdTypeRepository birdTypeRepository;
-
+    private final BirdEmotionRepository emotionRepository;
 
     @Override
     public List<ProcessForViewAllResponseDTO> findAllReproductionProcess() {
@@ -243,6 +243,44 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
         reproductionProcess.setIsDone(true);
         reproductionProcessRepository.save(reproductionProcess);
 
+    }
+
+    @Override
+    public Boolean setIdDoneWhenEmotion(Long id, String emotion) {
+        ReproductionProcess process = reproductionProcessRepository.findById(id)
+                .orElseThrow(() -> new ReproductionProcessNotFoundException("process not found"));
+        List<BirdReproduction> eggs = birdReproductionRepository.findAllByReproductionProcessIdAndReproductionRoleAndIsFailFalse(id, ReproductionRole.EGG);
+        if (!eggs.isEmpty()){
+            return false;
+        }
+        if (emotion != null){
+            BirdReproduction cockRe = birdReproductionRepository.findByReproductionProcessIdAndReproductionRole(id, ReproductionRole.FATHER);
+            BirdReproduction henRe = birdReproductionRepository.findByReproductionProcessIdAndReproductionRole(id, ReproductionRole.MOTHER);
+            Bird cock = cockRe.getBird();
+            Bird hen = henRe.getBird();
+            BirdEmotion emotionn = new BirdEmotion();
+            emotionn.setEmotion(Emotion.valueOf(emotion.toUpperCase()));
+            emotionn.setCock(cock);
+            emotionn.setHen(hen);
+            BirdEmotionId birdEmotionId = new BirdEmotionId(cock.getId(), hen.getId());
+            emotionn.setId(birdEmotionId);
+            emotionRepository.save(emotionn);
+        }
+        List<BirdReproduction> birdReproductions = birdReproductionRepository
+                .findAllByReproductionProcess_Id(process.getId());
+        for (BirdReproduction birdReproduction : birdReproductions){
+            if(birdReproduction.getBird() != null){
+                Bird bird = birdReproduction.getBird();
+                bird.setCage(null);
+                birdRepository.save(bird);
+            }
+        }
+        Cage cage = process.getCage();
+        cage.setQuantity(0);
+        cageRepository.save(cage);
+        process.setIsDone(true);
+        reproductionProcessRepository.save(process);
+        return true;
     }
 
     @Override
