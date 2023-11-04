@@ -410,8 +410,10 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
         BirdEmotionId birdPairId = new BirdEmotionId(cock.getId(), hen.getId());
         BirdEmotion birdPair = new BirdEmotion(birdPairId, Emotion.HATE, cock, hen);
         List<BirdEmotion> cockEmotions = birdEmotionRepository.findByCockAndEmotion(cock, Emotion.HATE);
-        if (cockEmotions.contains(birdPair)){
-            throw new BirdTypeNotMatchedException("This pair of birds used not to tolerate each other.");
+        if(cockEmotions != null){
+            if (cockEmotions.contains(birdPair)){
+                throw new BirdTypeNotMatchedException("This pair of birds used not to tolerate each other.");
+            }
         }
     }
 }
