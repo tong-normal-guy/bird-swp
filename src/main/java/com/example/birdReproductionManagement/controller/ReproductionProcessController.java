@@ -29,8 +29,10 @@ public class ReproductionProcessController {
         return new ResponseEntity<>(reproductionProcessService.findAllReproductionProcess(), HttpStatus.OK);
     }
     @PostMapping("/create")
-    public ResponseEntity<ReproductionProcessDTO> addReproductionProcess(@RequestBody PairDTO pairDTO){
-        return new ResponseEntity<>(reproductionProcessService.addReproductionProcess(pairDTO), HttpStatus.CREATED);
+    public ResponseEntity<ReproductionProcessDTO> addReproductionProcess(@RequestBody PairDTO pairDTO,
+                                                                         @RequestParam(name = "confirm", defaultValue = "false")
+                                                                         boolean confirm){
+        return new ResponseEntity<>(reproductionProcessService.addReproductionProcess(pairDTO, confirm), HttpStatus.CREATED);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteReproductionProcess(@PathVariable("id")Long id){
@@ -61,8 +63,8 @@ public class ReproductionProcessController {
 //        else reproductionProcessService.setIsDoneForProcess(id);
     }
 
-    @PostMapping("/separate/{processId}")
-    public ResponseEntity<String> separateBirdInProcess(@PathVariable("processId")Long cageId,
+    @PostMapping("/separate/{cageId}")
+    public ResponseEntity<String> separateBirdInProcess(@PathVariable("cageId")Long cageId,
                                                         @RequestBody CageDTO cageDTO){
         reproductionProcessService.separateBirdInProcess(cageId, cageDTO.getCageId());
         return new ResponseEntity<>("Separate success.", HttpStatus.OK);
