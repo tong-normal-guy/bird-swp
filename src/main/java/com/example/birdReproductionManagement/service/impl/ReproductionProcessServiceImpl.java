@@ -288,6 +288,12 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
     }
 
     @Override
+    public List<PairDTO> getListBirdEmotionHATE() {
+        List<BirdEmotion> birdEmotions = birdEmotionRepository.findAll();
+        return birdEmotions.stream().map(BirdEmotionMapper::mapToPairDTO).collect(Collectors.toList());
+    }
+
+    @Override
     public void separateBirdInProcess(Long cageId, String birdCageId) {
         Cage cage = cageRepository.findById(cageId).orElseThrow(
                 () -> new CageNotFoundException("Cage could not be found in separateBirdInProcess."));
@@ -407,8 +413,8 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
                 () -> new BirdNotFoundException("Cock could not be found."));
         Bird hen = birdRepository.findById(Long.valueOf(pairDTO.getHenId())).orElseThrow(
                 () -> new BirdNotFoundException("Hen could not be found."));
-        BirdEmotionId birdPairId = new BirdEmotionId(cock.getId(), hen.getId());
-        BirdEmotion birdPair = new BirdEmotion(birdPairId, Emotion.HATE, cock, hen);
+//        BirdEmotionId birdPairId = new BirdEmotionId(cock.getId(), hen.getId());
+//        BirdEmotion birdPair = new BirdEmotion(birdPairId, Emotion.HATE, cock, hen);
 //        List<BirdEmotion> cockEmotions = birdEmotionRepository.findByCockAndEmotion(cock, Emotion.HATE);
         List<BirdEmotion> cockEmotions = cock.getCocks();
         if(cockEmotions != null){

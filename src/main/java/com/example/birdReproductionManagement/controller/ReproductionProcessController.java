@@ -70,6 +70,11 @@ public class ReproductionProcessController {
         return new ResponseEntity<>("Separate success.", HttpStatus.OK);
     }
 
+    @GetMapping("/hate")
+    private ResponseEntity<List<PairDTO>> getListBirdEmotionHATE(){
+        return new ResponseEntity<>(reproductionProcessService.getListBirdEmotionHATE(), HttpStatus.OK);
+    }
+
 //    @GetMapping("/findfather/{id}")
 //    public ResponseEntity<BirdReproductionDto> findFather(@PathVariable("id")Long id){
 //        return new ResponseEntity<>(reproductionProcessService.findFather(id), HttpStatus.OK);
