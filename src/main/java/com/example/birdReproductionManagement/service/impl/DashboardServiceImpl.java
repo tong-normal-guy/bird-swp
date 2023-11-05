@@ -183,33 +183,33 @@ public class DashboardServiceImpl implements DashboardService {
                 calendar.setTime(reproduction.getExpEggHatchDate());
                 calendar.add(Calendar.DAY_OF_MONTH, -2);
                 if (current.after(calendar.getTime())) {
-                    closeDateReproDTOs.add(closeDate(reproduction, "hatch"));
+                    closeDateReproDTOs.add(closeDate(reproduction, "hatch", reproduction.getExpSwingBranchDate()));
                 }
             } else {
                 if (bird.getSwingBranchDate() == null){
                     calendar.setTime(reproduction.getExpSwingBranchDate());
                     calendar.add(Calendar.DAY_OF_MONTH, -2);
                     if (current.after(calendar.getTime())){
-                        closeDateReproDTOs.add(closeDate(reproduction, "swing"));
+                        closeDateReproDTOs.add(closeDate(reproduction, "swing", reproduction.getExpAdultBirdDate()));
                     }
                 } else if (bird.getAdultBirdDate() == null) {
                     calendar.setTime(reproduction.getExpSwingBranchDate());
                     calendar.add(Calendar.DAY_OF_MONTH, -2);
                     if (current.after(calendar.getTime())){
-                        closeDateReproDTOs.add(closeDate(reproduction, "adult"));
+                        closeDateReproDTOs.add(closeDate(reproduction, "adult", null));
                     }
                 }
             }
-
         }
         return closeDateReproDTOs;
     }
-    public CloseDateReproductionDTOResponse closeDate(BirdReproduction reproduction, String desc){
+    public CloseDateReproductionDTOResponse closeDate(BirdReproduction reproduction, String desc, Date next){
         return CloseDateReproductionDTOResponse.builder()
                 .pairingDate(reproduction.getReproductionProcess().getPairingDate())
                 .cageId(reproduction.getReproductionProcess().getCage().getId()+"")
-                .reproductionId(reproduction.getId()+"")
+                .reproductionRole(reproduction.getReproductionRole()+"")
                 .desc(desc)
+                .nextDate(next)
                 .build();
     }
 }

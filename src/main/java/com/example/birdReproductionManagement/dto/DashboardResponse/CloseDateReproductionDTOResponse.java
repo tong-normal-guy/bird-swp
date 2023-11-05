@@ -13,6 +13,7 @@ import java.util.Date;
 public class CloseDateReproductionDTOResponse {
     private String cageId;
     private Date pairingDate;
-    private String reproductionId;
+    private String reproductionRole;
+    private Date nextDate;
     private String desc;
 }
