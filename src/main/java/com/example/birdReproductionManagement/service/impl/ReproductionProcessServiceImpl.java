@@ -409,10 +409,17 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
                 () -> new BirdNotFoundException("Hen could not be found."));
         BirdEmotionId birdPairId = new BirdEmotionId(cock.getId(), hen.getId());
         BirdEmotion birdPair = new BirdEmotion(birdPairId, Emotion.HATE, cock, hen);
-        List<BirdEmotion> cockEmotions = birdEmotionRepository.findByCockAndEmotion(cock, Emotion.HATE);
+//        List<BirdEmotion> cockEmotions = birdEmotionRepository.findByCockAndEmotion(cock, Emotion.HATE);
+        List<BirdEmotion> cockEmotions = cock.getCocks();
         if(cockEmotions != null){
-            if (cockEmotions.contains(birdPair)){
-                throw new BirdTypeNotMatchedException("This pair of birds used not to tolerate each other.");
+//            if (cockEmotions.contains(birdPair)){
+//                throw new BirdTypeNotMatchedException("This pair of birds used not to tolerate each other.");
+//            }
+            for (BirdEmotion birdEmotion : cockEmotions){
+                if (birdEmotion.getCock().getId().equals(cock.getId())
+                        && birdEmotion.getHen().getId().equals(hen.getId())){
+                    throw new BirdTypeNotMatchedException("This pair of birds used not to tolerate each other.");
+                }
             }
         }
     }

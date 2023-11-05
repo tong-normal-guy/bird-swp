@@ -97,5 +97,8 @@ public interface BirdRepository extends JpaRepository<Bird, Long> {
                                               @Param("cage")Cage cage);
 
 
-    Integer countBirdByCage(Cage cage);
+    @Query("SELECT COUNT(b) FROM Bird b " +
+            "LEFT JOIN b.cage c " +
+            "WHERE b.cage = :cage ")
+    Integer countBirdByCage(@Param("cage") Cage cage);
 }
