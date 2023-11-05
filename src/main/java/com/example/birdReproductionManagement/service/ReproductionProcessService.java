@@ -19,4 +19,6 @@ public interface ReproductionProcessService {
     void separateBirdInProcess(Long cageId, String birdCageId);
     void birdNotTolerateInProcess(Long processId);
     Boolean setIdDoneWhenEmotion(Long id, String emotion);
+
+    List<PairDTO> getListBirdEmotionHATE();
 }
