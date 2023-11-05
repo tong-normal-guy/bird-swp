@@ -236,7 +236,7 @@ public class BirdServiceImpl implements BirdService {
     }
 
     @Override
-    public List<BirdDTO> findBirds() {
+    public Integer findBirds() {
 //        long id = 6;
 //        ReproductionProcess reproductionProcess = reproductionProcessRepository.findById(id).orElseThrow(() -> new ReproductionProcessNotFoundException("ahsdgasgd"));
 //        boolean flag;
@@ -245,7 +245,7 @@ public class BirdServiceImpl implements BirdService {
 //            return "có tồn tại";
 //        }
 //        return "không tồn tại";
-        Cage cage = cageRepository.findById((long)5).orElseThrow(() -> new CageNotFoundException("dhafgksdf"));
+        Cage cage = cageRepository.findById((long)1).orElseThrow(() -> new CageNotFoundException("dhafgksdf"));
         List<Bird> birds = cage.getBirdList();
         List<BirdDTO> birdDTOS = new ArrayList<>();
         if (birds != null){
@@ -255,7 +255,8 @@ public class BirdServiceImpl implements BirdService {
 //            bird.setCage(null);
 //            birdRepository.save(bird);
 //        }
-        return birdDTOS;
+        int number = birdRepository.countBirdByCage(cage);
+        return number;
     }
 
     private void findParents(BirdForPedigreeResponseDTO birdForPedigreeResponseDTO, int gen){
