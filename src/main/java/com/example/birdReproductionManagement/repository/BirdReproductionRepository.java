@@ -1,9 +1,6 @@
 package com.example.birdReproductionManagement.repository;
 
-import com.example.birdReproductionManagement.entity.Bird;
-import com.example.birdReproductionManagement.entity.BirdReproduction;
-import com.example.birdReproductionManagement.entity.ReproductionProcess;
-import com.example.birdReproductionManagement.entity.ReproductionRole;
+import com.example.birdReproductionManagement.entity.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -92,4 +89,19 @@ public interface BirdReproductionRepository extends JpaRepository<BirdReproducti
             "WHERE (br.reproductionRole = 'EGG' OR br.reproductionRole = 'CHILD') " +
             "AND rp.isDone = false")
     List<BirdReproduction> findEggOrChildReproductionsWithIsDoneFalse();
- }
+    @Query("SELECT br FROM BirdReproduction br " +
+            "LEFT JOIN br.reproductionProcess rp " +
+            "LEFT JOIN br.bird b " +
+            "LEFT JOIN b.cage c " +
+            "WHERE br.reproductionProcess = :reproductionProcess " +
+            "AND b.cage = :cage " +
+            "AND br.reproductionRole != 'EGG' ")
+    List<BirdReproduction> findByReproductionRoleNotEGG(@Param("reproductionProcess")ReproductionProcess reproductionProcess,
+                                                        @Param("cage")Cage cage);
+    @Query("SELECT br FROM BirdReproduction br " +
+            "LEFT JOIN br.reproductionProcess rp " +
+            "LEFT JOIN br.bird b " +
+            "WHERE br.reproductionProcess = :reproductionProcess " +
+            "AND br.reproductionRole = 'EGG' ")
+    List<BirdReproduction> findByReproductionRoleEGG(@Param("reproductionProcess")ReproductionProcess reproductionProcess);
+}

@@ -235,7 +235,12 @@ public class CageServiceImpl implements CageService {
                 Reproduction4CageDetailDTOResponse reproductionProcessDTO = ReproductionProcessMapper
                         .map2Reproduction4CageDetailDTO(reproductionProcess);
                 cageDto.setReproductionProcess(reproductionProcessDTO);
-                List<BirdReproduction> birdReproductions = reproductionProcess.getBirdReproductions();
+                //Cách cũ
+//                List<BirdReproduction> birdReproductions = reproductionProcess.getBirdReproductions();
+                //Cách mới
+                List<BirdReproduction> birdReproductions = birdReproductionRepository
+                        .findByReproductionRoleNotEGG(reproductionProcess, cage);
+                birdReproductions.addAll(birdReproductionRepository.findByReproductionRoleEGG(reproductionProcess));
                 if (birdReproductions != null){
                     cageDto.setBirdReproduction(birdReproductions.stream()
                             .map(BirdReproductionMapper::map2Bird4CageDetailDTO).collect(Collectors.toList()));

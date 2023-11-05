@@ -35,6 +35,7 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
     private final CageRepository cageRepository;
     private final BirdTypeRepository birdTypeRepository;
     private final BirdEmotionRepository emotionRepository;
+    private final BirdEmotionRepository birdEmotionRepository;
 
     @Override
     public List<ProcessForViewAllResponseDTO> findAllReproductionProcess() {
@@ -85,7 +86,10 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
     }
 
     @Override
-    public ReproductionProcessDTO addReproductionProcess(PairDTO pairDTO) {
+    public ReproductionProcessDTO addReproductionProcess(PairDTO pairDTO, boolean confirm) {
+        if (!confirm){
+            checkBirdPairEmotion(pairDTO);
+        }
         Cage cage = cageRepository.findById(Long.valueOf(pairDTO.getCageId())).orElseThrow(()
                 -> new ReproductionProcessNotFoundException("Cage could not be found in addReproductionProcess."));
         if(cage.getQuantity() > 0){
@@ -284,6 +288,12 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
     }
 
     @Override
+    public List<PairDTO> getListBirdEmotionHATE() {
+        List<BirdEmotion> birdEmotions = birdEmotionRepository.findAll();
+        return birdEmotions.stream().map(BirdEmotionMapper::mapToPairDTO).collect(Collectors.toList());
+    }
+
+    @Override
     public void separateBirdInProcess(Long cageId, String birdCageId) {
         Cage cage = cageRepository.findById(cageId).orElseThrow(
                 () -> new CageNotFoundException("Cage could not be found in separateBirdInProcess."));
@@ -394,6 +404,28 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
                 float mutationRate = mutationChildNumber / childNumber;
                 bird.setMutationRate(mutationRate);
                 birdRepository.save(bird);
+            }
+        }
+    }
+
+    private void checkBirdPairEmotion(PairDTO pairDTO){
+        Bird cock = birdRepository.findById(Long.valueOf(pairDTO.getCockId())).orElseThrow(
+                () -> new BirdNotFoundException("Cock could not be found."));
+        Bird hen = birdRepository.findById(Long.valueOf(pairDTO.getHenId())).orElseThrow(
+                () -> new BirdNotFoundException("Hen could not be found."));
+//        BirdEmotionId birdPairId = new BirdEmotionId(cock.getId(), hen.getId());
+//        BirdEmotion birdPair = new BirdEmotion(birdPairId, Emotion.HATE, cock, hen);
+//        List<BirdEmotion> cockEmotions = birdEmotionRepository.findByCockAndEmotion(cock, Emotion.HATE);
+        List<BirdEmotion> cockEmotions = cock.getCocks();
+        if(cockEmotions != null){
+//            if (cockEmotions.contains(birdPair)){
+//                throw new BirdTypeNotMatchedException("This pair of birds used not to tolerate each other.");
+//            }
+            for (BirdEmotion birdEmotion : cockEmotions){
+                if (birdEmotion.getCock().getId().equals(cock.getId())
+                        && birdEmotion.getHen().getId().equals(hen.getId())){
+                    throw new BirdTypeNotMatchedException("This pair of birds used not to tolerate each other.");
+                }
             }
         }
     }

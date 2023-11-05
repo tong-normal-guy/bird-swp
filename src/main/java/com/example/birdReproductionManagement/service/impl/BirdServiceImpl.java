@@ -152,36 +152,36 @@ public class BirdServiceImpl implements BirdService {
                     }
                 }else if (birdDto.getAgeRange().equals("Trưởng thành")){
                     finalBird.setAdultBirdDate(new Date());
-                    if(birdReproductionRepository.existsByBirdAndReproductionProcessIsDone(bird, false)){
-                            BirdReproduction birdReproduction = birdReproductionRepository.findByBirdAndReproductionRole(bird, ReproductionRole.CHILD);
-                            ReproductionProcess reproductionProcess = birdReproduction.getReproductionProcess();
-                            boolean eggExisted = birdReproductionRepository
-                                    .existsByReproductionRoleAndReproductionProcessAndEggStatusEquals(ReproductionRole.EGG,
-                                            reproductionProcess, "Đang phát triển");
-                            if (!eggExisted){
-                                List<BirdReproduction> birdReproductions = birdReproductionRepository
-                                        .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.CHILD);
-                                boolean flag = false;
-                                for (BirdReproduction birdReproductionWalker : birdReproductions){
-                                    if (!birdReproductionWalker.getBird().getAgeRange().equals("Trưởng thành")){
-                                        flag = true;
-                                    }
-                                }
-//                                if(birdReproductionRepository
-//                                        .existsByReproductionProcessAndReproductionRoleAndBirdAgeRange(
-//                                                reproductionProcess, ReproductionRole.CHILD, "Non")
-//                                        || birdReproductionRepository
-//                                        .existsByReproductionProcessAndReproductionRoleAndBirdAgeRange(
-//                                                reproductionProcess, ReproductionRole.CHILD, "Chuyền")){
-//                                    flag = true;
+//                    if(birdReproductionRepository.existsByBirdAndReproductionProcessIsDone(bird, false)){
+//                            BirdReproduction birdReproduction = birdReproductionRepository.findByBirdAndReproductionRole(bird, ReproductionRole.CHILD);
+//                            ReproductionProcess reproductionProcess = birdReproduction.getReproductionProcess();
+//                            boolean eggExisted = birdReproductionRepository
+//                                    .existsByReproductionRoleAndReproductionProcessAndEggStatusEquals(ReproductionRole.EGG,
+//                                            reproductionProcess, "Đang phát triển");
+//                            if (!eggExisted){
+//                                List<BirdReproduction> birdReproductions = birdReproductionRepository
+//                                        .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.CHILD);
+//                                boolean flag = false;
+//                                for (BirdReproduction birdReproductionWalker : birdReproductions){
+//                                    if (!birdReproductionWalker.getBird().getAgeRange().equals("Trưởng thành")){
+//                                        flag = true;
+//                                    }
 //                                }
-//                                flag = birdReproductionRepository.existsByReproductionProcessAndReproductionRoleAndBirdAgeRangeNot(reproductionProcess, ReproductionRole.CHILD, "Trưởng thành");
-                                if (!flag){
-                                    reproductionProcess.setIsDone(true);
-                                    reproductionProcessRepository.save(reproductionProcess);
-                                }
-                            }
-                    }
+////                                if(birdReproductionRepository
+////                                        .existsByReproductionProcessAndReproductionRoleAndBirdAgeRange(
+////                                                reproductionProcess, ReproductionRole.CHILD, "Non")
+////                                        || birdReproductionRepository
+////                                        .existsByReproductionProcessAndReproductionRoleAndBirdAgeRange(
+////                                                reproductionProcess, ReproductionRole.CHILD, "Chuyền")){
+////                                    flag = true;
+////                                }
+////                                flag = birdReproductionRepository.existsByReproductionProcessAndReproductionRoleAndBirdAgeRangeNot(reproductionProcess, ReproductionRole.CHILD, "Trưởng thành");
+//                                if (!flag){
+//                                    reproductionProcess.setIsDone(true);
+//                                    reproductionProcessRepository.save(reproductionProcess);
+//                                }
+//                            }
+//                    }
                 }
 
             }
@@ -236,7 +236,7 @@ public class BirdServiceImpl implements BirdService {
     }
 
     @Override
-    public List<BirdDTO> findBirds() {
+    public Integer findBirds() {
 //        long id = 6;
 //        ReproductionProcess reproductionProcess = reproductionProcessRepository.findById(id).orElseThrow(() -> new ReproductionProcessNotFoundException("ahsdgasgd"));
 //        boolean flag;
@@ -245,7 +245,7 @@ public class BirdServiceImpl implements BirdService {
 //            return "có tồn tại";
 //        }
 //        return "không tồn tại";
-        Cage cage = cageRepository.findById((long)20).orElseThrow(() -> new CageNotFoundException("dhafgksdf"));
+        Cage cage = cageRepository.findById((long)1).orElseThrow(() -> new CageNotFoundException("dhafgksdf"));
         List<Bird> birds = cage.getBirdList();
         List<BirdDTO> birdDTOS = new ArrayList<>();
         if (birds != null){
@@ -255,7 +255,8 @@ public class BirdServiceImpl implements BirdService {
 //            bird.setCage(null);
 //            birdRepository.save(bird);
 //        }
-        return birdDTOS;
+        int number = birdRepository.countBirdByCage(cage);
+        return number;
     }
 
     private void findParents(BirdForPedigreeResponseDTO birdForPedigreeResponseDTO, int gen){
