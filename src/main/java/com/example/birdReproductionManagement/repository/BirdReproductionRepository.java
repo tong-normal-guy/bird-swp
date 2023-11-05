@@ -87,4 +87,9 @@ public interface BirdReproductionRepository extends JpaRepository<BirdReproducti
             "AND br.reproductionProcess = :reproductionProcess ")
     Integer countByReproductionProcessAndReproductionRoleCHILD(
             @Param("reproductionProcess")ReproductionProcess reproductionProcess);
-}
+    @Query("SELECT br FROM BirdReproduction br " +
+            "JOIN br.reproductionProcess rp " +
+            "WHERE (br.reproductionRole = 'EGG' OR br.reproductionRole = 'CHILD') " +
+            "AND rp.isDone = false")
+    List<BirdReproduction> findEggOrChildReproductionsWithIsDoneFalse();
+ }
