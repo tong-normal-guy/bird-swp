@@ -183,20 +183,22 @@ public class DashboardServiceImpl implements DashboardService {
                 calendar.setTime(reproduction.getExpEggHatchDate());
                 calendar.add(Calendar.DAY_OF_MONTH, -2);
                 if (current.after(calendar.getTime())) {
-                    closeDateReproDTOs.add(closeDate(reproduction, "hatch", reproduction.getExpSwingBranchDate()));
+                    closeDateReproDTOs.add(closeDate(reproduction, "hatch", reproduction.getExpEggHatchDate()));
+
                 }
             } else {
                 if (bird.getSwingBranchDate() == null){
                     calendar.setTime(reproduction.getExpSwingBranchDate());
                     calendar.add(Calendar.DAY_OF_MONTH, -2);
                     if (current.after(calendar.getTime())){
-                        closeDateReproDTOs.add(closeDate(reproduction, "swing", reproduction.getExpAdultBirdDate()));
+                        closeDateReproDTOs.add(closeDate(reproduction, "swing", reproduction.getExpSwingBranchDate()));
                     }
                 } else if (bird.getAdultBirdDate() == null) {
                     calendar.setTime(reproduction.getExpSwingBranchDate());
                     calendar.add(Calendar.DAY_OF_MONTH, -2);
                     if (current.after(calendar.getTime())){
-                        closeDateReproDTOs.add(closeDate(reproduction, "adult", null));
+                        closeDateReproDTOs.add(closeDate(reproduction, "adult", reproduction.getExpAdultBirdDate()));
+
                     }
                 }
             }
