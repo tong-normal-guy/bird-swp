@@ -49,7 +49,7 @@ public class DashboardServiceImpl implements DashboardService {
                     .collect(Collectors.toList());
 
             chuyenBirds = birdList.stream()
-                    .filter(bird -> bird.getAgeRange().equals("Chuyển"))
+                    .filter(bird -> bird.getAgeRange().equals("Chuyền"))
                     .collect(Collectors.toList());
 
             nonBirds = birdList.stream()
