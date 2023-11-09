@@ -49,7 +49,7 @@ public class DashboardServiceImpl implements DashboardService {
                     .collect(Collectors.toList());
 
             chuyenBirds = birdList.stream()
-                    .filter(bird -> bird.getAgeRange().equals("Chuyển"))
+                    .filter(bird -> bird.getAgeRange().equals("Chuyền"))
                     .collect(Collectors.toList());
 
             nonBirds = birdList.stream()
@@ -82,7 +82,7 @@ public class DashboardServiceImpl implements DashboardService {
                 .totalSwingbranch(chuyenBirds.size())
                 .totalBaby(nonBirds.size())
                 .totalEggIn7Day(eggaWeekDTO())
-                .bird_reproduction(closeDateProcessDTO())
+                .bird_reproduction(closeDateReDTO())
                 .build();
     }
 
@@ -157,7 +157,6 @@ public class DashboardServiceImpl implements DashboardService {
 //                .collect(Collectors.toList());
 //        return filteredProcesses.stream().map(ReproductionProcessMapper::map2CloseDateProcessDTO).collect(Collectors.toList());
     }
-
     private Date getFirstExpDate(ReproductionProcess process) {
         if(process.getBirdReproductions().isEmpty()) {
             return null;
@@ -170,5 +169,49 @@ public class DashboardServiceImpl implements DashboardService {
         }
 
         return date;
+    }
+    private List<CloseDateReproductionDTOResponse> closeDateReDTO(){
+        List<CloseDateReproductionDTOResponse> closeDateReproDTOs = new ArrayList<>();
+        Bird bird;
+        Date current = new Date();
+        ReproductionProcess process;
+        List<BirdReproduction> reproductions = reproductionRepository.findEggOrChildReproductionsWithIsDoneFalse();
+        for (BirdReproduction reproduction: reproductions) {
+            Calendar calendar = Calendar.getInstance();
+            bird = reproduction.getBird();
+            if (bird == null){
+                calendar.setTime(reproduction.getExpEggHatchDate());
+                calendar.add(Calendar.DAY_OF_MONTH, -2);
+                if (current.after(calendar.getTime())) {
+                    closeDateReproDTOs.add(closeDate(reproduction, "hatch", reproduction.getExpEggHatchDate()));
+
+                }
+            } else {
+                if (bird.getSwingBranchDate() == null){
+                    calendar.setTime(reproduction.getExpSwingBranchDate());
+                    calendar.add(Calendar.DAY_OF_MONTH, -2);
+                    if (current.after(calendar.getTime())){
+                        closeDateReproDTOs.add(closeDate(reproduction, "swing", reproduction.getExpSwingBranchDate()));
+                    }
+                } else if (bird.getAdultBirdDate() == null) {
+                    calendar.setTime(reproduction.getExpSwingBranchDate());
+                    calendar.add(Calendar.DAY_OF_MONTH, -2);
+                    if (current.after(calendar.getTime())){
+                        closeDateReproDTOs.add(closeDate(reproduction, "adult", reproduction.getExpAdultBirdDate()));
+
+                    }
+                }
+            }
+        }
+        return closeDateReproDTOs;
+    }
+    public CloseDateReproductionDTOResponse closeDate(BirdReproduction reproduction, String desc, Date next){
+        return CloseDateReproductionDTOResponse.builder()
+                .pairingDate(reproduction.getReproductionProcess().getPairingDate())
+                .cageId(reproduction.getReproductionProcess().getCage().getId()+"")
+                .reproductionRole(reproduction.getReproductionRole()+"")
+                .desc(desc)
+                .nextDate(next)
+                .build();
     }
 }
