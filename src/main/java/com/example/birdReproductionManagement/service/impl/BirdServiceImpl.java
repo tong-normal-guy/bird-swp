@@ -245,16 +245,16 @@ public class BirdServiceImpl implements BirdService {
 //            return "có tồn tại";
 //        }
 //        return "không tồn tại";
-        Cage cage = cageRepository.findById((long)1).orElseThrow(() -> new CageNotFoundException("dhafgksdf"));
+        Cage cage = cageRepository.findById((long)5).orElseThrow(() -> new CageNotFoundException("dhafgksdf"));
         List<Bird> birds = cage.getBirdList();
         List<BirdDTO> birdDTOS = new ArrayList<>();
         if (birds != null){
             birdDTOS = birds.stream().map(BirdMapper::mapToBirdDto).collect(Collectors.toList());
         }
-//        for (Bird bird : birds){
-//            bird.setCage(null);
-//            birdRepository.save(bird);
-//        }
+        for (Bird bird : birds){
+            bird.setCage(null);
+            birdRepository.save(bird);
+        }
         int number = birdRepository.countBirdByCage(cage);
         return number;
     }
