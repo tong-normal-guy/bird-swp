@@ -246,7 +246,7 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
         cageRepository.save(processCage);
         reproductionProcess.setIsDone(true);
         reproductionProcessRepository.save(reproductionProcess);
-        calculateRateProcess(reproductionProcess);
+//        calculateRateProcess(reproductionProcess);
     }
 
     @Override
@@ -349,7 +349,7 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
         return birdTypeDTOs;
     }
 
-    private void calculateRateProcess(ReproductionProcess reproductionProcess){
+    public void calculateRateProcess(ReproductionProcess reproductionProcess){
         long processId = reproductionProcess.getId();
         //Tìm chim trống tham gia vào process đã cho
         BirdReproduction cockReproduction = birdReproductionRepository
@@ -380,7 +380,8 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
                 eggNumber = eggNumber + process.getTotalEgg();
             }
             if (eggNumber != 0){
-                float reproductionRate = childNumber / eggNumber;
+                float reproductionRate = (float) childNumber / eggNumber;
+                reproductionRate = (float) Math.round(reproductionRate * 100) / 100;
                 bird.setSuperReproduct(reproductionRate);
                 birdRepository.save(bird);
             }
@@ -401,7 +402,8 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
                         .countBirdByMutationAndReproductionProcessAndReproductionRole(process, ReproductionRole.CHILD);
             }
             if(childNumber != 0) {
-                float mutationRate = mutationChildNumber / childNumber;
+                float mutationRate = (float) mutationChildNumber / childNumber;
+                mutationRate = (float) Math.round(mutationRate * 100) / 100;
                 bird.setMutationRate(mutationRate);
                 birdRepository.save(bird);
             }

@@ -71,7 +71,7 @@ public class ReproductionProcessController {
     }
 
     @GetMapping("/hate")
-    private ResponseEntity<List<PairDTO>> getListBirdEmotionHATE(){
+    public ResponseEntity<List<PairDTO>> getListBirdEmotionHATE(){
         return new ResponseEntity<>(reproductionProcessService.getListBirdEmotionHATE(), HttpStatus.OK);
     }
 
