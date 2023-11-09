@@ -246,7 +246,7 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
         cageRepository.save(processCage);
         reproductionProcess.setIsDone(true);
         reproductionProcessRepository.save(reproductionProcess);
-
+        calculateRateProcess(reproductionProcess);
     }
 
     @Override
@@ -284,6 +284,7 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
         cageRepository.save(cage);
         process.setIsDone(true);
         reproductionProcessRepository.save(process);
+        calculateRateProcess(process);
         return true;
     }
 
@@ -313,7 +314,6 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
         cageRepository.save(newCage);
         reproductionProcess.setSeparateDate(new Date());
         reproductionProcessRepository.save(reproductionProcess);
-        calculateRateProcess(reproductionProcess);
     }
 
     @Override
