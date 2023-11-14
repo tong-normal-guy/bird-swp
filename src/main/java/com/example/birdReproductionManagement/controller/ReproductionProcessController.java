@@ -6,6 +6,7 @@ import com.example.birdReproductionManagement.dto.CageResponse.CageDTO;
 import com.example.birdReproductionManagement.dto.PairDTO;
 import com.example.birdReproductionManagement.dto.ReproductionProcessDTO;
 import com.example.birdReproductionManagement.dto.ReproductionProcessResponse.LoadData4InitProcessDTOResponse;
+import com.example.birdReproductionManagement.dto.ReproductionProcessResponse.ProcessDetailResponseDTO;
 import com.example.birdReproductionManagement.dto.ReproductionProcessResponse.ProcessForViewAllResponseDTO;
 import com.example.birdReproductionManagement.service.BirdTypeService;
 import com.example.birdReproductionManagement.service.ReproductionProcessService;
@@ -27,6 +28,10 @@ public class ReproductionProcessController {
     @GetMapping("/view")
     public ResponseEntity<List<ProcessForViewAllResponseDTO>> getListOfReproductionProcess(){
         return new ResponseEntity<>(reproductionProcessService.findAllReproductionProcess(), HttpStatus.OK);
+    }
+    @GetMapping("/view/{id}")
+    public ResponseEntity<ProcessDetailResponseDTO> getProcessDetailById(@PathVariable("id")long id){
+        return new ResponseEntity<>(reproductionProcessService.getProcessDetailById(id), HttpStatus.OK);
     }
     @PostMapping("/create")
     public ResponseEntity<ReproductionProcessDTO> addReproductionProcess(@RequestBody PairDTO pairDTO,
