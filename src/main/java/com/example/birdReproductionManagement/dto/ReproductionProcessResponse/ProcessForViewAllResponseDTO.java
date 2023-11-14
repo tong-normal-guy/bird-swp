@@ -1,6 +1,7 @@
 package com.example.birdReproductionManagement.dto.ReproductionProcessResponse;
 
 import com.example.birdReproductionManagement.dto.BirdReproductionDTO;
+import com.example.birdReproductionManagement.dto.BirdReproductionResponse.BirdReForProcessDetailResponseDTO;
 import lombok.*;
 
 import java.util.Date;
@@ -19,5 +20,5 @@ public class ProcessForViewAllResponseDTO {
     private Boolean isDone;
     private Date pairingDate;
     private String birdTypeName;
-    private List<BirdReproductionDTO> eggsList;
+    private List<BirdReForProcessDetailResponseDTO> eggsList;
 }
