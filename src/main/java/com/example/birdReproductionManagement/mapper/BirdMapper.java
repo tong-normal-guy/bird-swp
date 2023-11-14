@@ -246,4 +246,13 @@ public class BirdMapper {
                 .hatchDate(bird.getHatchDate())
                 .build();
     }
+
+    public static BirdForReproductionListReponseDTO mapToBirdForReproductionListReponseDTO(Bird bird){
+        return BirdForReproductionListReponseDTO.builder()
+                .birdId(String.valueOf(bird.getId()))
+                .actEggHatchDate(bird.getHatchDate())
+                .actSwingBranchDate(bird.getSwingBranchDate())
+                .actAdultBirdDate(bird.getAdultBirdDate())
+                .build();
+    }
 }
