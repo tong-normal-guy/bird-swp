@@ -111,8 +111,11 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
 
     @Override
     public ReproductionProcessDTO addReproductionProcess(PairDTO pairDTO, boolean confirm) {
-        if (!confirm){
-            checkBirdPairEmotion(pairDTO);
+//        if (!confirm){
+//            checkBirdPairEmotion(pairDTO);
+//        }
+        if (pairDTO.getCageId() == null || pairDTO.getCockId() == null || pairDTO.getHenId() == null){
+            throw new BirdTypeNotMatchedException("Cock, hen and cage is required.");
         }
         Cage cage = cageRepository.findById(Long.valueOf(pairDTO.getCageId())).orElseThrow(()
                 -> new ReproductionProcessNotFoundException("Cage could not be found in addReproductionProcess."));
