@@ -58,19 +58,19 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
                 BirdReproductionDTO henDTO = BirdReproductionMapper.mapToBirdReproductionDto(hen);
                 process.setHenId(henDTO.getBird().getBirdId());
             process.setBirdTypeName(cock.getBird().getBirdType().getName());
-//            //Tìm danh sách trứng
-//        List<BirdReproduction> eggList = birdReproductionRepository
-//                .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.EGG);
-//        //Tìm danh sách chim con
-//        List<BirdReproduction> childList = birdReproductionRepository
-//                .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.CHILD);
-//        //Cho vào danh sách tổng
-//        List<BirdReproduction> reproductionList = new ArrayList<>();
-//        reproductionList.addAll(eggList);
-//        reproductionList.addAll(childList);
-//        List<BirdReForProcessDetailResponseDTO> reproductionListDTO = reproductionList.stream()
-//                .map(BirdReproductionMapper::mapToBirdReForProcessDetailResponseDTO).collect(Collectors.toList());
-//        reproductionProcessDTO.setEggsList(reproductionListDTO);
+                //Tìm danh sách trứng
+            List<BirdReproduction> eggList = birdReproductionRepository
+                    .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.EGG);
+            //Tìm danh sách chim con
+            List<BirdReproduction> childList = birdReproductionRepository
+                    .findByReproductionProcessAndReproductionRole(reproductionProcess, ReproductionRole.CHILD);
+            //Cho vào danh sách tổng
+            List<BirdReproduction> reproductionList = new ArrayList<>();
+            reproductionList.addAll(eggList);
+            reproductionList.addAll(childList);
+            List<BirdReForProcessDetailResponseDTO> reproductionListDTO = reproductionList.stream()
+                    .map(BirdReproductionMapper::mapToBirdReForProcessDetailResponseDTO).collect(Collectors.toList());
+            process.setEggsList(reproductionListDTO);
             //Kiểm tra chim non sau khi trưởng thành đã được chuyển lồng hay chưa
 //            Cage processCage = reproductionProcess.getCage();
 //            for (BirdReproductionDTO birdReproductionDTO : reproductionListDTO){
