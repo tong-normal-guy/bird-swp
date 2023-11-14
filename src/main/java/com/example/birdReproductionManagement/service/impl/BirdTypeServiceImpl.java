@@ -71,11 +71,11 @@ public class BirdTypeServiceImpl implements BirdTypeService {
             MutationBirdListDTO mutationBirdListDTO = new MutationBirdListDTO();
             // xu ly chim mai mutation cua loai do
             List<Bird4ProcessDTOResponse> mutaionHens =  birdRepository
-                    .findBirdsWhereIsDoneIsTrueAndSexIsAliveAndBirdTypeSortedByMutationRateDesc(Sex.FEMALE,Long.parseLong(birdType4ProcessDTOResponse.getTypeId()) )
+                    .findBirdsWithConditions(Sex.FEMALE,Long.parseLong(birdType4ProcessDTOResponse.getTypeId()) )
                     .stream().map(BirdMapper::map2Bird4ProcessDTO).collect(Collectors.toList());
             // xu ly chim duc mutation cua loai do
             List<Bird4ProcessDTOResponse> mutationCocks =  birdRepository
-                    .findBirdsWhereIsDoneIsTrueAndSexIsAliveAndBirdTypeSortedByMutationRateDesc(Sex.MALE,Long.parseLong(birdType4ProcessDTOResponse.getTypeId()) )
+                    .findBirdsWithConditions(Sex.MALE,Long.parseLong(birdType4ProcessDTOResponse.getTypeId()) )
                     .stream().map(BirdMapper::map2Bird4ProcessDTO).collect(Collectors.toList());
             // set vao list mutation dto
             mutationBirdListDTO.setCock(mutationCocks);
