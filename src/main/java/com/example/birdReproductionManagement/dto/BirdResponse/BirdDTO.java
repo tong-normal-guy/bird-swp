@@ -22,6 +22,7 @@ public class BirdDTO {
     private String ageRange;
     private String mutation;
     private Float mutationRate;
+    private Float superReproduct;
     private Boolean isAlive;
     private String status;
     private String image;

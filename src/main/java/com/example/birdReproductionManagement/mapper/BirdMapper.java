@@ -46,6 +46,7 @@ public class BirdMapper {
                     .ageRange(bird.getAgeRange())
                     .mutation(bird.getMutation())
                     .mutationRate(bird.getMutationRate())
+                    .superReproduct(bird.getSuperReproduct())
                     .isAlive(bird.getIsAlive())
                     .status(bird.getStatus())
                     .image(bird.getImage())
@@ -71,6 +72,7 @@ public class BirdMapper {
                 .ageRange(bird.getAgeRange())
                 .mutation(bird.getMutation())
                 .mutationRate(bird.getMutationRate())
+                .superReproduct(bird.getSuperReproduct())
                 .isAlive(bird.getIsAlive())
                 .status(bird.getStatus())
                 .image(bird.getImage())
@@ -136,6 +138,7 @@ public class BirdMapper {
                     .ageRange(bird.getAgeRange())
                     .mutation(bird.getMutation())
                     .mutationRate(bird.getMutationRate())
+                    .superReproduct(bird.getSuperReproduct())
                     .isAlive(bird.getIsAlive())
                     .status(bird.getStatus())
                     .image(bird.getImage())
@@ -157,6 +160,7 @@ public class BirdMapper {
                 .ageRange(bird.getAgeRange())
                 .mutation(bird.getMutation())
                 .mutationRate(bird.getMutationRate())
+                .superReproduct(bird.getSuperReproduct())
                 .isAlive(bird.getIsAlive())
                 .status(bird.getStatus())
                 .image(bird.getImage())
@@ -240,6 +244,15 @@ public class BirdMapper {
                 .birdId(String.valueOf(bird.getId()))
                 .sex(bird.getSex().name())
                 .hatchDate(bird.getHatchDate())
+                .build();
+    }
+
+    public static BirdForReproductionListReponseDTO mapToBirdForReproductionListReponseDTO(Bird bird){
+        return BirdForReproductionListReponseDTO.builder()
+                .birdId(String.valueOf(bird.getId()))
+                .actEggHatchDate(bird.getHatchDate())
+                .actSwingBranchDate(bird.getSwingBranchDate())
+                .actAdultBirdDate(bird.getAdultBirdDate())
                 .build();
     }
 }

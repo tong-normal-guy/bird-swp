@@ -2,6 +2,7 @@ package com.example.birdReproductionManagement.mapper;
 
 import com.example.birdReproductionManagement.dto.BirdReproductionDTO;
 import com.example.birdReproductionManagement.dto.BirdReproductionResponse.BirdRe4CageDetailDTOResponse;
+import com.example.birdReproductionManagement.dto.BirdReproductionResponse.BirdReForProcessDetailResponseDTO;
 import com.example.birdReproductionManagement.dto.BirdReproductionResponse.BirdReproductionForBirdDetailResponseDTO;
 import com.example.birdReproductionManagement.dto.DashboardResponse.CloseDateReproductionDTOResponse;
 import com.example.birdReproductionManagement.entity.BirdReproduction;
@@ -114,6 +115,22 @@ public class BirdReproductionMapper {
         return CloseDateReproductionDTOResponse.builder()
                 .cageId(birdReproduction.getReproductionProcess().getCage().getId()+"")
                 .pairingDate(birdReproduction.getReproductionProcess().getPairingDate())
+                .build();
+    }
+
+    public static BirdReForProcessDetailResponseDTO mapToBirdReForProcessDetailResponseDTO(BirdReproduction birdReproduction){
+        if(birdReproduction.getBird() != null){
+            return BirdReForProcessDetailResponseDTO.builder()
+                    .reproductionId(birdReproduction.getId().toString())
+                    .bird(BirdMapper.mapToBirdForReproductionListReponseDTO(birdReproduction.getBird()))
+                    .eggLaidDate(birdReproduction.getEggLaidDate())
+                    .eggStatus(birdReproduction.getEggStatus())
+                    .build();
+        }
+        return BirdReForProcessDetailResponseDTO.builder()
+                .reproductionId(birdReproduction.getId().toString())
+                .eggLaidDate(birdReproduction.getEggLaidDate())
+                .eggStatus(birdReproduction.getEggStatus())
                 .build();
     }
 }
