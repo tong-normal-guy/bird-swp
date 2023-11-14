@@ -114,10 +114,10 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
 //        if (!confirm){
 //            checkBirdPairEmotion(pairDTO);
 //        }
-        if (pairDTO.getCageId() == null || pairDTO.getCockId() == null || pairDTO.getHenId() == null
-                || pairDTO.getCageId().isEmpty() || pairDTO.getCockId().isEmpty() || pairDTO.getHenId().isEmpty()){
-            throw new BirdTypeNotMatchedException("Cock, hen and cage is required.");
-        }
+//        if (pairDTO.getCageId() == null || pairDTO.getCockId() == null || pairDTO.getHenId() == null
+//                || pairDTO.getCageId().isEmpty() || pairDTO.getCockId().isEmpty() || pairDTO.getHenId().isEmpty()){
+//            throw new BirdTypeNotMatchedException("Cock, hen and cage is required.");
+//        }
         Cage cage = cageRepository.findById(Long.valueOf(pairDTO.getCageId())).orElseThrow(()
                 -> new ReproductionProcessNotFoundException("Cage could not be found in addReproductionProcess."));
         if(cage.getQuantity() > 0){
