@@ -29,6 +29,10 @@ public class ReproductionProcessController {
     public ResponseEntity<List<ProcessForViewAllResponseDTO>> getListOfReproductionProcess(){
         return new ResponseEntity<>(reproductionProcessService.findAllReproductionProcess(), HttpStatus.OK);
     }
+    @GetMapping("/all")
+    public ResponseEntity<List<ProcessForViewAllResponseDTO>> getListOfReproductionProcesses(){
+        return new ResponseEntity<>(reproductionProcessService.findAllReproductionProcesses(), HttpStatus.OK);
+    }
     @GetMapping("/view/{id}")
     public ResponseEntity<ProcessDetailResponseDTO> getProcessDetailById(@PathVariable("id")long id){
         return new ResponseEntity<>(reproductionProcessService.getProcessDetailById(id), HttpStatus.OK);

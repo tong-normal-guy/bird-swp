@@ -88,6 +88,29 @@ public class ReproductionProcessServiceImpl implements ReproductionProcessServic
     }
 
     @Override
+    public List<ProcessForViewAllResponseDTO> findAllReproductionProcesses() {
+        List<ProcessForViewAllResponseDTO> list = reproductionProcessRepository.findAll().stream()
+                .map(ReproductionProcessMapper::mapToProcessForViewAllResponseDTO).collect(Collectors.toList());
+        for (ProcessForViewAllResponseDTO process : list) {
+            ReproductionProcess reproductionProcess = reproductionProcessRepository
+                    .findById(Long.valueOf(process.getProcessId())).orElseThrow(
+                            () -> new ReproductionProcessNotFoundException("Process could not be found in findAllReproductionProcess."));
+            //Tìm thông tin chim cha
+            BirdReproduction cock = birdReproductionRepository
+                    .findByReproductionProcessIdAndReproductionRole(Long.valueOf(process.getProcessId()), ReproductionRole.FATHER);
+            BirdReproductionDTO cockDTO = BirdReproductionMapper.mapToBirdReproductionDto(cock);
+            process.setCockId(cockDTO.getBird().getBirdId());
+            //Tìm thông tin chim mẹ
+            BirdReproduction hen = birdReproductionRepository
+                    .findByReproductionProcessIdAndReproductionRole(Long.valueOf(process.getProcessId()), ReproductionRole.MOTHER);
+            BirdReproductionDTO henDTO = BirdReproductionMapper.mapToBirdReproductionDto(hen);
+            process.setHenId(henDTO.getBird().getBirdId());
+            process.setBirdTypeName(cock.getBird().getBirdType().getName());
+        }
+        return list;
+    }
+
+    @Override
     public ProcessDetailResponseDTO getProcessDetailById(Long processId) {
         ReproductionProcess reproductionProcess = reproductionProcessRepository.findById(processId).orElseThrow(
                         () -> new ReproductionProcessNotFoundException("Process could not be found in findAllReproductionProcess."));
