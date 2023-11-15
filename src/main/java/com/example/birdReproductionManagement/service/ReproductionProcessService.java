@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface ReproductionProcessService {
     List<ProcessForViewAllResponseDTO> findAllReproductionProcess();
+    List<ProcessForViewAllResponseDTO> findAllReproductionProcesses();
     ProcessDetailResponseDTO getProcessDetailById(Long processId);
     ReproductionProcessDTO addReproductionProcess(PairDTO pairDTO, boolean confirm);
     void deleteReproductionProcess(Long id);
