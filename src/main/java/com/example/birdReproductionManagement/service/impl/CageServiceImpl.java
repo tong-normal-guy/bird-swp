@@ -307,7 +307,7 @@ public class CageServiceImpl implements CageService {
             String newLocation = cageDto.getLocation() + cage.getId();
             finalCage.setLocation(newLocation);
         }
-        if(cageDto.getUserId() != null){
+        if(cageDto.getUserId() != null && !cageDto.getUserId().isEmpty()){
             User user = userRepository.findById(Long.valueOf(cageDto.getUserId())).orElseThrow(
                     () -> new UserNotFoundException("User could not be found."));
             finalCage.setUser(user);
