@@ -12,9 +12,7 @@ import com.example.birdReproductionManagement.dto.ReproductionProcessResponse.Re
 import com.example.birdReproductionManagement.dto.UserDTO;
 import com.example.birdReproductionManagement.dto.UserResponse.User4CageDetailDTOResponse;
 import com.example.birdReproductionManagement.entity.*;
-import com.example.birdReproductionManagement.exceptions.BirdNotFoundException;
-import com.example.birdReproductionManagement.exceptions.CageNotFoundException;
-import com.example.birdReproductionManagement.exceptions.UserNotFoundException;
+import com.example.birdReproductionManagement.exceptions.*;
 import com.example.birdReproductionManagement.mapper.*;
 import com.example.birdReproductionManagement.repository.*;
 import com.example.birdReproductionManagement.service.CageService;
@@ -288,6 +286,10 @@ public class CageServiceImpl implements CageService {
     public CageDTO updateCageByFields(Long id, CageDTO cageDto) {
         Cage cage = cageRepository.findById(id).orElseThrow(
                 () -> new UserNotFoundException("User could not be found in updateCageByFields."));
+        if(cage.getAvailable() != cageDto.getAvailable()){
+            if (birdRepository.countBirdByCage(cage) > 0)
+                throw new InternalException("There is bird in this cage.");
+        }
         Cage finalCage = cage;
         ReflectionUtils.doWithFields(cageDto.getClass(), field -> {
             field.setAccessible(true);
